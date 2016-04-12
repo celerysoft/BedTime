@@ -5,4 +5,29 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+
+    <string-array name="pref_example_list_titles">
+        <item>Always</item>
+        <item>When possible</item>
+        <item>Never</item>
+    </string-array>
+    <string-array name="pref_example_list_values">
+        <item>1</item>
+        <item>0</item>
+        <item>-1</item>
+    </string-array>
+
+    // Main Activity
+    <string name="main_snack_bar_text">退出App？</string>
+    <string name="main_snack_bar_action_text">exit</string>
+
+    //Main Fragment
+    <string name="main_actionbar_title">Bed Time</string>
+
+    //Bed Time Fragment
+    <string name="bedtime_actionbar_title">When To Bed</string>
+
+    //Settings Fragment
+    <string name="settings_actionbar_title">Settings</string>
+
 </resources>
