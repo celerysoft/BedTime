@@ -9,7 +9,7 @@ import android.view.View;
 /**
  * Created by Celery on 16/4/11.
  */
-public interface IViewMain {
+public interface IViewMainActivity {
     View getFloatActionButton();
     Context getContext();
     FragmentManager getFragmentManager();

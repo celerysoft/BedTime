@@ -16,16 +16,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.celerysoft.bedtime.R;
-import com.celerysoft.bedtime.activity.main.presenter.IPresenterMain;
-import com.celerysoft.bedtime.activity.main.presenter.PresenterMain;
+import com.celerysoft.bedtime.activity.main.presenter.IPresenterMainActivity;
+import com.celerysoft.bedtime.activity.main.presenter.PresenterMainActivity;
 import com.celerysoft.bedtime.fragment.bedtime.BedTimeFragment;
-import com.celerysoft.bedtime.fragment.main.MainFragment;
+import com.celerysoft.bedtime.fragment.main.view.MainFragment;
 import com.celerysoft.bedtime.fragment.settings.SettingsFragment;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, IViewMain {
+        implements NavigationView.OnNavigationItemSelectedListener, IViewMainActivity {
 
-    private IPresenterMain mPresenter;
+    private IPresenterMainActivity mPresenter;
     private FloatingActionButton mFloatingActionButton;
 
     private MainFragment mMainFragment;
@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mPresenter = new PresenterMain(this);
+        mPresenter = new PresenterMainActivity(this);
         init();
     }
 
@@ -46,6 +46,10 @@ public class MainActivity extends AppCompatActivity
         mMainFragment = new MainFragment();
         mBedTimeFragment = new BedTimeFragment();
         mSettingsFragment = new SettingsFragment();
+        getFragmentManager()
+                .beginTransaction()
+                .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out, android.R.anim.fade_in, android.R.anim.fade_out)
+                .commit();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -103,11 +107,7 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            if (mFloatingActionButton.getVisibility() == View.VISIBLE) {
-                mFloatingActionButton.setVisibility(View.GONE);
-            } else {
-                mFloatingActionButton.setVisibility(View.VISIBLE);
-            }
+            mPresenter.turnToSettingsFragment();
             return true;
         }
 

@@ -6,18 +6,18 @@ import android.support.design.widget.Snackbar;
 import android.view.View;
 
 import com.celerysoft.bedtime.R;
-import com.celerysoft.bedtime.activity.main.view.IViewMain;
+import com.celerysoft.bedtime.activity.main.view.IViewMainActivity;
 
 /**
  * Created by Celery on 16/4/11.
  * Presenter for main activity.
  */
-public class PresenterMain implements IPresenterMain {
-    private IViewMain mView;
+public class PresenterMainActivity implements IPresenterMainActivity {
+    private IViewMainActivity mView;
 
     private Fragment mCurrentFragment;
 
-    public PresenterMain(IViewMain view) {
+    public PresenterMainActivity(IViewMainActivity view) {
         super();
 
         mView = view;
@@ -45,6 +45,7 @@ public class PresenterMain implements IPresenterMain {
         FragmentTransaction ft = mView.getFragmentManager().beginTransaction();
 
         if (fromFragment != null) {
+            //ft.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
             //ft.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out, android.R.anim.fade_in, android.R.anim.fade_out);
             ft.hide(fromFragment);
         }
@@ -65,6 +66,7 @@ public class PresenterMain implements IPresenterMain {
         turnToFragment(mCurrentFragment, mView.getMainFragment());
         mCurrentFragment = mView.getMainFragment();
         mView.getSupportActionBar().setTitle(R.string.main_actionbar_title);
+        mView.getFloatActionButton().setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -72,6 +74,7 @@ public class PresenterMain implements IPresenterMain {
         turnToFragment(mCurrentFragment, mView.getBedTimeFragment());
         mCurrentFragment = mView.getBedTimeFragment();
         mView.getSupportActionBar().setTitle(R.string.bedtime_actionbar_title);
+        mView.getFloatActionButton().setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -79,6 +82,7 @@ public class PresenterMain implements IPresenterMain {
         turnToFragment(mCurrentFragment, mView.getSettingsFragment());
         mCurrentFragment = mView.getSettingsFragment();
         mView.getSupportActionBar().setTitle(R.string.settings_actionbar_title);
+        mView.getFloatActionButton().setVisibility(View.GONE);
     }
 
 
