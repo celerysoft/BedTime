@@ -24,6 +24,7 @@
 
     //Bed Time Fragment
     <string name="bedtime_actionbar_title">When To Bed</string>
+    <string name="bedtime_title">Wakeup times</string>
 
     //Settings Fragment
     <string name="settings_actionbar_title">Settings</string>

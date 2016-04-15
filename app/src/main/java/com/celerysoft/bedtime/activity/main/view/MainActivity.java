@@ -18,7 +18,7 @@ import android.view.MenuItem;
 import com.celerysoft.bedtime.R;
 import com.celerysoft.bedtime.activity.main.presenter.IPresenterMainActivity;
 import com.celerysoft.bedtime.activity.main.presenter.PresenterMainActivity;
-import com.celerysoft.bedtime.fragment.bedtime.BedTimeFragment;
+import com.celerysoft.bedtime.fragment.bedtime.view.BedTimeFragment;
 import com.celerysoft.bedtime.fragment.main.view.MainFragment;
 import com.celerysoft.bedtime.fragment.settings.SettingsFragment;
 
@@ -58,13 +58,7 @@ public class MainActivity extends AppCompatActivity
         mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                MainActivity.this.finish();
-                            }
-                        }).show();
+                mPresenter.turnToBedTimeFragment();
             }
         });
 

@@ -74,7 +74,7 @@ public class PresenterMainActivity implements IPresenterMainActivity {
         turnToFragment(mCurrentFragment, mView.getBedTimeFragment());
         mCurrentFragment = mView.getBedTimeFragment();
         mView.getSupportActionBar().setTitle(R.string.bedtime_actionbar_title);
-        mView.getFloatActionButton().setVisibility(View.VISIBLE);
+        mView.getFloatActionButton().setVisibility(View.GONE);
     }
 
     @Override
