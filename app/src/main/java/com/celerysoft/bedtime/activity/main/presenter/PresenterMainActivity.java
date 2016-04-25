@@ -7,6 +7,8 @@ import android.view.View;
 
 import com.celerysoft.bedtime.R;
 import com.celerysoft.bedtime.activity.main.view.IViewMainActivity;
+import com.celerysoft.bedtime.util.ActivityManagerUtil;
+import com.celerysoft.bedtime.view.BaseActivity;
 
 /**
  * Created by Celery on 16/4/11.
@@ -17,6 +19,8 @@ public class PresenterMainActivity implements IPresenterMainActivity {
 
     private Fragment mCurrentFragment;
 
+    private long mLastPressBackTime;
+
     public PresenterMainActivity(IViewMainActivity view) {
         super();
 
@@ -24,6 +28,25 @@ public class PresenterMainActivity implements IPresenterMainActivity {
     }
 
     @Override
+    public void preExitApp() {
+        showExitAppSnackBar();
+        mLastPressBackTime = System.currentTimeMillis();
+    }
+
+    @Override
+    public void exitApp() {
+        ActivityManagerUtil.getInstance().exitApp((BaseActivity) mView);
+    }
+
+    @Override
+    public boolean readyToExitApp() {
+        if (System.currentTimeMillis() - mLastPressBackTime <= 2000) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public void showExitAppSnackBar() {
         String text = mView.getContext().getString(R.string.main_snack_bar_text);
         String actionText = mView.getContext().getString(R.string.main_snack_bar_action_text);
@@ -46,7 +69,7 @@ public class PresenterMainActivity implements IPresenterMainActivity {
 
         if (fromFragment != null) {
             //ft.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
-            //ft.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out, android.R.anim.fade_in, android.R.anim.fade_out);
+            ft.setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out, android.R.animator.fade_in, android.R.animator.fade_out);
             ft.hide(fromFragment);
         }
 
@@ -85,5 +108,8 @@ public class PresenterMainActivity implements IPresenterMainActivity {
         mView.getFloatActionButton().setVisibility(View.GONE);
     }
 
-
+    @Override
+    public Fragment getCurrentFragment() {
+        return mCurrentFragment;
+    }
 }
