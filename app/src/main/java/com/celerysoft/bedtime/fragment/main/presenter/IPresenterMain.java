@@ -6,4 +6,6 @@ package com.celerysoft.bedtime.fragment.main.presenter;
 public interface IPresenterMain {
     void turnOnNotification();
     void turnOffNotification();
+    void startCountDownThread();
+    void stopCountDownThread();
 }

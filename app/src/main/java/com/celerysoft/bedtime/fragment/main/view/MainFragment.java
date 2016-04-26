@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.SwitchCompat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +23,11 @@ public class MainFragment extends Fragment implements IViewMain {
     IPresenterMain mPresenter;
 
     SwitchCompat mSwitch;
+    AppCompatTextView mTvLeftHour;
+    AppCompatTextView mTvLeftHourLabel;
+    AppCompatTextView mTvLeftMinute;
+    AppCompatTextView mTvLeftMinuteLabel;
+    AppCompatTextView mTvAction;
 
     @Nullable
     @Override
@@ -30,6 +36,14 @@ public class MainFragment extends Fragment implements IViewMain {
 
         mPresenter = new PresenterMain(this);
 
+        initView(v);
+
+        mPresenter.startCountDownThread();
+
+        return v;
+    }
+
+    private void initView(View v) {
         mSwitch = (SwitchCompat) v.findViewById(R.id.main_fragment_switch_notification);
         mSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -42,11 +56,56 @@ public class MainFragment extends Fragment implements IViewMain {
             }
         });
 
-        return v;
+        mTvLeftHour = (AppCompatTextView) v.findViewById(R.id.main_fragment_tv_left_hour);
+        mTvLeftHourLabel = (AppCompatTextView) v.findViewById(R.id.main_fragment_tv_left_hour_label);
+        mTvLeftMinute = (AppCompatTextView) v.findViewById(R.id.main_fragment_tv_left_minute);
+        mTvLeftMinuteLabel = (AppCompatTextView) v.findViewById(R.id.main_fragment_tv_left_minute_label);
+        mTvAction = (AppCompatTextView) v.findViewById(R.id.main_fragment_tv_action);
     }
 
     @Override
     public Context getContext() {
         return getActivity();
+    }
+
+    @Override
+    public void onDestroyView() {
+        mPresenter.stopCountDownThread();
+        super.onDestroyView();
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        if(hidden) {
+            mPresenter.stopCountDownThread();
+        } else {
+            mPresenter.startCountDownThread();
+        }
+        super.onHiddenChanged(hidden);
+    }
+
+    @Override
+    public AppCompatTextView getTvLeftHour() {
+        return mTvLeftHour;
+    }
+
+    @Override
+    public AppCompatTextView getTvAction() {
+        return mTvAction;
+    }
+
+    @Override
+    public AppCompatTextView getTvLeftMinuteLabel() {
+        return mTvLeftMinuteLabel;
+    }
+
+    @Override
+    public AppCompatTextView getTvLeftMinute() {
+        return mTvLeftMinute;
+    }
+
+    @Override
+    public AppCompatTextView getTvLeftHourLabel() {
+        return mTvLeftHourLabel;
     }
 }

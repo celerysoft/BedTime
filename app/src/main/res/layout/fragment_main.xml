@@ -10,7 +10,72 @@
         android:id="@+id/main_fragment_switch_notification"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Notify"
-        android:layout_gravity="center_horizontal"/>
+        android:text="Open Notifications"
+        android:layout_gravity="center_horizontal"
+        android:textColor="@color/colorPrimaryText"
+        android:textSize="@dimen/text_size_title"
+        android:layout_marginBottom="16dp"/>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/main_fragment_tv_left_hour"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="12"
+            android:textSize="@dimen/text_size_display"
+            android:textColor="@color/colorPrimaryText"/>
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/main_fragment_tv_left_hour_label"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="bottom"
+            android:text="Hours"
+            android:textSize="@dimen/text_size_title"
+            android:textColor="@color/colorSecondaryText"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/main_fragment_tv_left_minute"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="30"
+            android:textSize="@dimen/text_size_display"
+            android:textColor="@color/colorPrimaryText"/>
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/main_fragment_tv_left_minute_label"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="bottom"
+            android:text="Minutes"
+            android:textSize="@dimen/text_size_title"
+            android:textColor="@color/colorSecondaryText"/>
+    </LinearLayout>
+
+    <android.support.v7.widget.AppCompatTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Until"
+        android:textSize="@dimen/text_size_title"
+        android:textColor="@color/colorSecondaryText"/>
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/main_fragment_tv_action"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Bed Time"
+        android:textSize="@dimen/text_size_title"
+        android:textColor="@color/colorSecondaryText"/>
 </LinearLayout>
