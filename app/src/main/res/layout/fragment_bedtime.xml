@@ -10,11 +10,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
+        android:textSize="@dimen/text_size_title"
+        android:textColor="@color/colorPrimaryText"
         android:text="@string/bedtime_title"/>
 
     <android.support.v7.widget.ListViewCompat
         android:id="@+id/bedtime_lv_wakeup_time"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"/>
 
 </LinearLayout>

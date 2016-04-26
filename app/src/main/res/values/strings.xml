@@ -6,7 +6,20 @@
 
     //SharedPreferences Key
     <string name="shared_preferences_key_wakeup_time">shared_preferences_key_wakeup_time</string>
-
+    <string name="shared_preferences_key_wakeup_time_monday_hour">shared_preferences_key_wakeup_time_monday_hour</string>
+    <string name="shared_preferences_key_wakeup_time_monday_minute">shared_preferences_key_wakeup_time_monday_minute</string>
+    <string name="shared_preferences_key_wakeup_time_tuesday_hour">shared_preferences_key_wakeup_time_tuesday_hour</string>
+    <string name="shared_preferences_key_wakeup_time_tuesday_minute">shared_preferences_key_wakeup_time_tuesday_minute</string>
+    <string name="shared_preferences_key_wakeup_time_wednesday_hour">shared_preferences_key_wakeup_time_wednesday_hour</string>
+    <string name="shared_preferences_key_wakeup_time_wednesday_minute">shared_preferences_key_wakeup_time_wednesday_minute</string>
+    <string name="shared_preferences_key_wakeup_time_thursday_hour">shared_preferences_key_wakeup_time_thursday_hour</string>
+    <string name="shared_preferences_key_wakeup_time_thursday_minute">shared_preferences_key_wakeup_time_thursday_minute</string>
+    <string name="shared_preferences_key_wakeup_time_friday_hour">shared_preferences_key_wakeup_time_friday_hour</string>
+    <string name="shared_preferences_key_wakeup_time_friday_minute">shared_preferences_key_wakeup_time_friday_minute</string>
+    <string name="shared_preferences_key_wakeup_time_saturday_hour">shared_preferences_key_wakeup_time_saturday_hour</string>
+    <string name="shared_preferences_key_wakeup_time_saturday_minute">shared_preferences_key_wakeup_time_saturday_minute</string>
+    <string name="shared_preferences_key_wakeup_time_sunday_hour">shared_preferences_key_wakeup_time_sunday_hour</string>
+    <string name="shared_preferences_key_wakeup_time_sunday_minute">shared_preferences_key_wakeup_time_sunday_minute</string>
 
     // Main Activity
     <string name="main_snack_bar_text">退出App？</string>
@@ -18,6 +31,13 @@
     //Bed Time Fragment
     <string name="bedtime_actionbar_title">When To Bed</string>
     <string name="bedtime_title">Wakeup times</string>
+    <string name="bedtime_monday">Monday</string>
+    <string name="bedtime_tuesday">Tuesday</string>
+    <string name="bedtime_wednesday">Wednesday</string>
+    <string name="bedtime_thursday">Thursday</string>
+    <string name="bedtime_friday">Friday</string>
+    <string name="bedtime_saturday">Saturday</string>
+    <string name="bedtime_sunday">Sunday</string>
 
     //Settings Fragment
     <string name="settings_actionbar_title">Settings</string>

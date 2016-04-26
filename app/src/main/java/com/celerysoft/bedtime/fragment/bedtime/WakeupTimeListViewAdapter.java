@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
 import com.celerysoft.bedtime.R;
+import com.celerysoft.bedtime.fragment.bedtime.model.WakeupTimeBean;
+import com.celerysoft.bedtime.util.Const;
 
 import java.util.ArrayList;
 
@@ -17,7 +19,14 @@ import java.util.ArrayList;
 public class WakeupTimeListViewAdapter extends BaseAdapter {
     private Context mContext;
 
-    private ArrayList<Item> mItems;
+    private ArrayList<WakeupTimeBean> mWakeupTimes;
+    public ArrayList<WakeupTimeBean> getWakeupTimes() {
+        return mWakeupTimes;
+    }
+
+    public void setWakeupTimes(ArrayList<WakeupTimeBean> wakeupTimes) {
+        mWakeupTimes = wakeupTimes;
+    }
 
     public WakeupTimeListViewAdapter(Context context) {
         mContext = context;
@@ -26,42 +35,49 @@ public class WakeupTimeListViewAdapter extends BaseAdapter {
     }
 
     private void createDefaultItems() {
-        mItems = new ArrayList<Item>();
+        mWakeupTimes = new ArrayList<>();
 
-        Item item0 = new Item();
-        item0.title = "周一";
-        item0.content = "08:30";
-        mItems.add(item0);
+        WakeupTimeBean item0 = new WakeupTimeBean();
+        item0.setDayOfTheWeek(0);
+        item0.setWakeupHour(1);
+        item0.setWakeupMinute(30);
+        mWakeupTimes.add(item0);
 
-        Item item1 = new Item();
-        item1.title = "周二";
-        item1.content = "08:30";
-        mItems.add(item1);
+        WakeupTimeBean item1 = new WakeupTimeBean();
+        item1.setDayOfTheWeek(1);
+        item1.setWakeupHour(2);
+        item1.setWakeupMinute(30);
+        mWakeupTimes.add(item1);
 
-        Item item2 = new Item();
-        item2.title = "周三";
-        item2.content = "08:30";
-        mItems.add(item2);
+        WakeupTimeBean item2 = new WakeupTimeBean();
+        item2.setDayOfTheWeek(2);
+        item2.setWakeupHour(3);
+        item2.setWakeupMinute(30);
+        mWakeupTimes.add(item2);
 
-        Item item3 = new Item();
-        item3.title = "周四";
-        item3.content = "08:30";
-        mItems.add(item3);
+        WakeupTimeBean item3 = new WakeupTimeBean();
+        item3.setDayOfTheWeek(3);
+        item3.setWakeupHour(4);
+        item3.setWakeupMinute(30);
+        mWakeupTimes.add(item3);
 
-        Item item4 = new Item();
-        item4.title = "周五";
-        item4.content = "08:30";
-        mItems.add(item4);
+        WakeupTimeBean item4 = new WakeupTimeBean();
+        item4.setDayOfTheWeek(4);
+        item4.setWakeupHour(5);
+        item4.setWakeupMinute(30);
+        mWakeupTimes.add(item4);
 
-        Item item5 = new Item();
-        item5.title = "周六";
-        item5.content = "09:30";
-        mItems.add(item5);
+        WakeupTimeBean item5 = new WakeupTimeBean();
+        item5.setDayOfTheWeek(5);
+        item5.setWakeupHour(6);
+        item5.setWakeupMinute(30);
+        mWakeupTimes.add(item5);
 
-        Item item6 = new Item();
-        item6.title = "周天";
-        item6.content = "09:30";
-        mItems.add(item6);
+        WakeupTimeBean item6 = new WakeupTimeBean();
+        item6.setDayOfTheWeek(6);
+        item6.setWakeupHour(7);
+        item6.setWakeupMinute(30);
+        mWakeupTimes.add(item6);
 
     }
 
@@ -94,9 +110,9 @@ public class WakeupTimeListViewAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        Item item = mItems.get(position);
-        viewHolder.title.setText(item.title);
-        viewHolder.content.setText(item.content);
+        WakeupTimeBean bean = mWakeupTimes.get(position);
+        viewHolder.title.setText(getWakeupTimeTitleString(bean));
+        viewHolder.content.setText(getWakeupTimeContentString(bean));
 
         return convertView;
     }
@@ -106,8 +122,39 @@ public class WakeupTimeListViewAdapter extends BaseAdapter {
         public AppCompatTextView content;
     }
 
-    private class Item {
-        public String title;
-        public String content;
+    private String getWakeupTimeTitleString(WakeupTimeBean bean) {
+        String dayOfTheWeek = "";
+        switch (bean.getDayOfTheWeek()) {
+            case Const.MONDAY:
+                dayOfTheWeek = mContext.getString(R.string.bedtime_monday);
+                break;
+            case Const.TUESDAY:
+                dayOfTheWeek = mContext.getString(R.string.bedtime_tuesday);
+                break;
+            case Const.WEDNESDAY:
+                dayOfTheWeek = mContext.getString(R.string.bedtime_wednesday);
+                break;
+            case Const.THURSDAY:
+                dayOfTheWeek = mContext.getString(R.string.bedtime_thursday);
+                break;
+            case Const.FRIDAY:
+                dayOfTheWeek = mContext.getString(R.string.bedtime_friday);
+                break;
+            case Const.SATURDAY:
+                dayOfTheWeek = mContext.getString(R.string.bedtime_saturday);
+                break;
+            case Const.SUNDAY:
+                dayOfTheWeek = mContext.getString(R.string.bedtime_sunday);
+                break;
+            default:
+                break;
+        }
+        return dayOfTheWeek;
+    }
+
+    private String getWakeupTimeContentString(WakeupTimeBean bean) {
+        // TODO 注意12小时制和24小时制
+        String content = bean.getWakeupHour() + " : " + bean.getWakeupMinute();
+        return content;
     }
 }
