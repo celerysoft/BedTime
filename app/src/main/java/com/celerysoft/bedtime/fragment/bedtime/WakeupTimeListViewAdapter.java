@@ -12,6 +12,7 @@ import com.celerysoft.bedtime.fragment.bedtime.model.WakeupTimeBean;
 import com.celerysoft.bedtime.util.Const;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 /**
  * Created by Celery on 16/4/15.
@@ -125,25 +126,25 @@ public class WakeupTimeListViewAdapter extends BaseAdapter {
     private String getWakeupTimeTitleString(WakeupTimeBean bean) {
         String dayOfTheWeek = "";
         switch (bean.getDayOfTheWeek()) {
-            case Const.MONDAY:
+            case Calendar.MONDAY:
                 dayOfTheWeek = mContext.getString(R.string.bedtime_monday);
                 break;
-            case Const.TUESDAY:
+            case Calendar.TUESDAY:
                 dayOfTheWeek = mContext.getString(R.string.bedtime_tuesday);
                 break;
-            case Const.WEDNESDAY:
+            case Calendar.WEDNESDAY:
                 dayOfTheWeek = mContext.getString(R.string.bedtime_wednesday);
                 break;
-            case Const.THURSDAY:
+            case Calendar.THURSDAY:
                 dayOfTheWeek = mContext.getString(R.string.bedtime_thursday);
                 break;
-            case Const.FRIDAY:
+            case Calendar.FRIDAY:
                 dayOfTheWeek = mContext.getString(R.string.bedtime_friday);
                 break;
-            case Const.SATURDAY:
+            case Calendar.SATURDAY:
                 dayOfTheWeek = mContext.getString(R.string.bedtime_saturday);
                 break;
-            case Const.SUNDAY:
+            case Calendar.SUNDAY:
                 dayOfTheWeek = mContext.getString(R.string.bedtime_sunday);
                 break;
             default:

@@ -16,6 +16,8 @@ import com.celerysoft.bedtime.fragment.bedtime.presenter.PresenterBedTime;
 import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
+import java.util.Calendar;
+
 /**
  * Created by Celery on 16/4/12.
  */
@@ -45,19 +47,21 @@ public class BedTimeFragment extends Fragment implements IViewBedTime {
         mListViewWakeupTime.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+                final int dayOfTheWeek = positionToDayOfTheWeek(position);
+
                 TimePickerDialog.OnTimeSetListener onTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
                         WakeupTimeBean wakeupTime = new WakeupTimeBean();
-                        wakeupTime.setDayOfTheWeek(position);
+                        wakeupTime.setDayOfTheWeek(dayOfTheWeek);
                         wakeupTime.setWakeupHour(hourOfDay);
                         wakeupTime.setWakeupMinute(minute);
                         mPresenter.storeWakeupTime(wakeupTime);
-                        mPresenter.updateAdapter(mAdapter, position);
+                        mPresenter.updateAdapter(mAdapter, position, dayOfTheWeek);
                     }
                 };
 
-                mPresenter.showTimePickerDialog(onTimeSetListener, position);
+                mPresenter.showTimePickerDialog(onTimeSetListener, dayOfTheWeek);
             }
         });
     }
@@ -66,5 +70,35 @@ public class BedTimeFragment extends Fragment implements IViewBedTime {
     public void onHiddenChanged(boolean hidden) {
         mAdapter = mPresenter.fetchDataToCreateAdapter();
         mListViewWakeupTime.setAdapter(mAdapter);
+    }
+
+    private int positionToDayOfTheWeek(int position) {
+        int dayOfTheWeek = Calendar.SUNDAY;
+        switch (position) {
+            case 0:
+                dayOfTheWeek = Calendar.MONDAY;
+                break;
+            case 1:
+                dayOfTheWeek = Calendar.TUESDAY;
+                break;
+            case 2:
+                dayOfTheWeek = Calendar.WEDNESDAY;
+                break;
+            case 3:
+                dayOfTheWeek = Calendar.THURSDAY;
+                break;
+            case 4:
+                dayOfTheWeek = Calendar.FRIDAY;
+                break;
+            case 5:
+                dayOfTheWeek = Calendar.SATURDAY;
+                break;
+            case 6:
+                dayOfTheWeek = Calendar.SUNDAY;
+                break;
+            default:
+                break;
+        }
+        return dayOfTheWeek;
     }
 }

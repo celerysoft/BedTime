@@ -8,4 +8,5 @@ public interface IPresenterMain {
     void turnOffNotification();
     void startCountDownThread();
     void stopCountDownThread();
+    void testNotification();
 }

@@ -41,7 +41,7 @@ public class PresenterMain implements IPresenterMain {
     }
 
     @Override
-    public void turnOnNotification() {
+    public void testNotification() {
         // TODO Delete test code below
         AlarmManager alarmMgr;
         PendingIntent alarmIntent;
@@ -53,7 +53,10 @@ public class PresenterMain implements IPresenterMain {
         alarmMgr.set(AlarmManager.ELAPSED_REALTIME_WAKEUP,
                 SystemClock.elapsedRealtime() +
                         5 * 1000, alarmIntent);
+    }
 
+    @Override
+    public void turnOnNotification() {
         enableAlarm(mContext);
 
         // Enable receive device boot completed even so that reset alarm
@@ -73,33 +76,34 @@ public class PresenterMain implements IPresenterMain {
      * @param context context
      */
     public static void enableAlarm(Context context) {
-//        int currentDay = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
-//        WakeupTimeModel wakeupTimeModel = new WakeupTimeModel(context);
-//        WakeupTimeBean wakeupTime = wakeupTimeModel.findBeanByDayOfTheWeek(currentDay);
-//        int wakeupHour = wakeupTime.getWakeupHour();
-//        int wakeupMinute = wakeupTime.getWakeupMinute();
-//
-//        //TODO handle sleep time
-//
-//        Calendar calendar = Calendar.getInstance();
-//        calendar.setTimeInMillis(System.currentTimeMillis());
-//        calendar.set(Calendar.HOUR_OF_DAY, wakeupHour);
-//        calendar.set(Calendar.MINUTE, wakeupMinute);
-//        calendar.set(Calendar.SECOND, 0);
-//        calendar.set(Calendar.MILLISECOND, 0);
-//
-//        AlarmManager alarmMgr;
-//        PendingIntent alarmIntent;
-//
-//        alarmMgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-//        Intent setAlarmIntent = new Intent(context, BedTimeReceiver.class);
-//        alarmIntent = PendingIntent.getBroadcast(context, 0, setAlarmIntent, 0);
-//
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-//            alarmMgr.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), alarmIntent);
-//        } else {
-//            alarmMgr.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), alarmIntent);
-//        }
+        int currentDay = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
+        int nextDay = currentDay == Calendar.SATURDAY ? Calendar.SUNDAY : currentDay + 1;
+        WakeupTimeModel wakeupTimeModel = new WakeupTimeModel(context);
+        WakeupTimeBean wakeupTime = wakeupTimeModel.findWakeUpTimeByDayOfTheWeek(nextDay);
+        int wakeupHour = wakeupTime.getWakeupHour();
+        int wakeupMinute = wakeupTime.getWakeupMinute();
+
+        //TODO handle sleep time
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        calendar.set(Calendar.HOUR_OF_DAY, wakeupHour);
+        calendar.set(Calendar.MINUTE, wakeupMinute);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+
+        AlarmManager alarmMgr;
+        PendingIntent alarmIntent;
+
+        alarmMgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        Intent setAlarmIntent = new Intent(context, BedTimeReceiver.class);
+        alarmIntent = PendingIntent.getBroadcast(context, 0, setAlarmIntent, 0);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            alarmMgr.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), alarmIntent);
+        } else {
+            alarmMgr.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), alarmIntent);
+        }
     }
 
     /**
@@ -142,8 +146,9 @@ public class PresenterMain implements IPresenterMain {
                         int currentHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
                         int currentMinute = Calendar.getInstance().get(Calendar.MINUTE);
 
+                        // TODO handle sleep time
                         final int sleepTimeMinute = 7 * 60 + 30;
-                        WakeupTimeBean wakeupTime = mWakeupTimeModel.findBeanByDayOfTheWeek(currentDay);
+                        WakeupTimeBean wakeupTime = mWakeupTimeModel.findNextWakeUpTimeByDayOfTheWeek(currentDay);
 
                         int minuteUntilGoBed = (24 + wakeupTime.getWakeupHour() - currentHour) * 60
                                 + wakeupTime.getWakeupMinute() - currentMinute - sleepTimeMinute;
@@ -188,6 +193,7 @@ public class PresenterMain implements IPresenterMain {
     public void stopCountDownThread() {
         if (mCountDownThread != null) {
             mIsCountDownThreadRun = false;
+            mCountDownThread = null;
         }
     }
 

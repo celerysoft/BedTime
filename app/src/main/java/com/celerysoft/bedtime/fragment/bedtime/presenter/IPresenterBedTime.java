@@ -10,6 +10,6 @@ import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 public interface IPresenterBedTime {
     WakeupTimeListViewAdapter fetchDataToCreateAdapter();
     void storeWakeupTime(WakeupTimeBean wakeupTime);
-    void updateAdapter(WakeupTimeListViewAdapter adapter, int dayOfTheWeek);
+    void updateAdapter(WakeupTimeListViewAdapter adapter, int position, int dayOfTheWeek);
     void showTimePickerDialog(TimePickerDialog.OnTimeSetListener listener, int dayOfTheWeek);
 }

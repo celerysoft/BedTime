@@ -9,10 +9,10 @@ import com.celerysoft.bedtime.fragment.bedtime.WakeupTimeListViewAdapter;
 import com.celerysoft.bedtime.fragment.bedtime.model.WakeupTimeBean;
 import com.celerysoft.bedtime.fragment.bedtime.model.WakeupTimeModel;
 import com.celerysoft.bedtime.fragment.bedtime.view.IViewBedTime;
-import com.celerysoft.bedtime.util.Const;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 /**
  * Created by Celery on 16/4/15.
@@ -44,19 +44,19 @@ public class PresenterBedTime implements IPresenterBedTime {
 
         ArrayList<WakeupTimeBean> wakeupTimes = new ArrayList<>();
 
-        WakeupTimeBean monday = mModel.findBeanByDayOfTheWeek(Const.MONDAY);
+        WakeupTimeBean monday = mModel.findWakeUpTimeByDayOfTheWeek(Calendar.MONDAY);
         wakeupTimes.add(monday);
-        WakeupTimeBean tuesday = mModel.findBeanByDayOfTheWeek(Const.TUESDAY);
+        WakeupTimeBean tuesday = mModel.findWakeUpTimeByDayOfTheWeek(Calendar.TUESDAY);
         wakeupTimes.add(tuesday);
-        WakeupTimeBean wednesday = mModel.findBeanByDayOfTheWeek(Const.WEDNESDAY);
+        WakeupTimeBean wednesday = mModel.findWakeUpTimeByDayOfTheWeek(Calendar.WEDNESDAY);
         wakeupTimes.add(wednesday);
-        WakeupTimeBean thursday = mModel.findBeanByDayOfTheWeek(Const.THURSDAY);
+        WakeupTimeBean thursday = mModel.findWakeUpTimeByDayOfTheWeek(Calendar.THURSDAY);
         wakeupTimes.add(thursday);
-        WakeupTimeBean friday = mModel.findBeanByDayOfTheWeek(Const.FRIDAY);
+        WakeupTimeBean friday = mModel.findWakeUpTimeByDayOfTheWeek(Calendar.FRIDAY);
         wakeupTimes.add(friday);
-        WakeupTimeBean saturday = mModel.findBeanByDayOfTheWeek(Const.SATURDAY);
+        WakeupTimeBean saturday = mModel.findWakeUpTimeByDayOfTheWeek(Calendar.SATURDAY);
         wakeupTimes.add(saturday);
-        WakeupTimeBean sunday = mModel.findBeanByDayOfTheWeek(Const.SUNDAY);
+        WakeupTimeBean sunday = mModel.findWakeUpTimeByDayOfTheWeek(Calendar.SUNDAY);
         wakeupTimes.add(sunday);
 
         adapter.setWakeupTimes(wakeupTimes);
@@ -71,7 +71,7 @@ public class PresenterBedTime implements IPresenterBedTime {
 
     @Override
     public void showTimePickerDialog(TimePickerDialog.OnTimeSetListener listener, int dayOfTheWeek) {
-        WakeupTimeBean wakeupTime = mModel.findBeanByDayOfTheWeek(dayOfTheWeek);
+        WakeupTimeBean wakeupTime = mModel.findWakeUpTimeByDayOfTheWeek(dayOfTheWeek);
 
         // TODO 处理12小时制和24小时制
         TimePickerDialog timePickerDialog = TimePickerDialog.newInstance(listener, wakeupTime.getWakeupHour(), wakeupTime.getWakeupMinute(), true);
@@ -88,9 +88,9 @@ public class PresenterBedTime implements IPresenterBedTime {
     }
 
     @Override
-    public void updateAdapter(WakeupTimeListViewAdapter adapter, int dayOfTheWeek) {
-        WakeupTimeBean wakeupTime = mModel.findBeanByDayOfTheWeek(dayOfTheWeek);
-        adapter.getWakeupTimes().set(dayOfTheWeek, wakeupTime);
+    public void updateAdapter(WakeupTimeListViewAdapter adapter, int position, int dayOfTheWeek) {
+        WakeupTimeBean wakeupTime = mModel.findWakeUpTimeByDayOfTheWeek(dayOfTheWeek);
+        adapter.getWakeupTimes().set(position, wakeupTime);
         adapter.notifyDataSetChanged();
     }
 }

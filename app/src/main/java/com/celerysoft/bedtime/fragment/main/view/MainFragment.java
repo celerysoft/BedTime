@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.SwitchCompat;
 import android.view.LayoutInflater;
@@ -28,6 +29,8 @@ public class MainFragment extends Fragment implements IViewMain {
     AppCompatTextView mTvLeftMinute;
     AppCompatTextView mTvLeftMinuteLabel;
     AppCompatTextView mTvAction;
+
+    AppCompatButton mBtnTest;
 
     @Nullable
     @Override
@@ -61,6 +64,14 @@ public class MainFragment extends Fragment implements IViewMain {
         mTvLeftMinute = (AppCompatTextView) v.findViewById(R.id.main_fragment_tv_left_minute);
         mTvLeftMinuteLabel = (AppCompatTextView) v.findViewById(R.id.main_fragment_tv_left_minute_label);
         mTvAction = (AppCompatTextView) v.findViewById(R.id.main_fragment_tv_action);
+
+        mBtnTest = (AppCompatButton) v.findViewById(R.id.main_fragment_btn_test);
+        mBtnTest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPresenter.testNotification();
+            }
+        });
     }
 
     @Override
