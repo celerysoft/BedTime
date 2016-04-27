@@ -2,8 +2,10 @@ package com.celerysoft.bedtime.fragment.main.presenter;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
@@ -12,6 +14,7 @@ import com.celerysoft.bedtime.fragment.bedtime.model.WakeupTimeBean;
 import com.celerysoft.bedtime.fragment.bedtime.model.WakeupTimeModel;
 import com.celerysoft.bedtime.fragment.main.view.IViewMain;
 import com.celerysoft.bedtime.receiver.BedTimeReceiver;
+import com.celerysoft.bedtime.receiver.DeviceBootReceiver;
 
 import java.util.Calendar;
 
@@ -38,6 +41,7 @@ public class PresenterMain implements IPresenterMain {
 
     @Override
     public void turnOnNotification() {
+        // TODO Delete test code below
         AlarmManager alarmMgr;
         PendingIntent alarmIntent;
 
@@ -48,11 +52,30 @@ public class PresenterMain implements IPresenterMain {
         alarmMgr.set(AlarmManager.ELAPSED_REALTIME_WAKEUP,
                 SystemClock.elapsedRealtime() +
                         5 * 1000, alarmIntent);
+
+        // TODO Enable alarm
+
+        // Enable receive device boot completed even so that reset alarm
+        ComponentName receiver = new ComponentName(mContext, DeviceBootReceiver.class);
+        PackageManager pm = mContext.getPackageManager();
+
+        pm.setComponentEnabledSetting(receiver,
+                PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+                PackageManager.DONT_KILL_APP);
+
     }
 
     @Override
     public void turnOffNotification() {
+        // TODO Disable alarm
 
+        // Disable receive device boot completed even so that reset alarm
+        ComponentName receiver = new ComponentName(mContext, DeviceBootReceiver.class);
+        PackageManager pm = mContext.getPackageManager();
+
+        pm.setComponentEnabledSetting(receiver,
+                PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+                PackageManager.DONT_KILL_APP);
     }
 
     @Override

@@ -16,8 +16,8 @@ import com.celerysoft.bedtime.activity.main.view.MainActivity;
 public class BedTimeReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
-        Intent intent1 = new Intent(context, MainActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent1, PendingIntent.FLAG_UPDATE_CURRENT);
+        Intent openIntent = new Intent(context, MainActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, openIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         Notification notification;
         Notification.Builder builder = new Notification.Builder(context);
