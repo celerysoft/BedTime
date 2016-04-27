@@ -14,27 +14,23 @@ public class WakeupTimeBean {
         this.dayOfTheWeek = dayOfTheWeek;
     }
 
-    private int wakeupHour;
+    private int hour;
 
-    public int getWakeupHour() {
-        return wakeupHour;
+    public int getHour() {
+        return hour;
     }
 
-    public void setWakeupHour(int wakeupHour) {
-        this.wakeupHour = wakeupHour;
+    public void setHour(int hour) {
+        this.hour = hour;
     }
 
-    private int wakeupMinute;
+    private int minute;
 
-    public int getWakeupMinute() {
-        return wakeupMinute;
+    public int getMinute() {
+        return minute;
     }
 
-    public void setWakeupMinute(int wakeupMinute) {
-        this.wakeupMinute = wakeupMinute;
+    public void setMinute(int minute) {
+        this.minute = minute;
     }
-
-
-
-
 }

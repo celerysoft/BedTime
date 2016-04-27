@@ -13,6 +13,8 @@ import android.os.SystemClock;
 
 import com.celerysoft.bedtime.fragment.bedtime.model.WakeupTimeBean;
 import com.celerysoft.bedtime.fragment.bedtime.model.WakeupTimeModel;
+import com.celerysoft.bedtime.fragment.main.model.BedTimeBean;
+import com.celerysoft.bedtime.fragment.main.model.BedTimeModel;
 import com.celerysoft.bedtime.fragment.main.view.IViewMain;
 import com.celerysoft.bedtime.receiver.BedTimeReceiver;
 import com.celerysoft.bedtime.receiver.DeviceBootReceiver;
@@ -28,6 +30,7 @@ public class PresenterMain implements IPresenterMain {
     private Context mContext;
 
     private WakeupTimeModel mWakeupTimeModel;
+    private BedTimeModel mBedTimeModel;
 
     private Thread mCountDownThread;
     private boolean mIsCountDownThreadRun = false;
@@ -38,6 +41,7 @@ public class PresenterMain implements IPresenterMain {
         mContext = view.getContext();
 
         mWakeupTimeModel = new WakeupTimeModel(mContext);
+        mBedTimeModel = new BedTimeModel(mContext);
     }
 
     @Override
@@ -80,8 +84,8 @@ public class PresenterMain implements IPresenterMain {
         int nextDay = currentDay == Calendar.SATURDAY ? Calendar.SUNDAY : currentDay + 1;
         WakeupTimeModel wakeupTimeModel = new WakeupTimeModel(context);
         WakeupTimeBean wakeupTime = wakeupTimeModel.findWakeUpTimeByDayOfTheWeek(nextDay);
-        int wakeupHour = wakeupTime.getWakeupHour();
-        int wakeupMinute = wakeupTime.getWakeupMinute();
+        int wakeupHour = wakeupTime.getHour();
+        int wakeupMinute = wakeupTime.getMinute();
 
         //TODO handle sleep time
 
@@ -142,37 +146,65 @@ public class PresenterMain implements IPresenterMain {
                 @Override
                 public void run() {
                     while (mIsCountDownThreadRun) {
-                        int currentDay = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
-                        int currentHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
-                        int currentMinute = Calendar.getInstance().get(Calendar.MINUTE);
+                        Calendar calendarNow = Calendar.getInstance();
+                        int currentDay = calendarNow.get(Calendar.DAY_OF_WEEK);
+                        int currentHour = calendarNow.get(Calendar.HOUR_OF_DAY);
+                        int currentMinute = calendarNow.get(Calendar.MINUTE);
 
-                        // TODO handle sleep time
-                        final int sleepTimeMinute = 7 * 60 + 30;
-                        WakeupTimeBean wakeupTime = mWakeupTimeModel.findNextWakeUpTimeByDayOfTheWeek(currentDay);
+                        BedTimeBean currentDayBedTime = mBedTimeModel.findBedTimeByDayOfTheWeek(currentDay);
+                        WakeupTimeBean currentDayWakeupTime = mWakeupTimeModel.findWakeUpTimeByDayOfTheWeek(currentDay);
 
-                        int minuteUntilGoBed = (24 + wakeupTime.getWakeupHour() - currentHour) * 60
-                                + wakeupTime.getWakeupMinute() - currentMinute - sleepTimeMinute;
+                        BedTimeBean nextDayBedTime = mBedTimeModel.findNextBedTimeByDayOfTheWeek(currentDay);
+                        WakeupTimeBean nextDayWakeupTime = mWakeupTimeModel.findNextWakeUpTimeByDayOfTheWeek(currentDay);
+
+                        Calendar calendarCurrentDayBedTime = Calendar.getInstance();
+                        calendarCurrentDayBedTime.set(Calendar.DAY_OF_WEEK, currentDayBedTime.getActualDayOfWeek());
+                        calendarCurrentDayBedTime.set(Calendar.HOUR_OF_DAY, currentDayBedTime.getHour());
+                        calendarCurrentDayBedTime.set(Calendar.MINUTE, currentDayBedTime.getMinute());
+                        calendarCurrentDayBedTime.set(Calendar.SECOND, 0);
+
+                        Calendar calendarCurrentDayWakeupTime = Calendar.getInstance();
+                        calendarCurrentDayWakeupTime.set(Calendar.DAY_OF_WEEK, currentDayWakeupTime.getDayOfTheWeek());
+                        calendarCurrentDayWakeupTime.set(Calendar.HOUR_OF_DAY, currentDayWakeupTime.getHour());
+                        calendarCurrentDayWakeupTime.set(Calendar.MINUTE, currentDayWakeupTime.getMinute());
+                        calendarCurrentDayWakeupTime.set(Calendar.SECOND, 0);
+
+                        Calendar calendarNextDayBedTime = Calendar.getInstance();
+                        calendarNextDayBedTime.set(Calendar.DAY_OF_WEEK, nextDayBedTime.getActualDayOfWeek());
+                        calendarNextDayBedTime.set(Calendar.HOUR_OF_DAY, nextDayBedTime.getHour());
+                        calendarNextDayBedTime.set(Calendar.MINUTE, nextDayBedTime.getMinute());
+                        calendarNextDayBedTime.set(Calendar.SECOND, 0);
 
                         Message msg = new Message();
-                        int leftHour;
-                        int leftMinute;
 
-                        if (minuteUntilGoBed > 0) {
-                            // Count down for go bed
-                            msg.what = GO_BED;
-                            leftHour = minuteUntilGoBed / 60;
-                            leftMinute = minuteUntilGoBed % 60;
+                        int minuteUntilNotification;
+
+                        if (calendarNow.before(calendarCurrentDayWakeupTime)) {
+                            if (calendarNow.before(calendarCurrentDayBedTime)) {
+                                msg.what = GO_BED;
+                                minuteUntilNotification = (currentDayBedTime.getHour() - currentHour) * 60 + currentDayBedTime.getMinute() - currentMinute;
+                            } else {
+                                msg.what = GET_UP;
+                                minuteUntilNotification = (currentDayWakeupTime.getHour() - currentHour) * 60 + currentDayWakeupTime.getMinute() - currentMinute;
+                            }
                         } else {
-                            // Count down for get up
-                            msg.what = GET_UP;
-                            int minuteUntilGetUp = (24 + wakeupTime.getWakeupHour() - currentHour) * 60
-                                    - wakeupTime.getWakeupMinute() - currentMinute;
-                            leftHour = minuteUntilGetUp / 60;
-                            leftMinute = minuteUntilGetUp % 60;
+                            int hour;
+                            if (calendarNow.before(calendarNextDayBedTime)) {
+                                msg.what = GO_BED;
+                                if (nextDayBedTime.isBedTimeInPrevDay()) {
+                                    hour = nextDayBedTime.getHour();
+                                } else {
+                                    hour = nextDayBedTime.getHour() + 24;
+                                }
+                                minuteUntilNotification = (hour - currentHour) * 60 + nextDayBedTime.getMinute() - currentMinute;
+                            } else {
+                                msg.what = GET_UP;
+                                minuteUntilNotification = (24 + nextDayWakeupTime.getHour() - currentHour) * 60 + nextDayWakeupTime.getMinute() - currentMinute;
+                            }
                         }
 
-                        msg.arg1 = leftHour;
-                        msg.arg2 = leftMinute;
+                        msg.arg1 = minuteUntilNotification / 60;
+                        msg.arg2 = minuteUntilNotification % 60;
                         mHandler.sendMessage(msg);
 
                         try {

@@ -54,8 +54,8 @@ public class BedTimeFragment extends Fragment implements IViewBedTime {
                     public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
                         WakeupTimeBean wakeupTime = new WakeupTimeBean();
                         wakeupTime.setDayOfTheWeek(dayOfTheWeek);
-                        wakeupTime.setWakeupHour(hourOfDay);
-                        wakeupTime.setWakeupMinute(minute);
+                        wakeupTime.setHour(hourOfDay);
+                        wakeupTime.setMinute(minute);
                         mPresenter.storeWakeupTime(wakeupTime);
                         mPresenter.updateAdapter(mAdapter, position, dayOfTheWeek);
                     }

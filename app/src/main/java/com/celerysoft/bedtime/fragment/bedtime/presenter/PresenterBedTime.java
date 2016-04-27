@@ -1,6 +1,7 @@
 package com.celerysoft.bedtime.fragment.bedtime.presenter;
 
 import android.content.Context;
+import android.os.Build;
 
 import com.celerysoft.bedtime.R;
 import com.celerysoft.bedtime.activity.main.presenter.IPresenterMainActivity;
@@ -9,6 +10,7 @@ import com.celerysoft.bedtime.fragment.bedtime.WakeupTimeListViewAdapter;
 import com.celerysoft.bedtime.fragment.bedtime.model.WakeupTimeBean;
 import com.celerysoft.bedtime.fragment.bedtime.model.WakeupTimeModel;
 import com.celerysoft.bedtime.fragment.bedtime.view.IViewBedTime;
+import com.celerysoft.bedtime.fragment.main.model.BedTimeModel;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
 import java.util.ArrayList;
@@ -26,6 +28,7 @@ public class PresenterBedTime implements IPresenterBedTime {
     IPresenterMainActivity mPresenterMainActivity;
 
     WakeupTimeModel mModel;
+    BedTimeModel mBedTimeModel;
 
 
     public PresenterBedTime(IViewBedTime view) {
@@ -36,6 +39,7 @@ public class PresenterBedTime implements IPresenterBedTime {
         mPresenterMainActivity = ((MainActivity) mView.getActivity()).getPresenter();
 
         mModel = new WakeupTimeModel(mContext);
+        mBedTimeModel = new BedTimeModel(mContext);
     }
 
     @Override
@@ -67,6 +71,7 @@ public class PresenterBedTime implements IPresenterBedTime {
     @Override
     public void storeWakeupTime(WakeupTimeBean wakeupTime) {
         mModel.storeWakeupTime(wakeupTime);
+        mBedTimeModel.refreshBedTimeByDayOfTheWeek(wakeupTime.getDayOfTheWeek());
     }
 
     @Override
@@ -74,16 +79,18 @@ public class PresenterBedTime implements IPresenterBedTime {
         WakeupTimeBean wakeupTime = mModel.findWakeUpTimeByDayOfTheWeek(dayOfTheWeek);
 
         // TODO 处理12小时制和24小时制
-        TimePickerDialog timePickerDialog = TimePickerDialog.newInstance(listener, wakeupTime.getWakeupHour(), wakeupTime.getWakeupMinute(), true);
+        TimePickerDialog timePickerDialog = TimePickerDialog.newInstance(listener, wakeupTime.getHour(), wakeupTime.getMinute(), true);
         timePickerDialog.setThemeDark(false);
         timePickerDialog.vibrate(false);
         timePickerDialog.dismissOnPause(true);
         timePickerDialog.enableSeconds(false);
-        try {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             timePickerDialog.setAccentColor(mContext.getResources().getColor(R.color.colorPrimary, null));
-        } catch (NoSuchMethodError e) {
+        } else {
             timePickerDialog.setAccentColor(mContext.getResources().getColor(R.color.colorPrimary));
         }
+
         timePickerDialog.show(mView.getFragmentManager(), "TimePickerDialog");
     }
 

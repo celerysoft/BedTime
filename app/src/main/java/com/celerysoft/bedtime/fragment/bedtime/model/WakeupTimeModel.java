@@ -18,7 +18,7 @@ public class WakeupTimeModel {
     public WakeupTimeModel(Context context) {
         mContext = context;
 
-        String sharedPreferencesKey = context.getString(R.string.shared_preferences_key_wakeup_time);
+        String sharedPreferencesKey = context.getString(R.string.shared_preferences_key_default);
         mSharedPreferences = context.getSharedPreferences(sharedPreferencesKey, Context.MODE_PRIVATE);
     }
 
@@ -61,8 +61,8 @@ public class WakeupTimeModel {
                 break;
         }
 
-        bean.setWakeupHour(wakeupHour);
-        bean.setWakeupMinute(wakeupMinute);
+        bean.setHour(wakeupHour);
+        bean.setMinute(wakeupMinute);
 
         return bean;
     }
@@ -79,8 +79,8 @@ public class WakeupTimeModel {
 
     public void storeWakeupTime(WakeupTimeBean bean) {
         int dayOfTheWeek = bean.getDayOfTheWeek();
-        int wakeupHour = bean.getWakeupHour();
-        int wakeupMinute = bean.getWakeupMinute();
+        int wakeupHour = bean.getHour();
+        int wakeupMinute = bean.getMinute();
 
         SharedPreferences.Editor editor = mSharedPreferences.edit();
         switch (dayOfTheWeek) {

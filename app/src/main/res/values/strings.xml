@@ -5,7 +5,8 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     //SharedPreferences Key
-    <string name="shared_preferences_key_wakeup_time">shared_preferences_key_wakeup_time</string>
+    <string name="shared_preferences_key_default">shared_preferences_key_default</string>
+
     <string name="shared_preferences_key_wakeup_time_monday_hour">shared_preferences_key_wakeup_time_monday_hour</string>
     <string name="shared_preferences_key_wakeup_time_monday_minute">shared_preferences_key_wakeup_time_monday_minute</string>
     <string name="shared_preferences_key_wakeup_time_tuesday_hour">shared_preferences_key_wakeup_time_tuesday_hour</string>
@@ -20,6 +21,21 @@
     <string name="shared_preferences_key_wakeup_time_saturday_minute">shared_preferences_key_wakeup_time_saturday_minute</string>
     <string name="shared_preferences_key_wakeup_time_sunday_hour">shared_preferences_key_wakeup_time_sunday_hour</string>
     <string name="shared_preferences_key_wakeup_time_sunday_minute">shared_preferences_key_wakeup_time_sunday_minute</string>
+
+    <string name="shared_preferences_key_bed_time_monday_hour">shared_preferences_key_bed_time_monday_hour</string>
+    <string name="shared_preferences_key_bed_time_monday_minute">shared_preferences_key_bed_time_monday_minute</string>
+    <string name="shared_preferences_key_bed_time_tuesday_hour">shared_preferences_key_bed_time_tuesday_hour</string>
+    <string name="shared_preferences_key_bed_time_tuesday_minute">shared_preferences_key_bed_time_tuesday_minute</string>
+    <string name="shared_preferences_key_bed_time_wednesday_hour">shared_preferences_key_bed_time_wednesday_hour</string>
+    <string name="shared_preferences_key_bed_time_wednesday_minute">shared_preferences_key_bed_time_wednesday_minute</string>
+    <string name="shared_preferences_key_bed_time_thursday_hour">shared_preferences_key_bed_time_thursday_hour</string>
+    <string name="shared_preferences_key_bed_time_thursday_minute">shared_preferences_key_bed_time_thursday_minute</string>
+    <string name="shared_preferences_key_bed_time_friday_hour">shared_preferences_key_bed_time_friday_hour</string>
+    <string name="shared_preferences_key_bed_time_friday_minute">shared_preferences_key_bed_time_friday_minute</string>
+    <string name="shared_preferences_key_bed_time_saturday_hour">shared_preferences_key_bed_time_saturday_hour</string>
+    <string name="shared_preferences_key_bed_time_saturday_minute">shared_preferences_key_bed_time_saturday_minute</string>
+    <string name="shared_preferences_key_bed_time_sunday_hour">shared_preferences_key_bed_time_sunday_hour</string>
+    <string name="shared_preferences_key_bed_time_sunday_minute">shared_preferences_key_bed_time_sunday_minute</string>
 
     // Notifications
     <string name="notification_it_is_bed_time">It\'s going to bed now!</string>
