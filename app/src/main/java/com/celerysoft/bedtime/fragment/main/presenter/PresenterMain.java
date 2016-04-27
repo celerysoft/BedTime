@@ -6,6 +6,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
@@ -53,23 +54,75 @@ public class PresenterMain implements IPresenterMain {
                 SystemClock.elapsedRealtime() +
                         5 * 1000, alarmIntent);
 
-        // TODO Enable alarm
+        enableAlarm(mContext);
 
         // Enable receive device boot completed even so that reset alarm
+        enableBootCompletedReceiver();
+    }
+
+    @Override
+    public void turnOffNotification() {
+        disableAlarm();
+
+        // Disable receive device boot completed even so that reset alarm
+        disableBootCompletedReceiver();
+    }
+
+    /**
+     * set current day (of week) alarm.
+     * @param context context
+     */
+    public static void enableAlarm(Context context) {
+//        int currentDay = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
+//        WakeupTimeModel wakeupTimeModel = new WakeupTimeModel(context);
+//        WakeupTimeBean wakeupTime = wakeupTimeModel.findBeanByDayOfTheWeek(currentDay);
+//        int wakeupHour = wakeupTime.getWakeupHour();
+//        int wakeupMinute = wakeupTime.getWakeupMinute();
+//
+//        //TODO handle sleep time
+//
+//        Calendar calendar = Calendar.getInstance();
+//        calendar.setTimeInMillis(System.currentTimeMillis());
+//        calendar.set(Calendar.HOUR_OF_DAY, wakeupHour);
+//        calendar.set(Calendar.MINUTE, wakeupMinute);
+//        calendar.set(Calendar.SECOND, 0);
+//        calendar.set(Calendar.MILLISECOND, 0);
+//
+//        AlarmManager alarmMgr;
+//        PendingIntent alarmIntent;
+//
+//        alarmMgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+//        Intent setAlarmIntent = new Intent(context, BedTimeReceiver.class);
+//        alarmIntent = PendingIntent.getBroadcast(context, 0, setAlarmIntent, 0);
+//
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+//            alarmMgr.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), alarmIntent);
+//        } else {
+//            alarmMgr.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), alarmIntent);
+//        }
+    }
+
+    /**
+     * cancel alarm
+     */
+    private void disableAlarm() {
+        AlarmManager alarmMgr = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(mContext, BedTimeReceiver.class);
+        PendingIntent alarmIntent = PendingIntent.getBroadcast(mContext, 0, intent, 0);
+
+        alarmMgr.cancel(alarmIntent);
+    }
+
+    private void enableBootCompletedReceiver() {
         ComponentName receiver = new ComponentName(mContext, DeviceBootReceiver.class);
         PackageManager pm = mContext.getPackageManager();
 
         pm.setComponentEnabledSetting(receiver,
                 PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
                 PackageManager.DONT_KILL_APP);
-
     }
 
-    @Override
-    public void turnOffNotification() {
-        // TODO Disable alarm
-
-        // Disable receive device boot completed even so that reset alarm
+    private void disableBootCompletedReceiver() {
         ComponentName receiver = new ComponentName(mContext, DeviceBootReceiver.class);
         PackageManager pm = mContext.getPackageManager();
 
