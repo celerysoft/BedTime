@@ -68,7 +68,7 @@ public class PresenterMainActivity implements IPresenterMainActivity {
 
         if (fromFragment != null) {
             //ft.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
-            ft.setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out, android.R.animator.fade_in, android.R.animator.fade_out);
+            ft.setCustomAnimations(R.animator.move_in, R.animator.move_out, android.R.animator.fade_in, android.R.animator.fade_out);
             ft.hide(fromFragment);
         }
 
@@ -88,8 +88,8 @@ public class PresenterMainActivity implements IPresenterMainActivity {
         turnToFragment(mCurrentFragment, mView.getMainFragment());
         mCurrentFragment = mView.getMainFragment();
         mView.getSupportActionBar().setTitle(R.string.main_actionbar_title);
+        mView.getNavigationView().setCheckedItem(R.id.nav_main);
         showFloatActionButton();
-        //mView.getFloatActionButton().setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -97,6 +97,7 @@ public class PresenterMainActivity implements IPresenterMainActivity {
         turnToFragment(mCurrentFragment, mView.getBedTimeFragment());
         mCurrentFragment = mView.getBedTimeFragment();
         mView.getSupportActionBar().setTitle(R.string.bedtime_actionbar_title);
+        mView.getNavigationView().setCheckedItem(R.id.nav_bedtime);
         hideFloatActionButton();
     }
 
@@ -105,6 +106,7 @@ public class PresenterMainActivity implements IPresenterMainActivity {
         turnToFragment(mCurrentFragment, mView.getSettingsFragment());
         mCurrentFragment = mView.getSettingsFragment();
         mView.getSupportActionBar().setTitle(R.string.settings_actionbar_title);
+        mView.getNavigationView().setCheckedItem(R.id.nav_settings);
         hideFloatActionButton();
     }
 

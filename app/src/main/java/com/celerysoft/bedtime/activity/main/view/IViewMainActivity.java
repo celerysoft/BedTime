@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.v7.app.ActionBar;
 import android.view.View;
 
@@ -12,7 +13,7 @@ import android.view.View;
  */
 public interface IViewMainActivity {
     FloatingActionButton getFloatActionButton();
-    float getFloatActionButtonDefaultTranslationY();
+    NavigationView getNavigationView();
     Context getContext();
     FragmentManager getFragmentManager();
     Fragment getCurrentFragment();

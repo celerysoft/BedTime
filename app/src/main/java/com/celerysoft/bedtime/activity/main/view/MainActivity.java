@@ -31,12 +31,11 @@ public class MainActivity extends BaseActivity
 
     private FloatingActionButton mFloatingActionButton;
     private DrawerLayout mDrawer;
+    private NavigationView mNavigationView;
 
     private MainFragment mMainFragment;
     private BedTimeFragment mBedTimeFragment;
     private SettingsFragment mSettingsFragment;
-
-    private float mFloatActonButtonDefaultTranslationY;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,10 +51,6 @@ public class MainActivity extends BaseActivity
         mMainFragment = new MainFragment();
         mBedTimeFragment = new BedTimeFragment();
         mSettingsFragment = new SettingsFragment();
-        getFragmentManager()
-                .beginTransaction()
-                .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out, android.R.animator.fade_in, android.R.animator.fade_out)
-                .commit();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -67,7 +62,6 @@ public class MainActivity extends BaseActivity
                 mPresenter.turnToBedTimeFragment();
             }
         });
-        mFloatActonButtonDefaultTranslationY = mFloatingActionButton.getTranslationY();
 
         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -75,8 +69,8 @@ public class MainActivity extends BaseActivity
         mDrawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+        mNavigationView = (NavigationView) findViewById(R.id.nav_view);
+        mNavigationView.setNavigationItemSelectedListener(this);
 
         mPresenter.turnToMainFragment();
     }
@@ -132,11 +126,11 @@ public class MainActivity extends BaseActivity
             mPresenter.turnToMainFragment();
         } else if (id == R.id.nav_bedtime) {
             mPresenter.turnToBedTimeFragment();
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_settings) {
             mPresenter.turnToSettingsFragment();
         } else if (id == R.id.nav_share) {
 
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_feedback) {
 
         }
 
@@ -158,8 +152,8 @@ public class MainActivity extends BaseActivity
     }
 
     @Override
-    public float getFloatActionButtonDefaultTranslationY() {
-        return mFloatActonButtonDefaultTranslationY;
+    public NavigationView getNavigationView() {
+        return mNavigationView;
     }
 
     @Override

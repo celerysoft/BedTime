@@ -49,6 +49,12 @@
     // Main Activity
     <string name="main_snack_bar_text">Press back button again to exit the app</string>
     <string name="main_snack_bar_action_text">EXIT</string>
+    <string name="main_nav_home_text">Home</string>
+    <string name="main_nav_bedtime_text">BedTime</string>
+    <string name="main_nav_settings_text">Settings</string>
+    <string name="main_nav_communicate_text">Communicate</string>
+    <string name="main_nav_share_text">Share</string>
+    <string name="main_nav_feedback_text">Feedback</string>
 
     //Main Fragment
     <string name="main_actionbar_title">Bed Time</string>
