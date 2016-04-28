@@ -16,16 +16,15 @@
         android:textSize="@dimen/text_size_title"
         android:layout_marginBottom="16dp"/>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center">
+        android:layout_height="match_parent">
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:gravity="center">
+            android:layout_above="@+id/main_fragment_tv_until"
+            android:layout_centerHorizontal="true">
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/main_fragment_tv_left_hour"
                 android:layout_width="wrap_content"
@@ -39,20 +38,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="bottom"
-                android:text="Hours"
+                android:text="@string/main_tv_hours_text"
                 android:textSize="@dimen/text_size_title"
                 android:textColor="@color/colorSecondaryText"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center">
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/main_fragment_tv_left_minute"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
                 android:gravity="center"
                 android:text="30"
                 android:textSize="@dimen/text_size_display"
@@ -62,28 +56,32 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="bottom"
-                android:text="Minutes"
+                android:text="@string/main_tv_minutes_text"
                 android:textSize="@dimen/text_size_title"
                 android:textColor="@color/colorSecondaryText"/>
         </LinearLayout>
 
         <android.support.v7.widget.AppCompatTextView
-            android:layout_width="match_parent"
+            android:id="@+id/main_fragment_tv_until"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="Until"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="16dp"
+            android:text="@string/main_tv_until_text"
             android:textSize="@dimen/text_size_title"
             android:textColor="@color/colorSecondaryText"/>
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/main_fragment_tv_action"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/main_fragment_tv_until"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
             android:gravity="center"
-            android:text="Bed Time"
             android:textSize="@dimen/text_size_title"
             android:textColor="@color/colorSecondaryText"/>
 
-    </LinearLayout>
+    </RelativeLayout>
 
 </LinearLayout>

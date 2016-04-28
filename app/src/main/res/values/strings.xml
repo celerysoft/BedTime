@@ -54,6 +54,11 @@
     <string name="main_actionbar_title">Bed Time</string>
     <string name="main_count_down_action_go_bed">Going Bed</string>
     <string name="main_count_down_action_get_up">Getting Up</string>
+    <string name="main_tv_until_text">Until</string>
+    <string name="main_tv_hour_text">Hour</string>
+    <string name="main_tv_hours_text">Hours</string>
+    <string name="main_tv_minute_text">Minute</string>
+    <string name="main_tv_minutes_text">Minutes</string>
 
     //Bed Time Fragment
     <string name="bedtime_actionbar_title">When To Bed</string>
