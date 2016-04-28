@@ -10,7 +10,7 @@
         android:id="@+id/main_fragment_switch_notification"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Open Notifications"
+        android:text="@string/main_switch_title"
         android:layout_gravity="center_horizontal"
         android:textColor="@color/colorPrimaryText"
         android:textSize="@dimen/text_size_title"
