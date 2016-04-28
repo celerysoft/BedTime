@@ -84,14 +84,6 @@
             android:textSize="@dimen/text_size_title"
             android:textColor="@color/colorSecondaryText"/>
 
-        <android.support.v7.widget.AppCompatButton
-            android:id="@+id/main_fragment_btn_test"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_gravity="center"
-            android:textSize="@dimen/text_size_button"
-            android:text="Test Notification"/>
     </LinearLayout>
 
 </LinearLayout>

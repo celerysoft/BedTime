@@ -11,6 +11,7 @@ import com.celerysoft.bedtime.fragment.bedtime.model.WakeupTimeBean;
 import com.celerysoft.bedtime.fragment.bedtime.model.WakeupTimeModel;
 import com.celerysoft.bedtime.fragment.bedtime.view.IViewBedTime;
 import com.celerysoft.bedtime.fragment.main.model.BedTimeModel;
+import com.celerysoft.bedtime.fragment.main.presenter.PresenterMain;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
 import java.util.ArrayList;
@@ -72,6 +73,8 @@ public class PresenterBedTime implements IPresenterBedTime {
     public void storeWakeupTime(WakeupTimeBean wakeupTime) {
         mModel.storeWakeupTime(wakeupTime);
         mBedTimeModel.refreshBedTimeByDayOfTheWeek(wakeupTime.getDayOfTheWeek());
+
+        updateAlarm();
     }
 
     @Override
@@ -99,5 +102,9 @@ public class PresenterBedTime implements IPresenterBedTime {
         WakeupTimeBean wakeupTime = mModel.findWakeUpTimeByDayOfTheWeek(dayOfTheWeek);
         adapter.getWakeupTimes().set(position, wakeupTime);
         adapter.notifyDataSetChanged();
+    }
+
+    private void updateAlarm() {
+        PresenterMain.enableAlarm(mContext);
     }
 }

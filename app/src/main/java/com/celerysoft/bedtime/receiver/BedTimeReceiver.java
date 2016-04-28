@@ -1,6 +1,5 @@
 package com.celerysoft.bedtime.receiver;
 
-import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -9,7 +8,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.PowerManager;
-import android.os.SystemClock;
 
 import com.celerysoft.bedtime.R;
 import com.celerysoft.bedtime.activity.main.view.MainActivity;
@@ -57,16 +55,6 @@ public class BedTimeReceiver extends BroadcastReceiver {
     }
 
     private void setAlarmOfNextDay(Context context) {
-        //PresenterMain.enableAlarm(context);
-        AlarmManager alarmMgr;
-        PendingIntent alarmIntent;
-
-        alarmMgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(context, BedTimeReceiver.class);
-        alarmIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
-
-        alarmMgr.set(AlarmManager.ELAPSED_REALTIME_WAKEUP,
-                SystemClock.elapsedRealtime() +
-                        5 * 1000, alarmIntent);
+        PresenterMain.enableAlarm(context);
     }
 }

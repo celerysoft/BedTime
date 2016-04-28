@@ -31,7 +31,7 @@ public class WakeupTimeListViewAdapter extends BaseAdapter {
     public WakeupTimeListViewAdapter(Context context) {
         mContext = context;
 
-        createDefaultItems();
+        //createDefaultItems();
     }
 
     private void createDefaultItems() {
@@ -154,7 +154,13 @@ public class WakeupTimeListViewAdapter extends BaseAdapter {
 
     private String getWakeupTimeContentString(WakeupTimeBean bean) {
         // TODO 注意12小时制和24小时制
-        String content = bean.getHour() + " : " + bean.getMinute();
+        int hourLength = String.valueOf(bean.getHour()).length();
+        String hour = hourLength == 1 ? "0" + bean.getHour() : String.valueOf(bean.getHour());
+
+        int minuteLength = String.valueOf(bean.getMinute()).length();
+        String minute = minuteLength == 1 ? "0" + bean.getMinute() : String.valueOf(bean.getMinute());
+
+        String content = hour + " : " + minute;
         return content;
     }
 }

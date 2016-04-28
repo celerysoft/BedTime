@@ -30,8 +30,6 @@ public class MainFragment extends Fragment implements IViewMain {
     AppCompatTextView mTvLeftMinuteLabel;
     AppCompatTextView mTvAction;
 
-    AppCompatButton mBtnTest;
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -48,6 +46,7 @@ public class MainFragment extends Fragment implements IViewMain {
 
     private void initView(View v) {
         mSwitch = (SwitchCompat) v.findViewById(R.id.main_fragment_switch_notification);
+        mSwitch.setChecked(mPresenter.getNotificationStatus());
         mSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -65,13 +64,6 @@ public class MainFragment extends Fragment implements IViewMain {
         mTvLeftMinuteLabel = (AppCompatTextView) v.findViewById(R.id.main_fragment_tv_left_minute_label);
         mTvAction = (AppCompatTextView) v.findViewById(R.id.main_fragment_tv_action);
 
-        mBtnTest = (AppCompatButton) v.findViewById(R.id.main_fragment_btn_test);
-        mBtnTest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mPresenter.testNotification();
-            }
-        });
     }
 
     @Override

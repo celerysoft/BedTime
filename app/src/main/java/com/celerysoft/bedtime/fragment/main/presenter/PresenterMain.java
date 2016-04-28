@@ -1,25 +1,32 @@
 package com.celerysoft.bedtime.fragment.main.presenter;
 
+import android.annotation.SuppressLint;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
 
+import com.celerysoft.bedtime.R;
 import com.celerysoft.bedtime.fragment.bedtime.model.WakeupTimeBean;
 import com.celerysoft.bedtime.fragment.bedtime.model.WakeupTimeModel;
+import com.celerysoft.bedtime.fragment.main.model.AlarmTimeBean;
+import com.celerysoft.bedtime.fragment.main.model.AlarmTimeModel;
 import com.celerysoft.bedtime.fragment.main.model.BedTimeBean;
 import com.celerysoft.bedtime.fragment.main.model.BedTimeModel;
 import com.celerysoft.bedtime.fragment.main.view.IViewMain;
 import com.celerysoft.bedtime.receiver.BedTimeReceiver;
 import com.celerysoft.bedtime.receiver.DeviceBootReceiver;
+import com.celerysoft.bedtime.util.Const;
 
 import java.util.Calendar;
+import java.util.Locale;
 
 /**
  * Created by Celery on 16/4/14.
@@ -35,6 +42,8 @@ public class PresenterMain implements IPresenterMain {
     private Thread mCountDownThread;
     private boolean mIsCountDownThreadRun = false;
 
+    private SharedPreferences mSharedPreferences;
+
 
     public PresenterMain(IViewMain view) {
         mView = view;
@@ -42,21 +51,13 @@ public class PresenterMain implements IPresenterMain {
 
         mWakeupTimeModel = new WakeupTimeModel(mContext);
         mBedTimeModel = new BedTimeModel(mContext);
+
+        mSharedPreferences = mContext.getSharedPreferences(Const.getDefaultSharedPreferencesKey(mContext), Context.MODE_PRIVATE);
     }
 
     @Override
-    public void testNotification() {
-        // TODO Delete test code below
-        AlarmManager alarmMgr;
-        PendingIntent alarmIntent;
-
-        alarmMgr = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(mContext, BedTimeReceiver.class);
-        alarmIntent = PendingIntent.getBroadcast(mContext, 0, intent, 0);
-
-        alarmMgr.set(AlarmManager.ELAPSED_REALTIME_WAKEUP,
-                SystemClock.elapsedRealtime() +
-                        5 * 1000, alarmIntent);
+    public boolean getNotificationStatus() {
+        return mSharedPreferences.getBoolean(mContext.getString(R.string.shared_preferences_key_open_notification), true);
     }
 
     @Override
@@ -65,6 +66,10 @@ public class PresenterMain implements IPresenterMain {
 
         // Enable receive device boot completed even so that reset alarm
         enableBootCompletedReceiver();
+
+        mSharedPreferences.edit()
+                .putBoolean(mContext.getString(R.string.shared_preferences_key_open_notification), true)
+                .apply();
     }
 
     @Override
@@ -73,26 +78,27 @@ public class PresenterMain implements IPresenterMain {
 
         // Disable receive device boot completed even so that reset alarm
         disableBootCompletedReceiver();
+
+        mSharedPreferences.edit()
+                .putBoolean(mContext.getString(R.string.shared_preferences_key_open_notification), false)
+                .apply();
     }
 
     /**
-     * set current day (of week) alarm.
+     * set next alarm.
      * @param context context
      */
     public static void enableAlarm(Context context) {
-        int currentDay = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
-        int nextDay = currentDay == Calendar.SATURDAY ? Calendar.SUNDAY : currentDay + 1;
-        WakeupTimeModel wakeupTimeModel = new WakeupTimeModel(context);
-        WakeupTimeBean wakeupTime = wakeupTimeModel.findWakeUpTimeByDayOfTheWeek(nextDay);
-        int wakeupHour = wakeupTime.getHour();
-        int wakeupMinute = wakeupTime.getMinute();
+        AlarmTimeModel alarmTimeModel = new AlarmTimeModel(context);
+        AlarmTimeBean nextAlarm = alarmTimeModel.findNextAlarm();
 
         //TODO handle sleep time
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
-        calendar.set(Calendar.HOUR_OF_DAY, wakeupHour);
-        calendar.set(Calendar.MINUTE, wakeupMinute);
+        calendar.set(Calendar.DAY_OF_WEEK, nextAlarm.getDayOfTheWeek());
+        calendar.set(Calendar.HOUR_OF_DAY, nextAlarm.getHour());
+        calendar.set(Calendar.MINUTE, nextAlarm.getMinute());
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);
 
@@ -101,7 +107,9 @@ public class PresenterMain implements IPresenterMain {
 
         alarmMgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent setAlarmIntent = new Intent(context, BedTimeReceiver.class);
-        alarmIntent = PendingIntent.getBroadcast(context, 0, setAlarmIntent, 0);
+        alarmIntent = PendingIntent.getBroadcast(context, 0, setAlarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        alarmMgr.cancel(alarmIntent);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             alarmMgr.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), alarmIntent);
@@ -231,21 +239,26 @@ public class PresenterMain implements IPresenterMain {
 
     private static final int GO_BED = 1;
     private static final int GET_UP = 2;
+    @SuppressLint("HandlerLeak")
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
+            //msg.arg1 == hour, msg.arg2 == minute
+            int actionStringResId;
             switch (msg.what) {
                 case GO_BED:
-                    mView.getTvAction().setText("Going Bed");
-                    mView.getTvLeftHour().setText(Integer.toString(msg.arg1));
-                    mView.getTvLeftMinute().setText(Integer.toString(msg.arg2));
+                    actionStringResId = R.string.main_count_down_action_go_bed;
                     break;
                 case GET_UP:
-                    mView.getTvAction().setText("Getting Up");
-                    mView.getTvLeftHour().setText(Integer.toString(msg.arg1));
-                    mView.getTvLeftMinute().setText(Integer.toString(msg.arg2));
+                    actionStringResId = R.string.main_count_down_action_get_up;
+                    break;
+                default:
+                    actionStringResId = -1;
                     break;
             }
+            mView.getTvAction().setText(mContext.getString(actionStringResId));
+            mView.getTvLeftHour().setText(String.format(Locale.getDefault(), "%d", msg.arg1));
+            mView.getTvLeftMinute().setText(String.format(Locale.getDefault(), "%d", msg.arg2));
         }
     };
 }

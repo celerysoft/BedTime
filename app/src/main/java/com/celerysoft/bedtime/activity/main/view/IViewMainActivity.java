@@ -3,6 +3,7 @@ package com.celerysoft.bedtime.activity.main.view;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.view.View;
 
@@ -10,7 +11,8 @@ import android.view.View;
  * Created by Celery on 16/4/11.
  */
 public interface IViewMainActivity {
-    View getFloatActionButton();
+    FloatingActionButton getFloatActionButton();
+    float getFloatActionButtonDefaultTranslationY();
     Context getContext();
     FragmentManager getFragmentManager();
     Fragment getCurrentFragment();

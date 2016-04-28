@@ -3,7 +3,6 @@ package com.celerysoft.bedtime.activity.main.presenter;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.support.design.widget.Snackbar;
-import android.view.View;
 
 import com.celerysoft.bedtime.R;
 import com.celerysoft.bedtime.activity.main.view.IViewMainActivity;
@@ -51,12 +50,12 @@ public class PresenterMainActivity implements IPresenterMainActivity {
         String text = mView.getContext().getString(R.string.main_snack_bar_text);
         String actionText = mView.getContext().getString(R.string.main_snack_bar_action_text);
         Snackbar.make(mView.getFloatActionButton(), text, Snackbar.LENGTH_LONG)
-                .setAction(actionText, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mView.finish();
-                    }
-                })
+//                .setAction(actionText, new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        mView.finish();
+//                    }
+//                })
                 .show();
     }
 
@@ -89,7 +88,8 @@ public class PresenterMainActivity implements IPresenterMainActivity {
         turnToFragment(mCurrentFragment, mView.getMainFragment());
         mCurrentFragment = mView.getMainFragment();
         mView.getSupportActionBar().setTitle(R.string.main_actionbar_title);
-        mView.getFloatActionButton().setVisibility(View.VISIBLE);
+        showFloatActionButton();
+        //mView.getFloatActionButton().setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -97,7 +97,7 @@ public class PresenterMainActivity implements IPresenterMainActivity {
         turnToFragment(mCurrentFragment, mView.getBedTimeFragment());
         mCurrentFragment = mView.getBedTimeFragment();
         mView.getSupportActionBar().setTitle(R.string.bedtime_actionbar_title);
-        mView.getFloatActionButton().setVisibility(View.GONE);
+        hideFloatActionButton();
     }
 
     @Override
@@ -105,11 +105,19 @@ public class PresenterMainActivity implements IPresenterMainActivity {
         turnToFragment(mCurrentFragment, mView.getSettingsFragment());
         mCurrentFragment = mView.getSettingsFragment();
         mView.getSupportActionBar().setTitle(R.string.settings_actionbar_title);
-        mView.getFloatActionButton().setVisibility(View.GONE);
+        hideFloatActionButton();
     }
 
     @Override
     public Fragment getCurrentFragment() {
         return mCurrentFragment;
+    }
+
+    private void hideFloatActionButton() {
+        mView.getFloatActionButton().hide();
+    }
+
+    private void showFloatActionButton() {
+        mView.getFloatActionButton().show();
     }
 }

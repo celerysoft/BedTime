@@ -7,6 +7,7 @@
     //SharedPreferences Key
     <string name="shared_preferences_key_default">shared_preferences_key_default</string>
 
+    <!-- Wake up time -->
     <string name="shared_preferences_key_wakeup_time_monday_hour">shared_preferences_key_wakeup_time_monday_hour</string>
     <string name="shared_preferences_key_wakeup_time_monday_minute">shared_preferences_key_wakeup_time_monday_minute</string>
     <string name="shared_preferences_key_wakeup_time_tuesday_hour">shared_preferences_key_wakeup_time_tuesday_hour</string>
@@ -22,6 +23,7 @@
     <string name="shared_preferences_key_wakeup_time_sunday_hour">shared_preferences_key_wakeup_time_sunday_hour</string>
     <string name="shared_preferences_key_wakeup_time_sunday_minute">shared_preferences_key_wakeup_time_sunday_minute</string>
 
+    <!-- Go bed time -->
     <string name="shared_preferences_key_bed_time_monday_hour">shared_preferences_key_bed_time_monday_hour</string>
     <string name="shared_preferences_key_bed_time_monday_minute">shared_preferences_key_bed_time_monday_minute</string>
     <string name="shared_preferences_key_bed_time_tuesday_hour">shared_preferences_key_bed_time_tuesday_hour</string>
@@ -37,16 +39,21 @@
     <string name="shared_preferences_key_bed_time_sunday_hour">shared_preferences_key_bed_time_sunday_hour</string>
     <string name="shared_preferences_key_bed_time_sunday_minute">shared_preferences_key_bed_time_sunday_minute</string>
 
+    <!-- Notification status -->
+    <string name="shared_preferences_key_open_notification">shared_preferences_key_open_notification</string>
+
     // Notifications
     <string name="notification_it_is_bed_time">It\'s going to bed now!</string>
     <string name="notification_bed_time_in_30_minutes">It\'s about 30 minutes until bedtime.</string>
 
     // Main Activity
-    <string name="main_snack_bar_text">退出App？</string>
-    <string name="main_snack_bar_action_text">exit</string>
+    <string name="main_snack_bar_text">Press back button again to exit the app</string>
+    <string name="main_snack_bar_action_text">EXIT</string>
 
     //Main Fragment
     <string name="main_actionbar_title">Bed Time</string>
+    <string name="main_count_down_action_go_bed">Going Bed</string>
+    <string name="main_count_down_action_get_up">Getting Up</string>
 
     //Bed Time Fragment
     <string name="bedtime_actionbar_title">When To Bed</string>

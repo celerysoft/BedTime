@@ -1,13 +1,13 @@
 package com.celerysoft.bedtime.fragment.main.model;
 
-import com.celerysoft.bedtime.fragment.bedtime.model.WakeupTimeBean;
+import com.celerysoft.bedtime.bean.BaseTimeBean;
 
 import java.util.Calendar;
 
 /**
  * Created by admin on 16/4/27.
  */
-public class BedTimeBean extends WakeupTimeBean {
+public class BedTimeBean extends BaseTimeBean {
     private boolean mIsBedTimeInPrevDay;
 
     public boolean isBedTimeInPrevDay() {

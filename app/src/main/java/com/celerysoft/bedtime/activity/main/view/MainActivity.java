@@ -36,6 +36,8 @@ public class MainActivity extends BaseActivity
     private BedTimeFragment mBedTimeFragment;
     private SettingsFragment mSettingsFragment;
 
+    private float mFloatActonButtonDefaultTranslationY;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +67,7 @@ public class MainActivity extends BaseActivity
                 mPresenter.turnToBedTimeFragment();
             }
         });
+        mFloatActonButtonDefaultTranslationY = mFloatingActionButton.getTranslationY();
 
         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -83,9 +86,6 @@ public class MainActivity extends BaseActivity
         if (mDrawer.isDrawerOpen(GravityCompat.START)) {
             mDrawer.closeDrawer(GravityCompat.START);
         } else {
-            int a = 10;
-            int b = 20;
-            int c = a + b;
             if (mPresenter.getCurrentFragment().getClass().equals(MainFragment.class)) {
                 if (mPresenter.readyToExitApp()) {
                     mPresenter.exitApp();
@@ -153,8 +153,13 @@ public class MainActivity extends BaseActivity
     }
 
     @Override
-    public View getFloatActionButton() {
+    public FloatingActionButton getFloatActionButton() {
         return mFloatingActionButton;
+    }
+
+    @Override
+    public float getFloatActionButtonDefaultTranslationY() {
+        return mFloatActonButtonDefaultTranslationY;
     }
 
     @Override
