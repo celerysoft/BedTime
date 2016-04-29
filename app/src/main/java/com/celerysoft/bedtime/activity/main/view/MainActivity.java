@@ -18,7 +18,7 @@ import com.celerysoft.bedtime.activity.main.presenter.IPresenterMainActivity;
 import com.celerysoft.bedtime.activity.main.presenter.PresenterMainActivity;
 import com.celerysoft.bedtime.fragment.bedtime.view.BedTimeFragment;
 import com.celerysoft.bedtime.fragment.main.view.MainFragment;
-import com.celerysoft.bedtime.fragment.settings.SettingsFragment;
+import com.celerysoft.bedtime.fragment.settings.view.SettingsFragment;
 import com.celerysoft.bedtime.view.BaseActivity;
 
 public class MainActivity extends BaseActivity
@@ -43,7 +43,10 @@ public class MainActivity extends BaseActivity
         setContentView(R.layout.activity_main);
 
         mPresenter = new PresenterMainActivity(this);
+
         init();
+
+        restoreInstanceState(getIntent().getExtras());
     }
 
     private void init() {
@@ -70,7 +73,21 @@ public class MainActivity extends BaseActivity
         toggle.syncState();
 
         mNavigationView = (NavigationView) findViewById(R.id.nav_view);
-        mNavigationView.setNavigationItemSelectedListener(this);
+        if (mNavigationView != null) {
+            mNavigationView.setNavigationItemSelectedListener(this);
+        }
+    }
+
+    protected void restoreInstanceState(Bundle savedInstanceState) {
+        if (savedInstanceState != null) {
+            String launchFragment = savedInstanceState.getString("launch_fragment");
+            if (launchFragment != null) {
+                if (launchFragment.equals("settings")) {
+                    mPresenter.turnToSettingsFragment();
+                    return;
+                }
+            }
+        }
 
         mPresenter.turnToMainFragment();
     }
@@ -134,8 +151,13 @@ public class MainActivity extends BaseActivity
 
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
+//        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+//        if (drawer != null) {
+//            drawer.closeDrawer(GravityCompat.START);
+//        }
+
+        mDrawer.closeDrawer(GravityCompat.START);
+
         return true;
     }
 

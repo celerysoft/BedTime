@@ -44,4 +44,12 @@
     //Settings Fragment
     <string name="settings_actionbar_title">设置</string>
     <string name="action_settings">设置</string>
+    <string name="settings_fragment_language_follow_system">跟随系统设置</string>
+    <string name="settings_fragment_category_date_and_time">时间和日期</string>
+    <string name="settings_fragment_tv_time_format_text">24 小时制</string>
+    <string name="settings_fragment_tv_time_format_desc_text_24">时间将显示为 16:32</string>
+    <string name="settings_fragment_tv_time_format_desc_text_12">时间将显示为 4:32 PM</string>
+    <string name="settings_fragment_category_general">常规</string>
+    <string name="settings_fragment_tv_language_text">语言</string>
+    <string name="settings_fragment_tv_personal_information_text">个人信息</string>
 </resources>

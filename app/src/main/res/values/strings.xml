@@ -4,6 +4,10 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
+    // Common string do not translate
+    <string name="settings_fragment_language_english">English</string>
+    <string name="settings_fragment_language_chinese">简体中文</string>
+
     //SharedPreferences Key
     <string name="shared_preferences_key_default">shared_preferences_key_default</string>
 
@@ -41,6 +45,9 @@
 
     <!-- Notification status -->
     <string name="shared_preferences_key_open_notification">shared_preferences_key_open_notification</string>
+    
+    <!-- settings -->
+    <string name="shared_preferences_key_settings_language">shared_preferences_key_settings_language</string>
 
     // Notifications
     <string name="notification_it_is_bed_time">It\'s going to bed now!</string>
@@ -81,13 +88,13 @@
     //Settings Fragment
     <string name="settings_actionbar_title">Settings</string>
     <string name="action_settings">Settings</string>
-    <string-array name="pref_example_list_titles">
-        <item>简体中文</item>
-        <item>English</item>
-    </string-array>
-    <string-array name="pref_example_list_values">
-        <item>1</item>
-        <item>0</item>
-    </string-array>
+    <string name="settings_fragment_language_follow_system">Follow system settings</string>
+    <string name="settings_fragment_category_date_and_time">Date &amp; Time</string>
+    <string name="settings_fragment_tv_time_format_text">24-Hour Time</string>
+    <string name="settings_fragment_tv_time_format_desc_text_24">e.g. 16:32</string>
+    <string name="settings_fragment_tv_time_format_desc_text_12">e.g. 4:32 PM</string>
+    <string name="settings_fragment_category_general">General</string>
+    <string name="settings_fragment_tv_language_text">Language</string>
+    <string name="settings_fragment_tv_personal_information_text">Personal Information</string>
 
 </resources>
