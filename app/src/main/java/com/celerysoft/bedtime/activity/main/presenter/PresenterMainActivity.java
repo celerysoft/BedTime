@@ -60,6 +60,18 @@ public class PresenterMainActivity implements IPresenterMainActivity {
                 .show();
     }
 
+    @Override
+    public void setMainFragment() {
+        mView.getFragmentManager().beginTransaction()
+                .add(R.id.main_fragment_container, mView.getMainFragment())
+                .commit();
+
+        mCurrentFragment = mView.getMainFragment();
+        mView.getSupportActionBar().setTitle(R.string.main_actionbar_title);
+        mView.getNavigationView().setCheckedItem(R.id.nav_main);
+        showFloatActionButton();
+    }
+
     private void turnToFragment(Fragment fromFragment, Fragment toFragment) {
         if (fromFragment != null && fromFragment.equals(toFragment)) {
             return;
@@ -130,11 +142,6 @@ public class PresenterMainActivity implements IPresenterMainActivity {
         mView.getSupportActionBar().setTitle(R.string.settings_actionbar_title);
         mView.getNavigationView().setCheckedItem(R.id.nav_settings);
         hideFloatActionButton();
-    }
-
-    @Override
-    public Fragment getCurrentFragment() {
-        return mCurrentFragment;
     }
 
     private void hideFloatActionButton() {

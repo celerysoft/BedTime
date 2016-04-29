@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".activity.main.view.MainActivity"
+            android:name=".activity.launch.LaunchActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:launchMode="singleTop"
             android:configChanges="orientation|screenSize|locale">
@@ -23,6 +23,14 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".activity.main.view.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:launchMode="singleTop"
+            android:configChanges="orientation|screenSize|locale">
+
         </activity>
 
         <receiver android:name=".receiver.BedTimeReceiver" />

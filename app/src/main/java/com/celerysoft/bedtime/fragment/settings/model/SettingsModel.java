@@ -52,7 +52,7 @@ public class SettingsModel {
             case FOLLOW_SYSTEM:
                 break;
             case CHINESE:
-                locale = Locale.CHINESE;
+                locale = Locale.SIMPLIFIED_CHINESE;
                 break;
             case ENGLISH:
                 locale = locale.ENGLISH;

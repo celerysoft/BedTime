@@ -76,6 +76,8 @@ public class MainActivity extends BaseActivity
         if (mNavigationView != null) {
             mNavigationView.setNavigationItemSelectedListener(this);
         }
+
+        mPresenter.setMainFragment();
     }
 
     protected void restoreInstanceState(Bundle savedInstanceState) {
@@ -88,8 +90,6 @@ public class MainActivity extends BaseActivity
                 }
             }
         }
-
-        mPresenter.turnToMainFragment();
     }
 
     @Override
