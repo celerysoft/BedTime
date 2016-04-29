@@ -19,6 +19,13 @@ import java.util.Calendar;
 public class WakeupTimeListViewAdapter extends BaseAdapter {
     private Context mContext;
 
+    private boolean mIs24HourTime = true;
+
+    public void setIs24HourTime(boolean is24HourTime) {
+        mIs24HourTime = is24HourTime;
+        notifyDataSetChanged();
+    }
+
     private ArrayList<WakeupTimeBean> mWakeupTimes;
     public ArrayList<WakeupTimeBean> getWakeupTimes() {
         return mWakeupTimes;
@@ -153,14 +160,30 @@ public class WakeupTimeListViewAdapter extends BaseAdapter {
     }
 
     private String getWakeupTimeContentString(WakeupTimeBean bean) {
-        // TODO 注意12小时制和24小时制
-        int hourLength = String.valueOf(bean.getHour()).length();
-        String hour = hourLength == 1 ? "0" + bean.getHour() : String.valueOf(bean.getHour());
-
         int minuteLength = String.valueOf(bean.getMinute()).length();
         String minute = minuteLength == 1 ? "0" + bean.getMinute() : String.valueOf(bean.getMinute());
 
-        String content = hour + " : " + minute;
+        String hour;
+        String content;
+
+        if (mIs24HourTime) {
+            hour = String.valueOf(bean.getHour());
+            content = hour + ":" + minute;
+        } else {
+            boolean isAm = false;
+            if (bean.getHour() < 12) {
+                isAm = true;
+            }
+
+            if (isAm) {
+                hour = String.valueOf(bean.getHour());
+                content = hour + ":" + minute + " AM";
+            } else {
+                hour = String.valueOf(bean.getHour() - 12);
+                content = hour + ":" + minute + " PM";
+            }
+        }
+
         return content;
     }
 }

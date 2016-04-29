@@ -19,10 +19,15 @@ import com.celerysoft.bedtime.fragment.settings.presenter.PresenterSettings;
  */
 public class SettingsFragment extends Fragment implements IViewSettings {
     IPresenterSettings mPresenter;
+    public IPresenterSettings getPresenter() {
+        return mPresenter;
+    }
 
+    private View mViewTimeFormat;
     private AppCompatTextView mTvTimeFormat;
     private SwitchCompat mSwitchTimeFormat;
     private View mViewLanguage;
+    private AppCompatTextView mTvLanguage;
     private View mViewPersonalInformation;
 
     @Nullable
@@ -32,25 +37,31 @@ public class SettingsFragment extends Fragment implements IViewSettings {
 
         View v = inflater.inflate(R.layout.fragment_settings, container, false);
 
-        mTvTimeFormat = (AppCompatTextView) v.findViewById(R.id.settings_fragment_tv_time_format_desc);
-        mTvTimeFormat.setOnClickListener(new View.OnClickListener() {
+        mViewTimeFormat = v.findViewById(R.id.settings_fragment_time_format);
+        mViewTimeFormat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mSwitchTimeFormat.setChecked(!mSwitchTimeFormat.isChecked());
             }
         });
 
+        mTvTimeFormat = (AppCompatTextView) v.findViewById(R.id.settings_fragment_tv_time_format_desc);
+
         mSwitchTimeFormat = (SwitchCompat) v.findViewById(R.id.settings_fragment_switch_time_format);
         mSwitchTimeFormat.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
+                    mPresenter.apply24HourTime(true);
                     mTvTimeFormat.setText(getString(R.string.settings_fragment_tv_time_format_desc_text_24));
                 } else {
+                    mPresenter.apply24HourTime(false);
                     mTvTimeFormat.setText(getString(R.string.settings_fragment_tv_time_format_desc_text_12));
                 }
             }
         });
+        boolean is24HourTime = mPresenter.is24HourTime();
+        mSwitchTimeFormat.setChecked(is24HourTime);
 
         mViewLanguage = v.findViewById(R.id.settings_fragment_language);
         mViewLanguage.setOnClickListener(new View.OnClickListener() {
@@ -59,6 +70,9 @@ public class SettingsFragment extends Fragment implements IViewSettings {
                 mPresenter.showChooseLanguageDialog();
             }
         });
+
+        mTvLanguage = (AppCompatTextView) v.findViewById(R.id.settings_fragment_tv_language_desc);
+        mTvLanguage.setText(mPresenter.getLanguageString());
 
         mViewPersonalInformation = v.findViewById(R.id.settings_fragment_personal_information);
         mViewPersonalInformation.setOnClickListener(new View.OnClickListener() {

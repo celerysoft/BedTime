@@ -48,6 +48,7 @@
     
     <!-- settings -->
     <string name="shared_preferences_key_settings_language">shared_preferences_key_settings_language</string>
+    <string name="shared_preferences_key_settings_24_hour_time">shared_preferences_key_settings_24_hour_time</string>
 
     // Notifications
     <string name="notification_it_is_bed_time">It\'s going to bed now!</string>

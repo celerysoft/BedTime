@@ -45,7 +45,7 @@
                 android:gravity="center_vertical"
                 android:textSize="@dimen/text_size_body"
                 android:textColor="@color/colorSecondaryText"
-                android:text="@string/settings_fragment_tv_time_format_desc_text_24"/>
+                android:text="@string/settings_fragment_tv_time_format_desc_text_12"/>
         </LinearLayout>
         <android.support.v7.widget.SwitchCompat
             android:id="@+id/settings_fragment_switch_time_format"
@@ -92,6 +92,7 @@
             android:textColor="@color/colorPrimaryText"
             android:text="@string/settings_fragment_tv_language_text"/>
         <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/settings_fragment_tv_language_desc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"

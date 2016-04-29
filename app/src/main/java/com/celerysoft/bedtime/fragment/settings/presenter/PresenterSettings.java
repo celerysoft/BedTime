@@ -23,6 +23,9 @@ public class PresenterSettings implements IPresenterSettings {
 
     private SharedPreferences mSharedPreferences;
     private SettingsModel mModel;
+    public SettingsModel getModel() {
+        return mModel;
+    }
 
     private int newLanguage;
 
@@ -82,5 +85,20 @@ public class PresenterSettings implements IPresenterSettings {
         Intent intent = new Intent(mContext, MainActivity.class);
         intent.putExtra("launch_fragment", "settings");
         mContext.startActivity(intent);
+    }
+
+    @Override
+    public String getLanguageString() {
+        return mModel.getAppLanguageString();
+    }
+
+    @Override
+    public void apply24HourTime(boolean applied) {
+        mModel.apply24HourTime(applied);
+    }
+
+    @Override
+    public boolean is24HourTime() {
+        return mModel.is24HourTime();
     }
 }

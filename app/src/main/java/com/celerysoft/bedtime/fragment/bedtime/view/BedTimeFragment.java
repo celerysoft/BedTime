@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import com.celerysoft.bedtime.R;
 import com.celerysoft.bedtime.fragment.bedtime.WakeupTimeListViewAdapter;
 import com.celerysoft.bedtime.fragment.bedtime.model.WakeupTimeBean;
+import com.celerysoft.bedtime.fragment.bedtime.presenter.IPresenterBedTime;
 import com.celerysoft.bedtime.fragment.bedtime.presenter.PresenterBedTime;
 import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
@@ -23,7 +24,10 @@ import java.util.Calendar;
  */
 public class BedTimeFragment extends Fragment implements IViewBedTime {
 
-    PresenterBedTime mPresenter;
+    IPresenterBedTime mPresenter;
+    public IPresenterBedTime getPresenter() {
+        return mPresenter;
+    }
 
     ListViewCompat mListViewWakeupTime;
     WakeupTimeListViewAdapter mAdapter;

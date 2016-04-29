@@ -6,4 +6,7 @@ package com.celerysoft.bedtime.fragment.settings.presenter;
 public interface IPresenterSettings {
     void showChooseLanguageDialog();
     void showPersonalInformation();
+    String getLanguageString();
+    void apply24HourTime(boolean applied);
+    boolean is24HourTime();
 }

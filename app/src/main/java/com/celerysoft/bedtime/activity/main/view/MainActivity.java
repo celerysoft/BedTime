@@ -97,14 +97,24 @@ public class MainActivity extends BaseActivity
         if (mDrawer.isDrawerOpen(GravityCompat.START)) {
             mDrawer.closeDrawer(GravityCompat.START);
         } else {
-            if (mPresenter.getCurrentFragment().getClass().equals(MainFragment.class)) {
+//            if (mPresenter.getCurrentFragment().getClass().equals(MainFragment.class)) {
+//                if (mPresenter.readyToExitApp()) {
+//                    mPresenter.exitApp();
+//                } else {
+//                    mPresenter.preExitApp();
+//                }
+//            } else {
+//                mPresenter.turnToMainFragment();
+//            }
+
+            if (!getFragmentManager().popBackStackImmediate()) {
                 if (mPresenter.readyToExitApp()) {
                     mPresenter.exitApp();
                 } else {
                     mPresenter.preExitApp();
                 }
             } else {
-                mPresenter.turnToMainFragment();
+
             }
         }
     }
@@ -150,11 +160,6 @@ public class MainActivity extends BaseActivity
         } else if (id == R.id.nav_feedback) {
 
         }
-
-//        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-//        if (drawer != null) {
-//            drawer.closeDrawer(GravityCompat.START);
-//        }
 
         mDrawer.closeDrawer(GravityCompat.START);
 

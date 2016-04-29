@@ -12,6 +12,7 @@ import com.celerysoft.bedtime.fragment.bedtime.model.WakeupTimeModel;
 import com.celerysoft.bedtime.fragment.bedtime.view.IViewBedTime;
 import com.celerysoft.bedtime.fragment.main.model.BedTimeModel;
 import com.celerysoft.bedtime.fragment.main.presenter.PresenterMain;
+import com.celerysoft.bedtime.fragment.settings.model.SettingsModel;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
 import java.util.ArrayList;
@@ -30,6 +31,7 @@ public class PresenterBedTime implements IPresenterBedTime {
 
     WakeupTimeModel mModel;
     BedTimeModel mBedTimeModel;
+    SettingsModel mSettingsModel;
 
 
     public PresenterBedTime(IViewBedTime view) {
@@ -41,6 +43,7 @@ public class PresenterBedTime implements IPresenterBedTime {
 
         mModel = new WakeupTimeModel(mContext);
         mBedTimeModel = new BedTimeModel(mContext);
+        mSettingsModel = new SettingsModel(mContext, mContext.getSharedPreferences(mContext.getString(R.string.shared_preferences_key_default), Context.MODE_PRIVATE));
     }
 
     @Override
@@ -64,7 +67,9 @@ public class PresenterBedTime implements IPresenterBedTime {
         WakeupTimeBean sunday = mModel.findWakeUpTimeByDayOfTheWeek(Calendar.SUNDAY);
         wakeupTimes.add(sunday);
 
+        adapter.setIs24HourTime(mSettingsModel.is24HourTime());
         adapter.setWakeupTimes(wakeupTimes);
+
 
         return adapter;
     }
@@ -82,7 +87,7 @@ public class PresenterBedTime implements IPresenterBedTime {
         WakeupTimeBean wakeupTime = mModel.findWakeUpTimeByDayOfTheWeek(dayOfTheWeek);
 
         // TODO 处理12小时制和24小时制
-        TimePickerDialog timePickerDialog = TimePickerDialog.newInstance(listener, wakeupTime.getHour(), wakeupTime.getMinute(), true);
+        TimePickerDialog timePickerDialog = TimePickerDialog.newInstance(listener, wakeupTime.getHour(), wakeupTime.getMinute(), mSettingsModel.is24HourTime());
         timePickerDialog.setThemeDark(false);
         timePickerDialog.vibrate(false);
         timePickerDialog.dismissOnPause(true);

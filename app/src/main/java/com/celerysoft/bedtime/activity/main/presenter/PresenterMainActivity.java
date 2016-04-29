@@ -6,6 +6,7 @@ import android.support.design.widget.Snackbar;
 
 import com.celerysoft.bedtime.R;
 import com.celerysoft.bedtime.activity.main.view.IViewMainActivity;
+import com.celerysoft.bedtime.fragment.main.view.MainFragment;
 import com.celerysoft.bedtime.util.ActivityManagerUtil;
 import com.celerysoft.bedtime.view.BaseActivity;
 
@@ -48,7 +49,7 @@ public class PresenterMainActivity implements IPresenterMainActivity {
 
     public void showExitAppSnackBar() {
         String text = mView.getContext().getString(R.string.main_snack_bar_text);
-        String actionText = mView.getContext().getString(R.string.main_snack_bar_action_text);
+//        String actionText = mView.getContext().getString(R.string.main_snack_bar_action_text);
         Snackbar.make(mView.getFloatActionButton(), text, Snackbar.LENGTH_LONG)
 //                .setAction(actionText, new View.OnClickListener() {
 //                    @Override
@@ -67,21 +68,42 @@ public class PresenterMainActivity implements IPresenterMainActivity {
         FragmentTransaction ft = mView.getFragmentManager().beginTransaction();
 
         if (fromFragment != null) {
-            //ft.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
-            ft.setCustomAnimations(R.animator.move_in, R.animator.move_out, android.R.animator.fade_in, android.R.animator.fade_out);
-            ft.hide(fromFragment);
-        }
-
-        if (toFragment != null) {
-            if (toFragment.isAdded()) {
-                ft.show(toFragment);
-            } else {
-                ft.add(R.id.main_fragment_container, toFragment);
+            ft.setCustomAnimations(R.animator.move_in, R.animator.move_out, R.animator.move_in, R.animator.move_out);
+            ft.replace(R.id.main_fragment_container, toFragment);
+        } else {
+            ft.add(R.id.main_fragment_container, toFragment);
+            if (toFragment.getClass().equals(MainFragment.class)) {
+                ft.commit();
+                return;
             }
         }
 
+        ft.addToBackStack(null);
         ft.commit();
     }
+
+//    private void turnToFragment(Fragment fromFragment, Fragment toFragment) {
+//        if (fromFragment != null && fromFragment.equals(toFragment)) {
+//            return;
+//        }
+//
+//        FragmentTransaction ft = mView.getFragmentManager().beginTransaction();
+//
+//        if (fromFragment != null) {
+//            ft.setCustomAnimations(R.animator.move_in, R.animator.move_out, android.R.animator.fade_in, android.R.animator.fade_out);
+//            ft.hide(fromFragment);
+//        }
+//
+//        if (toFragment != null) {
+//            if (toFragment.isAdded()) {
+//                ft.show(toFragment);
+//            } else {
+//                ft.add(R.id.main_fragment_container, toFragment);
+//            }
+//        }
+//
+//        ft.commit();
+//    }
 
     @Override
     public void turnToMainFragment() {

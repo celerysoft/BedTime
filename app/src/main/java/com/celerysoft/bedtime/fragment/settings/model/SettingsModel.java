@@ -63,4 +63,34 @@ public class SettingsModel {
 
         return locale;
     }
+
+    public String getAppLanguageString() {
+        String languageString = mContext.getString(R.string.settings_fragment_language_follow_system);
+
+        int language = getAppLanguage();
+        switch (language) {
+            case FOLLOW_SYSTEM:
+                break;
+            case CHINESE:
+                languageString = mContext.getString(R.string.settings_fragment_language_chinese);
+                break;
+            case ENGLISH:
+                languageString = mContext.getString(R.string.settings_fragment_language_english);
+                break;
+            default:
+                break;
+        }
+
+        return languageString;
+    }
+
+    public void apply24HourTime(boolean applied) {
+        mSharedPreferences.edit()
+                .putBoolean(mContext.getString(R.string.shared_preferences_key_settings_24_hour_time), applied)
+                .apply();
+    }
+
+    public boolean is24HourTime() {
+        return mSharedPreferences.getBoolean(mContext.getString(R.string.shared_preferences_key_settings_24_hour_time), true);
+    }
 }
