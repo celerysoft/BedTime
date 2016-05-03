@@ -13,14 +13,14 @@
     <string name="main_snack_bar_text">再按一次返回键退出程序</string>
     <string name="main_snack_bar_action_text">退出</string>
     <string name="main_nav_home_text">主页</string>
-    <string name="main_nav_bedtime_text">睡觉时间</string>
+    <string name="main_nav_bedtime_text">卧榻</string>
     <string name="main_nav_settings_text">设置</string>
     <string name="main_nav_communicate_text">社交</string>
     <string name="main_nav_share_text">分享</string>
     <string name="main_nav_feedback_text">反馈</string>
 
     //Main Fragment
-    <string name="main_actionbar_title">睡觉时间</string>
+    <string name="main_actionbar_title">主页</string>
     <string name="main_switch_title">上床提醒</string>
     <string name="main_count_down_action_go_bed">上床睡觉</string>
     <string name="main_count_down_action_get_up">起床</string>
@@ -31,7 +31,7 @@
     <string name="main_tv_minutes_text">分钟</string>
 
     //Bed Time Fragment
-    <string name="bedtime_actionbar_title">卧榻相关</string>
+    <string name="bedtime_actionbar_title">卧榻</string>
     <string name="bedtime_title">起床时间</string>
     <string name="bedtime_monday">星期一</string>
     <string name="bedtime_tuesday">星期二</string>

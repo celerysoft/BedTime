@@ -65,7 +65,7 @@
     <string name="main_nav_feedback_text">Feedback</string>
 
     //Main Fragment
-    <string name="main_actionbar_title">Bed Time</string>
+    <string name="main_actionbar_title">Home</string>
     <string name="main_switch_title">Notify Going Bed</string>
     <string name="main_count_down_action_go_bed">Going Bed</string>
     <string name="main_count_down_action_get_up">Getting Up</string>
