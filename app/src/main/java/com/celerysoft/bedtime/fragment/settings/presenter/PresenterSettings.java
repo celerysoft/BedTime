@@ -21,7 +21,6 @@ public class PresenterSettings implements IPresenterSettings {
     private IViewSettings mView;
     private Context mContext;
 
-    private SharedPreferences mSharedPreferences;
     private SettingsModel mModel;
     public SettingsModel getModel() {
         return mModel;
@@ -33,9 +32,7 @@ public class PresenterSettings implements IPresenterSettings {
         mView = view;
         mContext = mView.getActivity();
 
-        mSharedPreferences = mContext.getSharedPreferences(mContext.getString(R.string.shared_preferences_key_default), Context.MODE_PRIVATE);
-
-        mModel = new SettingsModel(mContext, mSharedPreferences);
+        mModel = new SettingsModel(mContext);
     }
 
     @Override

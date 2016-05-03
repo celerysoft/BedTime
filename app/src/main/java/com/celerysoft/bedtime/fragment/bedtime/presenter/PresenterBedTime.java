@@ -43,7 +43,7 @@ public class PresenterBedTime implements IPresenterBedTime {
 
         mModel = new WakeupTimeModel(mContext);
         mBedTimeModel = new BedTimeModel(mContext);
-        mSettingsModel = new SettingsModel(mContext, mContext.getSharedPreferences(mContext.getString(R.string.shared_preferences_key_default), Context.MODE_PRIVATE));
+        mSettingsModel = new SettingsModel(mContext);
     }
 
     @Override

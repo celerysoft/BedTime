@@ -27,9 +27,7 @@ public class LaunchActivity extends BaseActivity {
     }
 
     private void setAppLanguage() {
-        SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.shared_preferences_key_default), MODE_PRIVATE);
-
-        SettingsModel model = new SettingsModel(this, sharedPreferences);
+        SettingsModel model = new SettingsModel(this);
 
         Resources resources = getResources();
         DisplayMetrics displayMetrics = resources.getDisplayMetrics();

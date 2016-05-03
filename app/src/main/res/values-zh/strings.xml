@@ -18,6 +18,8 @@
     <string name="main_nav_communicate_text">社交</string>
     <string name="main_nav_share_text">分享</string>
     <string name="main_nav_feedback_text">反馈</string>
+    <string name="main_could_not_send_feedback_dialog_message">"检测到您的设备无法正常发送邮件，如果您想给我发送任何反馈，请发送到：\ncelerysoft@gmail.com\n\n十分感谢您的建议和意见。"</string>
+    <string name="main_could_not_send_feedback_dialog_btn_text">复制邮箱地址到剪贴板</string>
 
     //Main Fragment
     <string name="main_actionbar_title">主页</string>

@@ -2,8 +2,15 @@ package com.celerysoft.bedtime.activity.main.presenter;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 
+import com.celerysoft.bedtime.BuildConfig;
 import com.celerysoft.bedtime.R;
 import com.celerysoft.bedtime.activity.main.view.IViewMainActivity;
 import com.celerysoft.bedtime.fragment.bedtime.view.BedTimeFragment;
@@ -19,6 +26,8 @@ import com.celerysoft.bedtime.view.BaseActivity;
 public class PresenterMainActivity implements IPresenterMainActivity {
     private IViewMainActivity mView;
 
+    private Context mContext;
+
     private Fragment mCurrentFragment;
 
     private long mLastPressBackTime;
@@ -27,6 +36,8 @@ public class PresenterMainActivity implements IPresenterMainActivity {
         super();
 
         mView = view;
+
+        mContext = mView.getContext();
     }
 
     @Override
@@ -50,7 +61,7 @@ public class PresenterMainActivity implements IPresenterMainActivity {
     }
 
     public void showExitAppSnackBar() {
-        String text = mView.getContext().getString(R.string.main_snack_bar_text);
+        String text = mContext.getString(R.string.main_snack_bar_text);
 //        String actionText = mView.getContext().getString(R.string.main_snack_bar_action_text);
         Snackbar.make(mView.getFloatActionButton(), text, Snackbar.LENGTH_LONG)
 //                .setAction(actionText, new View.OnClickListener() {
@@ -152,6 +163,39 @@ public class PresenterMainActivity implements IPresenterMainActivity {
             mView.getNavigationView().setCheckedItem(R.id.nav_settings);
             hideFloatActionButton();
         }
+    }
+
+    @Override
+    public void sendFeedback() {
+        String content = "Version name: " + BuildConfig.VERSION_NAME
+                + "Version code: " + BuildConfig.VERSION_CODE
+                + "\n\n----------------\n\n";
+
+
+        Intent intent = new Intent(Intent.ACTION_SENDTO);
+        intent.setType("plain/text");
+        intent.putExtra(Intent.EXTRA_EMAIL, "celerysoft@gmail.com");
+        intent.putExtra(Intent.EXTRA_SUBJECT, "BedTime Feedback");
+        intent.putExtra(Intent.EXTRA_TEXT, content);
+
+        if(mContext.getPackageManager().queryIntentActivities(intent, 0).size() > 0) {
+            mContext.startActivity(intent);
+        } else {
+            AlertDialog.Builder builder = new AlertDialog.Builder(mContext, R.style.AppTheme_Dialog_Light);
+            builder.setMessage(mContext.getString(R.string.main_could_not_send_feedback_dialog_message))
+                    .setPositiveButton(mContext.getString(R.string.main_could_not_send_feedback_dialog_btn_text), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            ClipData clipData = ClipData.newPlainText("Email address", "celerysoft@gmail.com");
+
+                            ClipboardManager cmb = (ClipboardManager) mContext.getSystemService(Context.CLIPBOARD_SERVICE);
+                            cmb.setPrimaryClip(clipData);
+                        }
+                    })
+                    .show();
+        }
+
+
     }
 
     private void hideFloatActionButton() {

@@ -63,6 +63,8 @@
     <string name="main_nav_communicate_text">Communicate</string>
     <string name="main_nav_share_text">Share</string>
     <string name="main_nav_feedback_text">Feedback</string>
+    <string name="main_could_not_send_feedback_dialog_message">"Could not find a e-mail client in your device. if you want to send any feedback, please send to \ncelerysoft@gmail.com"</string>
+    <string name="main_could_not_send_feedback_dialog_btn_text">Copy E-mail address to clipboard</string>
 
     //Main Fragment
     <string name="main_actionbar_title">Home</string>

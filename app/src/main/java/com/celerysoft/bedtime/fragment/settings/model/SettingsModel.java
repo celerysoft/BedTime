@@ -19,9 +19,9 @@ public class SettingsModel {
 
     private SharedPreferences mSharedPreferences;
 
-    public SettingsModel(Context context, SharedPreferences sharedPreferences) {
+    public SettingsModel(Context context) {
         mContext = context;
-        mSharedPreferences = sharedPreferences;
+        mSharedPreferences = context.getSharedPreferences(context.getString(R.string.shared_preferences_key_default), Context.MODE_PRIVATE);
     }
 
     public String[] getLanguageStrings() {
@@ -52,7 +52,7 @@ public class SettingsModel {
             case FOLLOW_SYSTEM:
                 break;
             case CHINESE:
-                locale = Locale.CHINESE;
+                locale = Locale.SIMPLIFIED_CHINESE;
                 break;
             case ENGLISH:
                 locale = locale.ENGLISH;
@@ -87,6 +87,7 @@ public class SettingsModel {
     public void apply24HourTime(boolean applied) {
         mSharedPreferences.edit()
                 .putBoolean(mContext.getString(R.string.shared_preferences_key_settings_24_hour_time), applied)
+                .apply();
     }
 
     public boolean is24HourTime() {

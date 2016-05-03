@@ -156,7 +156,7 @@ public class MainActivity extends BaseActivity
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_feedback) {
-
+            mPresenter.sendFeedback();
         }
 
         mDrawer.closeDrawer(GravityCompat.START);

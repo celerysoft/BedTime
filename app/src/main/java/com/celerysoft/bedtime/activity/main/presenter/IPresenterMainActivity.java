@@ -14,4 +14,5 @@ public interface IPresenterMainActivity {
     void turnToMainFragment();
     void turnToBedTimeFragment();
     void turnToSettingsFragment();
+    void sendFeedback();
 }
