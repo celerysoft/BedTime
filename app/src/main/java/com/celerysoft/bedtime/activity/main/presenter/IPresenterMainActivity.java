@@ -6,7 +6,7 @@ import android.app.Fragment;
  * Created by Celery on 16/4/11.
  */
 public interface IPresenterMainActivity {
-    void setMainFragment();
+        void setMainFragment();
     void preExitApp();
     void exitApp();
     boolean readyToExitApp();
@@ -15,4 +15,5 @@ public interface IPresenterMainActivity {
     void turnToBedTimeFragment();
     void turnToSettingsFragment();
     void sendFeedback();
+    void startPersonalInformationActivity();
 }

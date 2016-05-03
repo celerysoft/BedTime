@@ -4,6 +4,8 @@ import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.widget.AppCompatSpinner;
+import android.view.MotionEvent;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -22,7 +24,7 @@ import com.celerysoft.bedtime.fragment.settings.view.SettingsFragment;
 import com.celerysoft.bedtime.view.BaseActivity;
 
 public class MainActivity extends BaseActivity
-        implements NavigationView.OnNavigationItemSelectedListener, IViewMainActivity {
+        implements NavigationView.OnNavigationItemSelectedListener ,IViewMainActivity {
 
     private IPresenterMainActivity mPresenter;
     public IPresenterMainActivity getPresenter() {
@@ -32,6 +34,8 @@ public class MainActivity extends BaseActivity
     private FloatingActionButton mFloatingActionButton;
     private DrawerLayout mDrawer;
     private NavigationView mNavigationView;
+
+    private AppCompatSpinner mSpinnerPersonalInformation;
 
     private MainFragment mMainFragment;
     private BedTimeFragment mBedTimeFragment;
@@ -75,6 +79,20 @@ public class MainActivity extends BaseActivity
         mNavigationView = (NavigationView) findViewById(R.id.nav_view);
         if (mNavigationView != null) {
             mNavigationView.setNavigationItemSelectedListener(this);
+        }
+
+        if (mNavigationView != null) {
+            View header = mNavigationView.getHeaderView(0);
+            mSpinnerPersonalInformation = (AppCompatSpinner) header.findViewById(R.id.main_nav_spinner);
+            mSpinnerPersonalInformation.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    if (event.getAction() == MotionEvent.ACTION_UP) {
+                        mPresenter.startPersonalInformationActivity();
+                    }
+                    return false;
+                }
+            });
         }
 
         mPresenter.setMainFragment();

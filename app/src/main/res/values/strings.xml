@@ -50,9 +50,21 @@
     <string name="shared_preferences_key_settings_language">shared_preferences_key_settings_language</string>
     <string name="shared_preferences_key_settings_24_hour_time">shared_preferences_key_settings_24_hour_time</string>
 
+    <!-- personal information -->
+    <string name="shared_preferences_key_personal_information_nickname">shared_preferences_key_personal_information_nickname</string>
+    <string name="shared_preferences_key_personal_information_age">shared_preferences_key_personal_information_age</string>
+    <string name="shared_preferences_key_personal_information_sleep_hour">shared_preferences_key_personal_information_sleep_hour</string>
+    <string name="shared_preferences_key_personal_information_sleep_minute">shared_preferences_key_personal_information_sleep_minute</string>
+
     // Notifications
     <string name="notification_it_is_bed_time">It\'s going to bed now!</string>
     <string name="notification_bed_time_in_30_minutes">It\'s about 30 minutes until bedtime.</string>
+
+    // Personal Information Activity
+    <string name="personal_information_title">Personal Information</string>
+    <string name="personal_information_tv_nickname_label_text">Nickname</string>
+    <string name="personal_information_tv_age_label_text">Age</string>
+    <string name="personal_information_tv_sleep_time_label_text">Sleep Time</string>
 
     // Main Activity
     <string name="main_snack_bar_text">Press back button again to exit the app</string>

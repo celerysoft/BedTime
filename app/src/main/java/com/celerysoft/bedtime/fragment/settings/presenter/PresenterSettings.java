@@ -3,13 +3,13 @@ package com.celerysoft.bedtime.fragment.settings.presenter;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.support.v7.app.AlertDialog;
 import android.util.DisplayMetrics;
 
 import com.celerysoft.bedtime.R;
+import com.celerysoft.bedtime.activity.information.view.PersonalInformationActivity;
 import com.celerysoft.bedtime.activity.main.view.MainActivity;
 import com.celerysoft.bedtime.fragment.settings.model.SettingsModel;
 import com.celerysoft.bedtime.fragment.settings.view.IViewSettings;
@@ -63,7 +63,8 @@ public class PresenterSettings implements IPresenterSettings {
 
     @Override
     public void showPersonalInformation() {
-
+        Intent intent = new Intent(mContext, PersonalInformationActivity.class);
+        mContext.startActivity(intent);
     }
 
     private void changeAppLanguage() {

@@ -9,6 +9,12 @@
     <string name="notification_it_is_bed_time">按理说，你应该已经睡着了</string>
     <string name="notification_bed_time_in_30_minutes">30分钟后就该睡着了，洗洗睡吧</string>
 
+    // Personal Information Activity
+    <string name="personal_information_title">个人信息</string>
+    <string name="personal_information_tv_nickname_label_text">昵称</string>
+    <string name="personal_information_tv_age_label_text">年龄</string>
+    <string name="personal_information_tv_sleep_time_label_text">睡眠时间</string>
+
     // Main Activity
     <string name="main_snack_bar_text">再按一次返回键退出程序</string>
     <string name="main_snack_bar_action_text">退出</string>

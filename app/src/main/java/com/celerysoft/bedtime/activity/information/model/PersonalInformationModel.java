@@ -1,0 +1,81 @@
+package com.celerysoft.bedtime.activity.information.model;
+
+import android.content.Context;
+import android.content.SharedPreferences;
+
+import com.celerysoft.bedtime.R;
+
+/**
+ * Created by admin on 16/5/3.
+ */
+public class PersonalInformationModel {
+    private Context mContext;
+
+    private SharedPreferences mSharedPreferences;
+
+    public PersonalInformationModel(Context context) {
+        mContext = context;
+
+        mSharedPreferences = context.getSharedPreferences(mContext.getString(R.string.shared_preferences_key_default), Context.MODE_PRIVATE);
+    }
+
+    public String getNickname() {
+        return mSharedPreferences.getString(mContext.getString(R.string.shared_preferences_key_personal_information_nickname), "BedTime");
+    }
+
+    public void setNickname(String nickname) {
+        mSharedPreferences.edit()
+                .putString(mContext.getString(R.string.shared_preferences_key_personal_information_nickname), nickname)
+                .apply();
+
+    }
+
+    public String getAge() {
+        int age = mSharedPreferences.getInt(mContext.getString(R.string.shared_preferences_key_personal_information_age), 18);
+        return String.valueOf(age);
+    }
+
+    public void setAge(String age) {
+        Integer ageInt = Integer.valueOf(age);
+
+        mSharedPreferences.edit()
+                .putInt(mContext.getString(R.string.shared_preferences_key_personal_information_age), ageInt)
+                .apply();
+    }
+
+    public String getSleepTime() {
+        int hour = getSleepTimeHour();
+        int minute = getSleepTimeMinute();
+
+        String sleepTime = hour + "hours " + minute + "minutes";
+
+        return sleepTime;
+    }
+
+    public int getSleepTimeHour() {
+        return mSharedPreferences.getInt(mContext.getString(R.string.shared_preferences_key_personal_information_sleep_hour), 7);
+    }
+
+    public int getSleepTimeMinute() {
+        return mSharedPreferences.getInt(mContext.getString(R.string.shared_preferences_key_personal_information_sleep_minute), 30);
+    }
+
+    public void setSleepTime(int hour, int minute) {
+        setSleepTimeHour(hour);
+        setSleepTimeMinute(minute);
+    }
+
+    private void setSleepTimeHour(int hour) {
+        mSharedPreferences.edit()
+                .putInt(mContext.getString(R.string.shared_preferences_key_personal_information_sleep_hour), hour)
+                .apply();
+    }
+
+    private void setSleepTimeMinute(int minute) {
+        mSharedPreferences.edit()
+                .putInt(mContext.getString(R.string.shared_preferences_key_personal_information_sleep_minute), minute)
+                .apply();
+    }
+
+
+}

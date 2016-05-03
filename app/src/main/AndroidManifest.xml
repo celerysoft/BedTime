@@ -30,8 +30,10 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:launchMode="singleTop"
             android:configChanges="orientation|screenSize|locale">
-
         </activity>
+
+        <activity android:name=".activity.information.view.PersonalInformationActivity"
+                  android:theme="@style/AppTheme.NoActionBar" />
 
         <receiver android:name=".receiver.BedTimeReceiver" />
         <receiver android:name=".receiver.DeviceBootReceiver"

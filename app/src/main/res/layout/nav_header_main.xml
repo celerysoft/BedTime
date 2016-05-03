@@ -39,7 +39,7 @@
             android:text="Need to sleep 8.5hours"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"/>
 
-        <Spinner
+        <android.support.v7.widget.AppCompatSpinner
             android:id="@+id/main_nav_spinner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>

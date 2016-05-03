@@ -12,6 +12,7 @@ import android.support.v7.app.AlertDialog;
 
 import com.celerysoft.bedtime.BuildConfig;
 import com.celerysoft.bedtime.R;
+import com.celerysoft.bedtime.activity.information.view.PersonalInformationActivity;
 import com.celerysoft.bedtime.activity.main.view.IViewMainActivity;
 import com.celerysoft.bedtime.fragment.bedtime.view.BedTimeFragment;
 import com.celerysoft.bedtime.fragment.main.view.MainFragment;
@@ -196,6 +197,12 @@ public class PresenterMainActivity implements IPresenterMainActivity {
         }
 
 
+    }
+
+    @Override
+    public void startPersonalInformationActivity() {
+        Intent intent = new Intent(mContext, PersonalInformationActivity.class);
+        mContext.startActivity(intent);
     }
 
     private void hideFloatActionButton() {
