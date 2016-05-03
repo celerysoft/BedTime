@@ -6,7 +6,9 @@ import android.support.design.widget.Snackbar;
 
 import com.celerysoft.bedtime.R;
 import com.celerysoft.bedtime.activity.main.view.IViewMainActivity;
+import com.celerysoft.bedtime.fragment.bedtime.view.BedTimeFragment;
 import com.celerysoft.bedtime.fragment.main.view.MainFragment;
+import com.celerysoft.bedtime.fragment.settings.view.SettingsFragment;
 import com.celerysoft.bedtime.util.ActivityManagerUtil;
 import com.celerysoft.bedtime.view.BaseActivity;
 
@@ -120,28 +122,36 @@ public class PresenterMainActivity implements IPresenterMainActivity {
     @Override
     public void turnToMainFragment() {
         turnToFragment(mCurrentFragment, mView.getMainFragment());
-        mCurrentFragment = mView.getMainFragment();
-        mView.getSupportActionBar().setTitle(R.string.main_actionbar_title);
-        mView.getNavigationView().setCheckedItem(R.id.nav_main);
-        showFloatActionButton();
     }
 
     @Override
     public void turnToBedTimeFragment() {
         turnToFragment(mCurrentFragment, mView.getBedTimeFragment());
-        mCurrentFragment = mView.getBedTimeFragment();
-        mView.getSupportActionBar().setTitle(R.string.bedtime_actionbar_title);
-        mView.getNavigationView().setCheckedItem(R.id.nav_bedtime);
-        hideFloatActionButton();
     }
 
     @Override
     public void turnToSettingsFragment() {
         turnToFragment(mCurrentFragment, mView.getSettingsFragment());
-        mCurrentFragment = mView.getSettingsFragment();
-        mView.getSupportActionBar().setTitle(R.string.settings_actionbar_title);
-        mView.getNavigationView().setCheckedItem(R.id.nav_settings);
-        hideFloatActionButton();
+    }
+
+    @Override
+    public void updateViewByFragmentInfo(Fragment fragment) {
+        if (fragment instanceof MainFragment) {
+            mCurrentFragment = mView.getMainFragment();
+            mView.getSupportActionBar().setTitle(R.string.main_actionbar_title);
+            mView.getNavigationView().setCheckedItem(R.id.nav_main);
+            showFloatActionButton();
+        } else if (fragment instanceof BedTimeFragment) {
+            mCurrentFragment = mView.getBedTimeFragment();
+            mView.getSupportActionBar().setTitle(R.string.bedtime_actionbar_title);
+            mView.getNavigationView().setCheckedItem(R.id.nav_bedtime);
+            hideFloatActionButton();
+        } else if (fragment instanceof SettingsFragment) {
+            mCurrentFragment = mView.getSettingsFragment();
+            mView.getSupportActionBar().setTitle(R.string.settings_actionbar_title);
+            mView.getNavigationView().setCheckedItem(R.id.nav_settings);
+            hideFloatActionButton();
+        }
     }
 
     private void hideFloatActionButton() {

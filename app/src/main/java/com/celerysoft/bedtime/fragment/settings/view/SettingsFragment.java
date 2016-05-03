@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.CompoundButton;
 
 import com.celerysoft.bedtime.R;
+import com.celerysoft.bedtime.activity.main.view.MainActivity;
 import com.celerysoft.bedtime.fragment.settings.presenter.IPresenterSettings;
 import com.celerysoft.bedtime.fragment.settings.presenter.PresenterSettings;
 
@@ -29,6 +30,14 @@ public class SettingsFragment extends Fragment implements IViewSettings {
     private View mViewLanguage;
     private AppCompatTextView mTvLanguage;
     private View mViewPersonalInformation;
+
+    @Override
+    public void onStart() {
+        if (getActivity() instanceof MainActivity) {
+            ((MainActivity) getActivity()).onTurnToSettingsFragment();
+        }
+        super.onStart();
+    }
 
     @Nullable
     @Override

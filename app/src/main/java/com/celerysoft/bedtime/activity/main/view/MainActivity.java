@@ -113,8 +113,6 @@ public class MainActivity extends BaseActivity
                 } else {
                     mPresenter.preExitApp();
                 }
-            } else {
-
             }
         }
     }
@@ -189,11 +187,6 @@ public class MainActivity extends BaseActivity
     }
 
     @Override
-    public Fragment getCurrentFragment() {
-        return null;
-    }
-
-    @Override
     public Fragment getMainFragment() {
         return mMainFragment;
     }
@@ -206,5 +199,20 @@ public class MainActivity extends BaseActivity
     @Override
     public Fragment getBedTimeFragment() {
         return mBedTimeFragment;
+    }
+
+    @Override
+    public void onTurnToMainFragment() {
+        mPresenter.updateViewByFragmentInfo(mMainFragment);
+    }
+
+    @Override
+    public void onTurnToBedTimeFragment() {
+        mPresenter.updateViewByFragmentInfo(mBedTimeFragment);
+    }
+
+    @Override
+    public void onTurnToSettingsFragment() {
+        mPresenter.updateViewByFragmentInfo(mSettingsFragment);
     }
 }

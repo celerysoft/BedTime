@@ -10,6 +10,7 @@ public interface IPresenterMainActivity {
     void preExitApp();
     void exitApp();
     boolean readyToExitApp();
+    void updateViewByFragmentInfo(Fragment fragment);
     void turnToMainFragment();
     void turnToBedTimeFragment();
     void turnToSettingsFragment();

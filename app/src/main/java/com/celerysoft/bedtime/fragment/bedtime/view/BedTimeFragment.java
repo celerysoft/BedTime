@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 
 import com.celerysoft.bedtime.R;
+import com.celerysoft.bedtime.activity.main.view.MainActivity;
 import com.celerysoft.bedtime.fragment.bedtime.WakeupTimeListViewAdapter;
 import com.celerysoft.bedtime.fragment.bedtime.model.WakeupTimeBean;
 import com.celerysoft.bedtime.fragment.bedtime.presenter.IPresenterBedTime;
@@ -31,6 +32,14 @@ public class BedTimeFragment extends Fragment implements IViewBedTime {
 
     ListViewCompat mListViewWakeupTime;
     WakeupTimeListViewAdapter mAdapter;
+
+    @Override
+    public void onStart() {
+        if (getActivity() instanceof MainActivity) {
+            ((MainActivity) getActivity()).onTurnToBedTimeFragment();
+        }
+        super.onStart();
+    }
 
     @Nullable
     @Override

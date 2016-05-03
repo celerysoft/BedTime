@@ -16,11 +16,11 @@ public interface IViewMainActivity {
     NavigationView getNavigationView();
     Context getContext();
     FragmentManager getFragmentManager();
-    Fragment getCurrentFragment();
     Fragment getMainFragment();
     Fragment getSettingsFragment();
     Fragment getBedTimeFragment();
-
-    void finish();
     ActionBar getSupportActionBar();
+    void onTurnToMainFragment();
+    void onTurnToBedTimeFragment();
+    void onTurnToSettingsFragment();
 }

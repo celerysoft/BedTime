@@ -6,12 +6,14 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.SwitchCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 
 import com.celerysoft.bedtime.R;
+import com.celerysoft.bedtime.activity.main.view.MainActivity;
 import com.celerysoft.bedtime.fragment.main.presenter.IPresenterMain;
 import com.celerysoft.bedtime.fragment.main.presenter.PresenterMain;
 
@@ -19,15 +21,24 @@ import com.celerysoft.bedtime.fragment.main.presenter.PresenterMain;
  * Created by Celery on 16/4/12.
  */
 public class MainFragment extends Fragment implements IViewMain {
+    private final String TAG = "MainFragment";
 
-    IPresenterMain mPresenter;
+    private IPresenterMain mPresenter;
 
-    SwitchCompat mSwitch;
-    AppCompatTextView mTvLeftHour;
-    AppCompatTextView mTvLeftHourLabel;
-    AppCompatTextView mTvLeftMinute;
-    AppCompatTextView mTvLeftMinuteLabel;
-    AppCompatTextView mTvAction;
+    private SwitchCompat mSwitch;
+    private AppCompatTextView mTvLeftHour;
+    private AppCompatTextView mTvLeftHourLabel;
+    private AppCompatTextView mTvLeftMinute;
+    private AppCompatTextView mTvLeftMinuteLabel;
+    private AppCompatTextView mTvAction;
+
+    @Override
+    public void onStart() {
+        if (getActivity() instanceof MainActivity) {
+            ((MainActivity) getActivity()).onTurnToMainFragment();
+        }
+        super.onStart();
+    }
 
     @Nullable
     @Override
