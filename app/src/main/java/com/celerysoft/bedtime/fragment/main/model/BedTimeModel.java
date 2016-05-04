@@ -139,9 +139,8 @@ public class BedTimeModel {
     }
 
     public void refreshBedTimeByDayOfTheWeek(int dayOfTheWeek) {
-        //TODO read sleep time in settings
-        final int sleepTimeHour = 7;
-        final int sleepTimeMinute = 30;
+        final int sleepTimeHour = getSleepHour();
+        final int sleepTimeMinute = getSleepMinute();
 
         WakeupTimeBean wakeupTime = mWakeupTimeModel.findWakeUpTimeByDayOfTheWeek(dayOfTheWeek);
         final int wakeupTimeHour = wakeupTime.getHour();
@@ -154,5 +153,13 @@ public class BedTimeModel {
         bedTime.setMinute(differenceInMinute);
 
         storeBedTime(bedTime);
+    }
+
+    private int getSleepHour() {
+        return mSharedPreferences.getInt(mContext.getString(R.string.shared_preferences_key_personal_information_sleep_hour), 7);
+    }
+
+    private int getSleepMinute() {
+        return mSharedPreferences.getInt(mContext.getString(R.string.shared_preferences_key_personal_information_sleep_minute), 50);
     }
 }

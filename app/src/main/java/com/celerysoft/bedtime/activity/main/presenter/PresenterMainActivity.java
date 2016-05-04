@@ -7,6 +7,7 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 
@@ -59,24 +60,12 @@ public class PresenterMainActivity implements IPresenterMainActivity {
 
     @Override
     public boolean readyToExitApp() {
-        if (System.currentTimeMillis() - mLastPressBackTime <= 2000) {
-            return true;
-        } else {
-            return false;
-        }
+        return System.currentTimeMillis() - mLastPressBackTime <= 2000;
     }
 
     public void showExitAppSnackBar() {
         String text = mContext.getString(R.string.main_snack_bar_text);
-//        String actionText = mView.getContext().getString(R.string.main_snack_bar_action_text);
-        Snackbar.make(mView.getFloatActionButton(), text, Snackbar.LENGTH_LONG)
-//                .setAction(actionText, new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        mView.finish();
-//                    }
-//                })
-                .show();
+        Snackbar.make(mView.getFloatActionButton(), text, Snackbar.LENGTH_LONG).show();
     }
 
     @Override
@@ -218,6 +207,51 @@ public class PresenterMainActivity implements IPresenterMainActivity {
     @Override
     public String getSleepTime() {
         return mContext.getString(R.string.main_tv_sleep_time_text) + mModel.getSleepTime();
+    }
+
+    @Override
+    public boolean isNewToBedTime() {
+        SharedPreferences sharedPreferences = mContext.getSharedPreferences(mContext.getString(R.string.shared_preferences_key_default), Context.MODE_PRIVATE);
+        boolean isNew = sharedPreferences.getBoolean(mContext.getString(R.string.shared_preferences_key_is_new_user), true);
+
+        if (isNew) {
+            sharedPreferences.edit()
+                    .putBoolean(mContext.getString(R.string.shared_preferences_key_is_new_user), false)
+                    .apply();
+        }
+
+        return isNew;
+    }
+
+    @Override
+    public void showWelcomeDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext, R.style.AppTheme_Dialog_Light);
+        builder.setTitle(mContext.getString(R.string.main_dialog_welcome_title))
+                .setMessage(mContext.getString(R.string.main_dialog_welcome_message))
+                .setPositiveButton(mContext.getString(R.string.main_dialog_welcome_positive_btn_text), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+
+                        Intent intent = new Intent(mContext, PersonalInformationActivity.class);
+                        mContext.startActivity(intent);
+                    }
+                })
+                .show();
+    }
+
+    // TODO add social sharing.
+    @Override
+    public void showSocialSharingDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext, R.style.AppTheme_Dialog_Light);
+        builder.setMessage("分享功能将在稍后的版本退出，给您带来的不便深感歉意。\n\nSocial Sharing will be released later, sorry for that.")
+                .setPositiveButton(mContext.getString(android.R.string.ok), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .show();
     }
 
     private void hideFloatActionButton() {

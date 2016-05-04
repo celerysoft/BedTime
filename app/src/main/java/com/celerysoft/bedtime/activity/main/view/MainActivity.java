@@ -54,6 +54,10 @@ public class MainActivity extends BaseActivity
         init();
 
         restoreInstanceState(getIntent().getExtras());
+
+        if(mPresenter.isNewToBedTime()) {
+            mPresenter.showWelcomeDialog();
+        }
     }
 
     private void init() {
@@ -186,7 +190,7 @@ public class MainActivity extends BaseActivity
         } else if (id == R.id.nav_settings) {
             mPresenter.turnToSettingsFragment();
         } else if (id == R.id.nav_share) {
-
+            mPresenter.showSocialSharingDialog();
         } else if (id == R.id.nav_feedback) {
             mPresenter.sendFeedback();
         }

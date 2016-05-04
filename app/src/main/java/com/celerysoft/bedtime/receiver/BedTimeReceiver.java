@@ -6,6 +6,7 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.PowerManager;
 
@@ -29,12 +30,21 @@ public class BedTimeReceiver extends BroadcastReceiver {
         builder.setAutoCancel(true)
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setWhen(System.currentTimeMillis())
-                .setDefaults(Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE)
-                .setContentTitle(context.getString(R.string.app_name))
-                .setContentText(context.getString(R.string.notification_it_is_bed_time))
-                .setTicker(context.getString(R.string.notification_it_is_bed_time))
                 .setContentIntent(pendingIntent);
-                //.setOngoing(true);
+
+        String action = intent.getAction();
+        if (action.equals(context.getString(R.string.action_go_bed))) {
+            builder.setContentTitle(context.getString(R.string.notification_bed_time_in_30_minutes_title))
+                    .setContentText(context.getString(R.string.notification_bed_time_in_30_minutes) + getNickname(context))
+                    .setTicker(context.getString(R.string.notification_bed_time_in_30_minutes) + getNickname(context))
+                    .setDefaults(Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE);
+        } else if (action.equals(context.getString(R.string.action_bed_time))) {
+            builder.setContentTitle(context.getString(R.string.notification_it_is_bed_time_title))
+                    .setContentText(context.getString(R.string.notification_it_is_bed_time) + getNickname(context))
+                    .setTicker(context.getString(R.string.notification_it_is_bed_time) + getNickname(context))
+                    .setDefaults(Notification.DEFAULT_VIBRATE);
+        }
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             notification = builder.build();
         } else {
@@ -56,5 +66,10 @@ public class BedTimeReceiver extends BroadcastReceiver {
 
     private void setAlarmOfNextDay(Context context) {
         PresenterMain.enableAlarm(context);
+    }
+
+    private String getNickname(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(context.getString(R.string.shared_preferences_key_default), Context.MODE_PRIVATE);
+        return sharedPreferences.getString(context.getString(R.string.shared_preferences_key_personal_information_nickname), "BedTime");
     }
 }

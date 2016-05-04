@@ -31,14 +31,35 @@ public class AlarmTimeModel {
         calendarCurrentDayBedTime.set(Calendar.SECOND, 0);
 
         if (calendarNow.before(calendarCurrentDayBedTime)) {
-            alarmTime.setDayOfTheWeek(currentDayBedTime.getActualDayOfWeek());
-            alarmTime.setHour(currentDayBedTime.getHour());
-            alarmTime.setMinute(currentDayBedTime.getMinute());
+            Calendar calendar30minutesBeforeCurrentDayBedTime = Calendar.getInstance();
+            calendar30minutesBeforeCurrentDayBedTime.setTimeInMillis(calendarCurrentDayBedTime.getTimeInMillis());
+            calendar30minutesBeforeCurrentDayBedTime.add(Calendar.MINUTE, -30);
+
+            if (calendarNow.before(calendar30minutesBeforeCurrentDayBedTime)) {
+                alarmTime.setDayOfTheWeek(calendar30minutesBeforeCurrentDayBedTime.get(Calendar.DAY_OF_WEEK));
+                alarmTime.setHour(calendar30minutesBeforeCurrentDayBedTime.get(Calendar.HOUR_OF_DAY));
+                alarmTime.setMinute(calendar30minutesBeforeCurrentDayBedTime.get(Calendar.MINUTE));
+                alarmTime.setType(AlarmTimeBean.Type.GO_BED);
+            } else {
+                alarmTime.setDayOfTheWeek(currentDayBedTime.getActualDayOfWeek());
+                alarmTime.setHour(currentDayBedTime.getHour());
+                alarmTime.setMinute(currentDayBedTime.getMinute());
+                alarmTime.setType(AlarmTimeBean.Type.BED_TIME);
+            }
         } else {
             BedTimeBean nextDayBedTime = bedTimeModel.findNextBedTimeByDayOfTheWeek(currentDayOfWeek);
-            alarmTime.setDayOfTheWeek(nextDayBedTime.getActualDayOfWeek());
-            alarmTime.setHour(nextDayBedTime.getHour());
-            alarmTime.setMinute(nextDayBedTime.getMinute());
+
+            Calendar calendar30minutesBeforeNextDayBedTime = Calendar.getInstance();
+            calendar30minutesBeforeNextDayBedTime.set(Calendar.DAY_OF_WEEK, nextDayBedTime.getActualDayOfWeek());
+            calendar30minutesBeforeNextDayBedTime.set(Calendar.HOUR_OF_DAY, nextDayBedTime.getHour());
+            calendar30minutesBeforeNextDayBedTime.set(Calendar.MINUTE, nextDayBedTime.getMinute());
+            calendar30minutesBeforeNextDayBedTime.set(Calendar.SECOND, 0);
+            calendar30minutesBeforeNextDayBedTime.add(Calendar.MINUTE, -30);
+
+            alarmTime.setDayOfTheWeek(calendar30minutesBeforeNextDayBedTime.get(Calendar.DAY_OF_WEEK));
+            alarmTime.setHour(calendar30minutesBeforeNextDayBedTime.get(Calendar.HOUR_OF_DAY));
+            alarmTime.setMinute(calendar30minutesBeforeNextDayBedTime.get(Calendar.MINUTE));
+            alarmTime.setType(AlarmTimeBean.Type.GO_BED);
         }
 
         return alarmTime;

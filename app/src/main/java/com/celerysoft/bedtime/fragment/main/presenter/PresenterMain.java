@@ -92,8 +92,6 @@ public class PresenterMain implements IPresenterMain {
         AlarmTimeModel alarmTimeModel = new AlarmTimeModel(context);
         AlarmTimeBean nextAlarm = alarmTimeModel.findNextAlarm();
 
-        //TODO handle sleep time
-
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
         calendar.set(Calendar.DAY_OF_WEEK, nextAlarm.getDayOfTheWeek());
@@ -107,6 +105,11 @@ public class PresenterMain implements IPresenterMain {
 
         alarmMgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent setAlarmIntent = new Intent(context, BedTimeReceiver.class);
+        if (nextAlarm.getType() == AlarmTimeBean.Type.GO_BED) {
+            setAlarmIntent.setAction(context.getString(R.string.action_go_bed));
+        } else if (nextAlarm.getType() == AlarmTimeBean.Type.BED_TIME) {
+            setAlarmIntent.setAction(context.getString(R.string.action_bed_time));
+        }
         alarmIntent = PendingIntent.getBroadcast(context, 0, setAlarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         alarmMgr.cancel(alarmIntent);

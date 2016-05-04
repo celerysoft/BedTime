@@ -18,4 +18,7 @@ public interface IPresenterMainActivity {
     void startPersonalInformationActivity();
     String getNickname();
     String getSleepTime();
+    boolean isNewToBedTime();
+    void showWelcomeDialog();
+    void showSocialSharingDialog();
 }

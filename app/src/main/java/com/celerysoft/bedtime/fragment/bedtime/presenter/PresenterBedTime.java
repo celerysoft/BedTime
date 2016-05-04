@@ -86,7 +86,6 @@ public class PresenterBedTime implements IPresenterBedTime {
     public void showTimePickerDialog(TimePickerDialog.OnTimeSetListener listener, int dayOfTheWeek) {
         WakeupTimeBean wakeupTime = mModel.findWakeUpTimeByDayOfTheWeek(dayOfTheWeek);
 
-        // TODO 处理12小时制和24小时制
         TimePickerDialog timePickerDialog = TimePickerDialog.newInstance(listener, wakeupTime.getHour(), wakeupTime.getMinute(), mSettingsModel.is24HourTime());
         timePickerDialog.setThemeDark(false);
         timePickerDialog.vibrate(false);

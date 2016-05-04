@@ -8,8 +8,14 @@
     <string name="settings_fragment_language_english">English</string>
     <string name="settings_fragment_language_chinese">简体中文</string>
 
+    // Action
+    <string name="action_go_bed">com.celerysoft.bedtime.action.GO_BED</string>
+    <string name="action_bed_time">com.celerysoft.bedTime.action.BED_TIME</string>
+
     //SharedPreferences Key
     <string name="shared_preferences_key_default">shared_preferences_key_default</string>
+
+    <string name="shared_preferences_key_is_new_user">shared_preferences_key_is_new_user</string>
 
     <!-- Wake up time -->
     <string name="shared_preferences_key_wakeup_time_monday_hour">shared_preferences_key_wakeup_time_monday_hour</string>
@@ -57,11 +63,10 @@
     <string name="shared_preferences_key_personal_information_sleep_minute">shared_preferences_key_personal_information_sleep_minute</string>
 
     // Notifications
-    <string name="notification_it_is_bed_time">It\'s going to bed now!</string>
-    <string name="notification_bed_time_in_30_minutes">It\'s about 30 minutes until bedtime.</string>
-
-    // Common words
-
+    <string name="notification_it_is_bed_time_title">Good night</string>
+    <string name="notification_it_is_bed_time">Hope you have a nice dream, </string>
+    <string name="notification_bed_time_in_30_minutes_title">Get ready to bed</string>
+    <string name="notification_bed_time_in_30_minutes">It\'s about 30 minutes until bedtime, </string>
 
     // Personal Information Activity
     <string name="personal_information_title">Personal Information</string>
@@ -85,6 +90,9 @@
     <string name="main_could_not_send_feedback_dialog_message">"Could not find a e-mail client in your device. if you want to send any feedback, please send to \ncelerysoft@gmail.com"</string>
     <string name="main_could_not_send_feedback_dialog_btn_text">Copy E-mail address to clipboard</string>
     <string name="main_tv_sleep_time_text">Sleep Time: </string>
+    <string name="main_dialog_welcome_title">Welcome to BedTime</string>
+    <string name="main_dialog_welcome_message">This is your first time to BedTime, so you need to set up some personal information for getting a better service. We will not collect this information of all times.</string>
+    <string name="main_dialog_welcome_positive_btn_text">Go and Set</string>
 
     //Main Fragment
     <string name="main_actionbar_title">Home</string>
