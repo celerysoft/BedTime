@@ -1,5 +1,6 @@
 package com.celerysoft.bedtime.activity.information.view;
 
+import android.app.FragmentManager;
 import android.content.Context;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.AppCompatEditText;
@@ -10,6 +11,7 @@ import android.support.v7.widget.AppCompatTextView;
  */
 public interface IViewPersonalInformationActivity {
     Context getContext();
+    FragmentManager getFragmentManager();
     AppCompatTextView getTvNickname();
     AppCompatEditText getEtNickname();
     AppCompatTextView getTvAge();

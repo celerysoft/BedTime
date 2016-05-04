@@ -12,6 +12,7 @@ import android.support.v7.app.AlertDialog;
 
 import com.celerysoft.bedtime.BuildConfig;
 import com.celerysoft.bedtime.R;
+import com.celerysoft.bedtime.activity.information.model.PersonalInformationModel;
 import com.celerysoft.bedtime.activity.information.view.PersonalInformationActivity;
 import com.celerysoft.bedtime.activity.main.view.IViewMainActivity;
 import com.celerysoft.bedtime.fragment.bedtime.view.BedTimeFragment;
@@ -33,12 +34,16 @@ public class PresenterMainActivity implements IPresenterMainActivity {
 
     private long mLastPressBackTime;
 
+    private PersonalInformationModel mModel;
+
     public PresenterMainActivity(IViewMainActivity view) {
         super();
 
         mView = view;
 
         mContext = mView.getContext();
+
+        mModel = new PersonalInformationModel(mContext);
     }
 
     @Override
@@ -203,6 +208,16 @@ public class PresenterMainActivity implements IPresenterMainActivity {
     public void startPersonalInformationActivity() {
         Intent intent = new Intent(mContext, PersonalInformationActivity.class);
         mContext.startActivity(intent);
+    }
+
+    @Override
+    public String getNickname() {
+        return mModel.getNickname();
+    }
+
+    @Override
+    public String getSleepTime() {
+        return mContext.getString(R.string.main_tv_sleep_time_text) + mModel.getSleepTime();
     }
 
     private void hideFloatActionButton() {

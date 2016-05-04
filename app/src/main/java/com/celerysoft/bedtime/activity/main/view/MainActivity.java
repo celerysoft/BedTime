@@ -14,6 +14,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.celerysoft.bedtime.R;
 import com.celerysoft.bedtime.activity.main.presenter.IPresenterMainActivity;
@@ -36,6 +37,8 @@ public class MainActivity extends BaseActivity
     private NavigationView mNavigationView;
 
     private AppCompatSpinner mSpinnerPersonalInformation;
+    private TextView mTvNickname;
+    private TextView mTvSleepTime;
 
     private MainFragment mMainFragment;
     private BedTimeFragment mBedTimeFragment;
@@ -93,6 +96,9 @@ public class MainActivity extends BaseActivity
                     return false;
                 }
             });
+
+            mTvNickname = (TextView) header.findViewById(R.id.main_nav_tv_nickname);
+            mTvSleepTime = (TextView) header.findViewById(R.id.main_nav_tv_sleep_time);
         }
 
         mPresenter.setMainFragment();
@@ -108,6 +114,14 @@ public class MainActivity extends BaseActivity
                 }
             }
         }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        mTvNickname.setText(mPresenter.getNickname());
+        mTvSleepTime.setText(mPresenter.getSleepTime());
     }
 
     @Override

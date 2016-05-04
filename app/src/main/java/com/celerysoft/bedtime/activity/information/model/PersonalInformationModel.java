@@ -47,9 +47,17 @@ public class PersonalInformationModel {
         int hour = getSleepTimeHour();
         int minute = getSleepTimeMinute();
 
-        String sleepTime = hour + "hours " + minute + "minutes";
+        String hourString = hour > 1 ? mContext.getString(R.string.personal_information_hours_text) : mContext.getString(R.string.personal_information_hour_text);
+        hourString = hour + hourString;
+        String minuteString;
+        if (minute == 0) {
+            minuteString = "";
+        } else {
+            minuteString = minute > 1 ? mContext.getString(R.string.personal_information_minutes_text) : mContext.getString(R.string.personal_information_minute_text);
+            minuteString = minute + minuteString;
+        }
 
-        return sleepTime;
+        return hourString + minuteString;
     }
 
     public int getSleepTimeHour() {

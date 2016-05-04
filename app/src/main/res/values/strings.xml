@@ -60,11 +60,18 @@
     <string name="notification_it_is_bed_time">It\'s going to bed now!</string>
     <string name="notification_bed_time_in_30_minutes">It\'s about 30 minutes until bedtime.</string>
 
+    // Common words
+
+
     // Personal Information Activity
     <string name="personal_information_title">Personal Information</string>
     <string name="personal_information_tv_nickname_label_text">Nickname</string>
     <string name="personal_information_tv_age_label_text">Age</string>
     <string name="personal_information_tv_sleep_time_label_text">Sleep Time</string>
+    <string name="personal_information_hour_text">hour</string>
+    <string name="personal_information_hours_text">hours</string>
+    <string name="personal_information_minute_text">minute</string>
+    <string name="personal_information_minutes_text">minutes</string>
 
     // Main Activity
     <string name="main_snack_bar_text">Press back button again to exit the app</string>
@@ -77,6 +84,7 @@
     <string name="main_nav_feedback_text">Feedback</string>
     <string name="main_could_not_send_feedback_dialog_message">"Could not find a e-mail client in your device. if you want to send any feedback, please send to \ncelerysoft@gmail.com"</string>
     <string name="main_could_not_send_feedback_dialog_btn_text">Copy E-mail address to clipboard</string>
+    <string name="main_tv_sleep_time_text">Sleep Time: </string>
 
     //Main Fragment
     <string name="main_actionbar_title">Home</string>

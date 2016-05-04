@@ -14,6 +14,10 @@
     <string name="personal_information_tv_nickname_label_text">昵称</string>
     <string name="personal_information_tv_age_label_text">年龄</string>
     <string name="personal_information_tv_sleep_time_label_text">睡眠时间</string>
+    <string name="personal_information_hour_text">小时</string>
+    <string name="personal_information_hours_text">小时</string>
+    <string name="personal_information_minute_text">分钟</string>
+    <string name="personal_information_minutes_text">分钟</string>
 
     // Main Activity
     <string name="main_snack_bar_text">再按一次返回键退出程序</string>
@@ -26,6 +30,7 @@
     <string name="main_nav_feedback_text">反馈</string>
     <string name="main_could_not_send_feedback_dialog_message">"检测到您的设备无法正常发送邮件，如果您想给我发送任何反馈，请发送到：\ncelerysoft@gmail.com\n\n十分感谢您的建议和意见。"</string>
     <string name="main_could_not_send_feedback_dialog_btn_text">复制邮箱地址到剪贴板</string>
+    <string name="main_tv_sleep_time_text">睡眠时间：</string>
 
     //Main Fragment
     <string name="main_actionbar_title">主页</string>

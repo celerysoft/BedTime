@@ -16,4 +16,6 @@ public interface IPresenterMainActivity {
     void turnToSettingsFragment();
     void sendFeedback();
     void startPersonalInformationActivity();
+    String getNickname();
+    String getSleepTime();
 }
