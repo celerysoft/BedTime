@@ -93,6 +93,7 @@
     <string name="main_dialog_welcome_title">Welcome to BedTime</string>
     <string name="main_dialog_welcome_message">This is your first time to BedTime, so you need to set up some personal information for getting a better service. We will not collect this information of all times.</string>
     <string name="main_dialog_welcome_positive_btn_text">Go and Set</string>
+    <string name="main_dialog_share_message">Social Sharing will be released in next version, sorry for that.</string>
 
     //Main Fragment
     <string name="main_actionbar_title">Home</string>

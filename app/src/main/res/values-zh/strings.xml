@@ -36,6 +36,7 @@
     <string name="main_dialog_welcome_title">欢迎使用睡觉时间</string>
     <string name="main_dialog_welcome_message">因为这是您第一次打开App，为了更好的为您服务，首先需要你设置一些个人信息，请放心，这些信息都只是存在本地，不会上传到服务器。</string>
     <string name="main_dialog_welcome_positive_btn_text">前往设置</string>
+    <string name="main_dialog_share_message">分享功能将在稍后的版本退出，给您带来的不便深感歉意。</string>
 
     //Main Fragment
     <string name="main_actionbar_title">主页</string>

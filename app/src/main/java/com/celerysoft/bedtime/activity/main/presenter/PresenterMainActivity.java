@@ -244,7 +244,7 @@ public class PresenterMainActivity implements IPresenterMainActivity {
     @Override
     public void showSocialSharingDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext, R.style.AppTheme_Dialog_Light);
-        builder.setMessage("分享功能将在稍后的版本退出，给您带来的不便深感歉意。\n\nSocial Sharing will be released later, sorry for that.")
+        builder.setMessage(mContext.getString(R.string.main_dialog_share_message))
                 .setPositiveButton(mContext.getString(android.R.string.ok), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

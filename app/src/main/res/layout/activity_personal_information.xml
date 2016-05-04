@@ -40,7 +40,7 @@
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/nav_header_vertical_spacing"
             android:layout_gravity="center"
-            android:src="@mipmap/ic_launcher"/>
+            android:src="@mipmap/ic_avatar"/>
 
         <LinearLayout
             android:layout_width="match_parent"
