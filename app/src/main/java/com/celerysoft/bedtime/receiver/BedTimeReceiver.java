@@ -29,7 +29,7 @@ public class BedTimeReceiver extends BroadcastReceiver {
         Notification notification;
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
         builder.setAutoCancel(true)
-                .setSmallIcon(R.mipmap.ic_launcher)
+                .setSmallIcon(R.mipmap.ic_launcher_bedtime)
                 .setWhen(System.currentTimeMillis())
                 .setContentIntent(pendingIntent);
 
