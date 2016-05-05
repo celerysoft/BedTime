@@ -1,6 +1,6 @@
 package com.celerysoft.bedtime.fragment.bedtime.presenter;
 
-import com.celerysoft.bedtime.fragment.bedtime.WakeupTimeListViewAdapter;
+import com.celerysoft.bedtime.fragment.bedtime.adapter.WakeupTimeListViewAdapter;
 import com.celerysoft.bedtime.fragment.bedtime.model.WakeupTimeBean;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 

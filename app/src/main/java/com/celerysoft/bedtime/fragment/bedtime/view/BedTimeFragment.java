@@ -11,7 +11,7 @@ import android.widget.AdapterView;
 
 import com.celerysoft.bedtime.R;
 import com.celerysoft.bedtime.activity.main.view.MainActivity;
-import com.celerysoft.bedtime.fragment.bedtime.WakeupTimeListViewAdapter;
+import com.celerysoft.bedtime.fragment.bedtime.adapter.WakeupTimeListViewAdapter;
 import com.celerysoft.bedtime.fragment.bedtime.model.WakeupTimeBean;
 import com.celerysoft.bedtime.fragment.bedtime.presenter.IPresenterBedTime;
 import com.celerysoft.bedtime.fragment.bedtime.presenter.PresenterBedTime;

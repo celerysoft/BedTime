@@ -1,5 +1,6 @@
 package com.celerysoft.bedtime.activity.main.presenter;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.ClipData;
@@ -10,17 +11,25 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.ListViewCompat;
+import android.view.View;
+import android.widget.AdapterView;
 
 import com.celerysoft.bedtime.BuildConfig;
 import com.celerysoft.bedtime.R;
 import com.celerysoft.bedtime.activity.information.model.PersonalInformationModel;
 import com.celerysoft.bedtime.activity.information.view.PersonalInformationActivity;
+import com.celerysoft.bedtime.activity.main.adapter.SocialSharingListViewAdapter;
 import com.celerysoft.bedtime.activity.main.view.IViewMainActivity;
 import com.celerysoft.bedtime.fragment.bedtime.view.BedTimeFragment;
 import com.celerysoft.bedtime.fragment.main.view.MainFragment;
 import com.celerysoft.bedtime.fragment.settings.view.SettingsFragment;
 import com.celerysoft.bedtime.util.ActivityManagerUtil;
 import com.celerysoft.bedtime.view.BaseActivity;
+import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.UMShareListener;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.media.UMImage;
 
 /**
  * Created by Celery on 16/4/11.
@@ -36,6 +45,8 @@ public class PresenterMainActivity implements IPresenterMainActivity {
     private long mLastPressBackTime;
 
     private PersonalInformationModel mModel;
+
+    private AlertDialog mSocialSharingDialog;
 
     public PresenterMainActivity(IViewMainActivity view) {
         super();
@@ -243,14 +254,58 @@ public class PresenterMainActivity implements IPresenterMainActivity {
     // TODO add social sharing.
     @Override
     public void showSocialSharingDialog() {
+        ListViewCompat listView = new ListViewCompat(mContext);
+        listView.setAdapter(new SocialSharingListViewAdapter(mContext));
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                ShareAction action = new ShareAction((Activity) mContext);
+                action.withTitle(mContext.getString(R.string.main_share_title))
+                        .withText(mContext.getString(R.string.main_share_message))
+                        .withMedia(new UMImage(mContext, "http://7xpapo.com1.z0.glb.clouddn.com/BedTime108.png"))
+                        .withTargetUrl("http://celerysoft.github.io/2016-05-05.html")
+                        .setCallback(new UMShareListener() {
+                            @Override
+                            public void onResult(SHARE_MEDIA share_media) {
+                                Snackbar.make(mView.getFloatActionButton(), R.string.main_snack_bar_share_success, Snackbar.LENGTH_SHORT).show();
+                            }
+
+                            @Override
+                            public void onError(SHARE_MEDIA share_media, Throwable throwable) {
+                                Snackbar.make(mView.getFloatActionButton(), R.string.main_snack_bar_share_fail, Snackbar.LENGTH_SHORT).show();
+                            }
+
+                            @Override
+                            public void onCancel(SHARE_MEDIA share_media) {
+                                Snackbar.make(mView.getFloatActionButton(), R.string.main_snack_bar_share_cancel, Snackbar.LENGTH_SHORT).show();
+                            }
+                        });
+                switch (position) {
+                    case SocialSharingListViewAdapter.WECHAT:
+                        action.setPlatform(SHARE_MEDIA.WEIXIN);
+                        break;
+                    case SocialSharingListViewAdapter.WECHAT_TIMELINE:
+                        action.setPlatform(SHARE_MEDIA.WEIXIN_CIRCLE);
+                        break;
+                    case SocialSharingListViewAdapter.QQ:
+                        action.setPlatform(SHARE_MEDIA.QQ);
+                        break;
+                    case SocialSharingListViewAdapter.QZONE:
+                        action.setPlatform(SHARE_MEDIA.QZONE);
+                        break;
+                    default:
+                        break;
+                }
+                if (mSocialSharingDialog != null && mSocialSharingDialog.isShowing()) {
+                    mSocialSharingDialog.dismiss();
+                }
+                action.share();
+            }
+        });
+
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext, R.style.AppTheme_Dialog_Light);
-        builder.setMessage(mContext.getString(R.string.main_dialog_share_message))
-                .setPositiveButton(mContext.getString(android.R.string.ok), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                })
+        mSocialSharingDialog = builder.setView(listView, 0, 20, 0, 24)
+                .setTitle(R.string.main_dialog_share_title)
                 .show();
     }
 

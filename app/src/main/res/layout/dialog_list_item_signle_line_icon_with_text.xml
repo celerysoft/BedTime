@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="48dp">
+    <ImageView
+        android:id="@+id/dialog_list_item_single_line_iv"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_centerVertical="true"/>
+
+    <TextView
+        android:id="@+id/dialog_list_item_single_line_tv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="80dp"
+        android:layout_marginLeft="80dp"
+        android:layout_marginRight="24dp"
+        android:layout_marginEnd="24dp"
+        android:textSize="@dimen/list_view_font_size"
+        android:textColor="@color/colorPrimaryText"
+        android:gravity="center_vertical|start"/>
+</RelativeLayout>

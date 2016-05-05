@@ -1,4 +1,4 @@
-package com.celerysoft.bedtime.fragment.bedtime;
+package com.celerysoft.bedtime.fragment.bedtime.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.AppCompatTextView;

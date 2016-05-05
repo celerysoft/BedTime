@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">睡觉时间</string>
+    <string name="app_name">夜堪眠</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -36,7 +36,16 @@
     <string name="main_dialog_welcome_title">欢迎使用睡觉时间</string>
     <string name="main_dialog_welcome_message">因为这是您第一次打开App，为了更好的为您服务，首先需要你设置一些个人信息，请放心，这些信息都只是存在本地，不会上传到服务器。</string>
     <string name="main_dialog_welcome_positive_btn_text">前往设置</string>
-    <string name="main_dialog_share_message">分享功能将在稍后的版本退出，给您带来的不便深感歉意。</string>
+    <string name="main_snack_bar_share_success">分享成功</string>
+    <string name="main_snack_bar_share_fail">分享失败</string>
+    <string name="main_snack_bar_share_cancel">分享取消</string>
+    <string name="main_share_title">也许你需要一个提醒你按时睡觉的小助手</string>
+    <string name="main_share_message">您只需设定每天的起床时间，并且设定您的年龄，「夜堪眠」会根据您的年龄计算出每天所需睡眠的时间，并在您睡前30分钟提醒你上床睡觉。</string>
+    <string name="main_dialog_share_title">分享到</string>
+    <string name="main_dialog_share_wechat">微信</string>
+    <string name="main_dialog_share_wechat_timeline">微信朋友圈</string>
+    <string name="main_dialog_share_qq">QQ</string>
+    <string name="main_dialog_share_qzone">QQ空间</string>
 
     //Main Fragment
     <string name="main_actionbar_title">主页</string>

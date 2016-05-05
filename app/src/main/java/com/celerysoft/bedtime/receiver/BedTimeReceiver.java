@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.PowerManager;
+import android.support.v7.app.NotificationCompat;
 
 import com.celerysoft.bedtime.R;
 import com.celerysoft.bedtime.activity.main.view.MainActivity;
@@ -26,7 +27,7 @@ public class BedTimeReceiver extends BroadcastReceiver {
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, openIntent, PendingIntent.FLAG_ONE_SHOT);
 
         Notification notification;
-        Notification.Builder builder = new Notification.Builder(context);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
         builder.setAutoCancel(true)
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setWhen(System.currentTimeMillis())
@@ -37,12 +38,12 @@ public class BedTimeReceiver extends BroadcastReceiver {
             builder.setContentTitle(context.getString(R.string.notification_bed_time_in_30_minutes_title))
                     .setContentText(context.getString(R.string.notification_bed_time_in_30_minutes) + getNickname(context))
                     .setTicker(context.getString(R.string.notification_bed_time_in_30_minutes) + getNickname(context))
-                    .setDefaults(Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE);
+                    .setDefaults(NotificationCompat.DEFAULT_SOUND | NotificationCompat.DEFAULT_VIBRATE);
         } else if (action.equals(context.getString(R.string.action_bed_time))) {
             builder.setContentTitle(context.getString(R.string.notification_it_is_bed_time_title))
                     .setContentText(context.getString(R.string.notification_it_is_bed_time) + getNickname(context))
                     .setTicker(context.getString(R.string.notification_it_is_bed_time) + getNickname(context))
-                    .setDefaults(Notification.DEFAULT_VIBRATE);
+                    .setDefaults(NotificationCompat.DEFAULT_VIBRATE);
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
@@ -54,7 +55,7 @@ public class BedTimeReceiver extends BroadcastReceiver {
         NotificationManager manager = (NotificationManager) context.getSystemService((Context.NOTIFICATION_SERVICE));
         manager.notify(1, notification);
 
-        setAlarmOfNextDay(context);
+        setNextAlarm(context);
     }
 
     private void acquireWakeLock(Context context, long timeout) {
@@ -64,7 +65,7 @@ public class BedTimeReceiver extends BroadcastReceiver {
         wakeLock.acquire(timeout);
     }
 
-    private void setAlarmOfNextDay(Context context) {
+    private void setNextAlarm(Context context) {
         PresenterMain.enableAlarm(context);
     }
 

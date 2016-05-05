@@ -2,6 +2,7 @@ package com.celerysoft.bedtime.activity.main.view;
 
 import android.app.Fragment;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.AppCompatSpinner;
@@ -23,6 +24,9 @@ import com.celerysoft.bedtime.fragment.bedtime.view.BedTimeFragment;
 import com.celerysoft.bedtime.fragment.main.view.MainFragment;
 import com.celerysoft.bedtime.fragment.settings.view.SettingsFragment;
 import com.celerysoft.bedtime.view.BaseActivity;
+import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.UMShareAPI;
+import com.umeng.socialize.bean.SHARE_MEDIA;
 
 public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener ,IViewMainActivity {
@@ -126,6 +130,12 @@ public class MainActivity extends BaseActivity
 
         mTvNickname.setText(mPresenter.getNickname());
         mTvSleepTime.setText(mPresenter.getSleepTime());
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
