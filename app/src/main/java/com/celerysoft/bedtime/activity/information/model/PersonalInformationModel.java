@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.celerysoft.bedtime.R;
+import com.celerysoft.bedtime.fragment.main.model.BedTimeModel;
+import com.celerysoft.bedtime.fragment.main.presenter.PresenterMain;
 
 /**
  * Created by admin on 16/5/3.
@@ -13,10 +15,14 @@ public class PersonalInformationModel {
 
     private SharedPreferences mSharedPreferences;
 
+    BedTimeModel mBedTimeModel;
+
     public PersonalInformationModel(Context context) {
         mContext = context;
 
         mSharedPreferences = context.getSharedPreferences(mContext.getString(R.string.shared_preferences_key_default), Context.MODE_PRIVATE);
+
+        mBedTimeModel = new BedTimeModel(context);
     }
 
     public String getNickname() {
@@ -71,6 +77,10 @@ public class PersonalInformationModel {
     public void setSleepTime(int hour, int minute) {
         setSleepTimeHour(hour);
         setSleepTimeMinute(minute);
+
+        mBedTimeModel.refreshBedTime();
+
+        PresenterMain.enableAlarm(mContext);
     }
 
     private void setSleepTimeHour(int hour) {
