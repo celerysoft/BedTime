@@ -30,10 +30,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:showIn="@layout/app_bar_main"
-        tools:context=".activity.main.view.MainActivity">
-
-    </FrameLayout>
+        tools:showIn="@layout/activity_main_app_bar"
+        tools:context=".activity.main.view.MainActivity"/>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"

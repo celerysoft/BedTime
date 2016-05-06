@@ -31,7 +31,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:showIn="@layout/app_bar_main"
+        tools:showIn="@layout/activity_main_app_bar"
         tools:context=".activity.main.view.MainActivity">
 
         <ImageView

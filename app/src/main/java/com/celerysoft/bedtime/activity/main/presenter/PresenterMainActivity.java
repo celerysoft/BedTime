@@ -33,7 +33,7 @@ import com.umeng.socialize.media.UMImage;
 
 /**
  * Created by Celery on 16/4/11.
- * Presenter for main activity.
+ * Presenter for activity_main_toolbar activity.
  */
 public class PresenterMainActivity implements IPresenterMainActivity {
     private IViewMainActivity mView;
@@ -263,7 +263,7 @@ public class PresenterMainActivity implements IPresenterMainActivity {
                 action.withTitle(mContext.getString(R.string.main_share_title))
                         .withText(mContext.getString(R.string.main_share_message))
                         .withMedia(new UMImage(mContext, "http://7xpapo.com1.z0.glb.clouddn.com/BedTime108.png"))
-                        .withTargetUrl("http://celerysoft.github.io/2016-05-05.html")
+                        .withTargetUrl("http://a.app.qq.com/o/simple.jsp?pkgname=com.celerysoft.bedtime")
                         .setCallback(new UMShareListener() {
                             @Override
                             public void onResult(SHARE_MEDIA share_media) {

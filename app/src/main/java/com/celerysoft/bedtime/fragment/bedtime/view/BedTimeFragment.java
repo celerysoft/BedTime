@@ -1,6 +1,5 @@
 package com.celerysoft.bedtime.fragment.bedtime.view;
 
-import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.ListViewCompat;
@@ -10,11 +9,11 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 
 import com.celerysoft.bedtime.R;
-import com.celerysoft.bedtime.activity.main.view.MainActivity;
 import com.celerysoft.bedtime.fragment.bedtime.adapter.WakeupTimeListViewAdapter;
 import com.celerysoft.bedtime.fragment.bedtime.model.WakeupTimeBean;
 import com.celerysoft.bedtime.fragment.bedtime.presenter.IPresenterBedTime;
 import com.celerysoft.bedtime.fragment.bedtime.presenter.PresenterBedTime;
+import com.celerysoft.bedtime.view.BaseFragment;
 import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
@@ -23,7 +22,7 @@ import java.util.Calendar;
 /**
  * Created by Celery on 16/4/12.
  */
-public class BedTimeFragment extends Fragment implements IViewBedTime {
+public class BedTimeFragment extends BaseFragment implements IViewBedTime {
 
     IPresenterBedTime mPresenter;
     public IPresenterBedTime getPresenter() {
@@ -32,14 +31,6 @@ public class BedTimeFragment extends Fragment implements IViewBedTime {
 
     ListViewCompat mListViewWakeupTime;
     WakeupTimeListViewAdapter mAdapter;
-
-    @Override
-    public void onStart() {
-        if (getActivity() instanceof MainActivity) {
-            ((MainActivity) getActivity()).onTurnToBedTimeFragment();
-        }
-        super.onStart();
-    }
 
     @Nullable
     @Override

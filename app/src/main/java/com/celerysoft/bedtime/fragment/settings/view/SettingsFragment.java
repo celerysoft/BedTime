@@ -1,6 +1,5 @@
 package com.celerysoft.bedtime.fragment.settings.view;
 
-import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatTextView;
@@ -11,14 +10,14 @@ import android.view.ViewGroup;
 import android.widget.CompoundButton;
 
 import com.celerysoft.bedtime.R;
-import com.celerysoft.bedtime.activity.main.view.MainActivity;
 import com.celerysoft.bedtime.fragment.settings.presenter.IPresenterSettings;
 import com.celerysoft.bedtime.fragment.settings.presenter.PresenterSettings;
+import com.celerysoft.bedtime.view.BaseFragment;
 
 /**
  * Created by admin on 16/4/29.
  */
-public class SettingsFragment extends Fragment implements IViewSettings {
+public class SettingsFragment extends BaseFragment implements IViewSettings {
     IPresenterSettings mPresenter;
     public IPresenterSettings getPresenter() {
         return mPresenter;
@@ -30,14 +29,6 @@ public class SettingsFragment extends Fragment implements IViewSettings {
     private View mViewLanguage;
     private AppCompatTextView mTvLanguage;
     private View mViewPersonalInformation;
-
-    @Override
-    public void onStart() {
-        if (getActivity() instanceof MainActivity) {
-            ((MainActivity) getActivity()).onTurnToSettingsFragment();
-        }
-        super.onStart();
-    }
 
     @Nullable
     @Override

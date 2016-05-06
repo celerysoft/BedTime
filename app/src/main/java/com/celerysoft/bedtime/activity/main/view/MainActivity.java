@@ -24,9 +24,8 @@ import com.celerysoft.bedtime.fragment.bedtime.view.BedTimeFragment;
 import com.celerysoft.bedtime.fragment.main.view.MainFragment;
 import com.celerysoft.bedtime.fragment.settings.view.SettingsFragment;
 import com.celerysoft.bedtime.view.BaseActivity;
-import com.umeng.socialize.ShareAction;
+import com.celerysoft.bedtime.view.BaseFragment;
 import com.umeng.socialize.UMShareAPI;
-import com.umeng.socialize.bean.SHARE_MEDIA;
 
 public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener ,IViewMainActivity {
@@ -55,7 +54,9 @@ public class MainActivity extends BaseActivity
 
         mPresenter = new PresenterMainActivity(this);
 
-        init();
+        initActivity();
+
+        initFragment();
 
         restoreInstanceState(getIntent().getExtras());
 
@@ -64,12 +65,7 @@ public class MainActivity extends BaseActivity
         }
     }
 
-    private void init() {
-
-        mMainFragment = new MainFragment();
-        mBedTimeFragment = new BedTimeFragment();
-        mSettingsFragment = new SettingsFragment();
-
+    private void initActivity() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -108,9 +104,25 @@ public class MainActivity extends BaseActivity
             mTvNickname = (TextView) header.findViewById(R.id.main_nav_tv_nickname);
             mTvSleepTime = (TextView) header.findViewById(R.id.main_nav_tv_sleep_time);
         }
+    }
+
+    private void initFragment() {
+        mMainFragment = new MainFragment();
+        mMainFragment.setOnFragmentStatusChangedListener(mOnFragmentStatusChangedListener);
+        mBedTimeFragment = new BedTimeFragment();
+        mBedTimeFragment.setOnFragmentStatusChangedListener(mOnFragmentStatusChangedListener);
+        mSettingsFragment = new SettingsFragment();
+        mSettingsFragment.setOnFragmentStatusChangedListener(mOnFragmentStatusChangedListener);
 
         mPresenter.setMainFragment();
     }
+
+    private BaseFragment.OnFragmentStatusChangedListener mOnFragmentStatusChangedListener = new BaseFragment.OnFragmentStatusChangedListener() {
+        @Override
+        public void onFragmentStart(BaseFragment fragment) {
+            mPresenter.updateViewByFragmentInfo(fragment);
+        }
+    };
 
     protected void restoreInstanceState(Bundle savedInstanceState) {
         if (savedInstanceState != null) {
@@ -166,7 +178,7 @@ public class MainActivity extends BaseActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
+        getMenuInflater().inflate(R.menu.activity_main_toolbar, menu);
         return true;
     }
 
