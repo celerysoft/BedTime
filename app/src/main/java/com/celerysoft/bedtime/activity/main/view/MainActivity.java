@@ -15,6 +15,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.celerysoft.bedtime.R;
@@ -39,7 +40,7 @@ public class MainActivity extends BaseActivity
     private DrawerLayout mDrawer;
     private NavigationView mNavigationView;
 
-    private AppCompatSpinner mSpinnerPersonalInformation;
+    private ImageView mIvAvatar;
     private TextView mTvNickname;
     private TextView mTvSleepTime;
 
@@ -90,14 +91,11 @@ public class MainActivity extends BaseActivity
 
         if (mNavigationView != null) {
             View header = mNavigationView.getHeaderView(0);
-            mSpinnerPersonalInformation = (AppCompatSpinner) header.findViewById(R.id.main_nav_spinner);
-            mSpinnerPersonalInformation.setOnTouchListener(new View.OnTouchListener() {
+            mIvAvatar = (ImageView) header.findViewById(R.id.main_nav_iv_avatar);
+            mIvAvatar.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public boolean onTouch(View v, MotionEvent event) {
-                    if (event.getAction() == MotionEvent.ACTION_UP) {
-                        mPresenter.startPersonalInformationActivity();
-                    }
-                    return false;
+                public void onClick(View v) {
+                    mPresenter.startPersonalInformationActivity();
                 }
             });
 
