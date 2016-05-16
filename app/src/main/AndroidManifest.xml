@@ -56,6 +56,9 @@
         <activity android:name=".activity.information.view.PersonalInformationActivity"
                   android:theme="@style/AppTheme.NoActionBar" />
 
+        <activity android:name=".activity.abuotus.AboutUsActivity"
+                  android:theme="@style/AppTheme.NoActionBar" />
+
         <receiver android:name=".receiver.BedTimeReceiver" />
         <receiver android:name=".receiver.DeviceBootReceiver"
             android:enabled="false">

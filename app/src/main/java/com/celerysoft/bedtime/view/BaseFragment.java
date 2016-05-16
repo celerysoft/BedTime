@@ -1,6 +1,7 @@
 package com.celerysoft.bedtime.view;
 
 import android.app.Fragment;
+import android.os.Bundle;
 
 /**
  * Created by admin on 16/5/6.
@@ -12,8 +13,8 @@ public class BaseFragment extends Fragment {
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
 
         if (mOnFragmentStatusChangedListener != null) {
             mOnFragmentStatusChangedListener.onFragmentStart(this);

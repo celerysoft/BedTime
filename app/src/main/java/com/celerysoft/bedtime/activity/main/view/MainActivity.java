@@ -148,6 +148,7 @@ public class MainActivity extends BaseActivity
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
+        mPresenter.handleActivityResult(requestCode, resultCode, data);
     }
 
     @Override
@@ -190,8 +191,8 @@ public class MainActivity extends BaseActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            mPresenter.turnToSettingsFragment();
+        if (id == R.id.action_about_us) {
+            mPresenter.openAboutBedTimeActivity();
             return true;
         }
 
@@ -257,20 +258,5 @@ public class MainActivity extends BaseActivity
     @Override
     public Fragment getBedTimeFragment() {
         return mBedTimeFragment;
-    }
-
-    @Override
-    public void onTurnToMainFragment() {
-        mPresenter.updateViewByFragmentInfo(mMainFragment);
-    }
-
-    @Override
-    public void onTurnToBedTimeFragment() {
-        mPresenter.updateViewByFragmentInfo(mBedTimeFragment);
-    }
-
-    @Override
-    public void onTurnToSettingsFragment() {
-        mPresenter.updateViewByFragmentInfo(mSettingsFragment);
     }
 }

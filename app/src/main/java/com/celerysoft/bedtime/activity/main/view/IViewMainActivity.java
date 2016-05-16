@@ -20,7 +20,4 @@ public interface IViewMainActivity {
     Fragment getSettingsFragment();
     Fragment getBedTimeFragment();
     ActionBar getSupportActionBar();
-    void onTurnToMainFragment();
-    void onTurnToBedTimeFragment();
-    void onTurnToSettingsFragment();
 }

@@ -1,13 +1,14 @@
 package com.celerysoft.bedtime.activity.main.presenter;
 
 import android.app.Fragment;
+import android.content.Intent;
 
 /**
  * Created by Celery on 16/4/11.
  *
  */
 public interface IPresenterMainActivity {
-        void setMainFragment();
+    void setMainFragment();
     void preExitApp();
     void exitApp();
     boolean readyToExitApp();
@@ -24,4 +25,6 @@ public interface IPresenterMainActivity {
     void showWelcomeDialog();
     void showSocialSharingDialog();
     void copyAssetsFileToExternalStorage();
+    void openAboutBedTimeActivity();
+    void handleActivityResult(int requestCode, int resultCode, Intent data);
 }

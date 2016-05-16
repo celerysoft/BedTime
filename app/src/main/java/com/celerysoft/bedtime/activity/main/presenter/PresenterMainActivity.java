@@ -17,6 +17,7 @@ import android.widget.AdapterView;
 
 import com.celerysoft.bedtime.BuildConfig;
 import com.celerysoft.bedtime.R;
+import com.celerysoft.bedtime.activity.abuotus.AboutUsActivity;
 import com.celerysoft.bedtime.activity.information.model.PersonalInformationModel;
 import com.celerysoft.bedtime.activity.information.view.PersonalInformationActivity;
 import com.celerysoft.bedtime.activity.main.adapter.SocialSharingListViewAdapter;
@@ -38,6 +39,8 @@ import com.umeng.socialize.media.UMImage;
  * Presenter for activity_main_toolbar activity.
  */
 public class PresenterMainActivity implements IPresenterMainActivity {
+    private final int REQUEST_CODE_OPEN_ABOUT_US_ACTIVITY = 1001;
+
     private IViewMainActivity mView;
 
     private Context mContext;
@@ -286,8 +289,8 @@ public class PresenterMainActivity implements IPresenterMainActivity {
                 ShareAction action = new ShareAction((Activity) mContext);
                 action.withTitle(mContext.getString(R.string.main_share_title))
                         .withText(mContext.getString(R.string.main_share_message))
-                        .withMedia(new UMImage(mContext, "http://7xpapo.com1.z0.glb.clouddn.com/BedTime108.png"))
-                        .withTargetUrl("http://celerysoft.github.io/2016-05-05.html")
+                        .withMedia(new UMImage(mContext, Const.BED_TIME_LOGO_URL))
+                        .withTargetUrl(Const.ABOUT_BED_TIME_URL)
                         .setCallback(new UMShareListener() {
                             @Override
                             public void onResult(SHARE_MEDIA share_media) {
@@ -331,6 +334,34 @@ public class PresenterMainActivity implements IPresenterMainActivity {
         mSocialSharingDialog = builder.setView(listView, 0, 20, 0, 24)
                 .setTitle(R.string.main_dialog_share_title)
                 .show();
+    }
+
+    @Override
+    public void openAboutBedTimeActivity() {
+        mView.getFloatActionButton().hide();
+        mView.getFloatActionButton().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(mContext, AboutUsActivity.class);
+                ((Activity) mContext).startActivityForResult(intent, REQUEST_CODE_OPEN_ABOUT_US_ACTIVITY);
+            }
+        }, 300);
+    }
+
+    @Override
+    public void handleActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case REQUEST_CODE_OPEN_ABOUT_US_ACTIVITY:
+                mView.getFloatActionButton().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mView.getFloatActionButton().show();
+                    }
+                }, 300);
+                break;
+            default:
+                break;
+        }
     }
 
     private void hideFloatActionButton() {
