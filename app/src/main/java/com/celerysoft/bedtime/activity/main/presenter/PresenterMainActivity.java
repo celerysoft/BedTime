@@ -25,6 +25,7 @@ import com.celerysoft.bedtime.fragment.bedtime.view.BedTimeFragment;
 import com.celerysoft.bedtime.fragment.main.view.MainFragment;
 import com.celerysoft.bedtime.fragment.settings.view.SettingsFragment;
 import com.celerysoft.bedtime.util.ActivityManagerUtil;
+import com.celerysoft.bedtime.util.AssetsUtil;
 import com.celerysoft.bedtime.view.BaseActivity;
 import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.UMShareListener;
@@ -251,7 +252,6 @@ public class PresenterMainActivity implements IPresenterMainActivity {
                 .show();
     }
 
-    // TODO add social sharing.
     @Override
     public void showSocialSharingDialog() {
         ListViewCompat listView = new ListViewCompat(mContext);
@@ -263,7 +263,7 @@ public class PresenterMainActivity implements IPresenterMainActivity {
                 action.withTitle(mContext.getString(R.string.main_share_title))
                         .withText(mContext.getString(R.string.main_share_message))
                         .withMedia(new UMImage(mContext, "http://7xpapo.com1.z0.glb.clouddn.com/BedTime108.png"))
-                        .withTargetUrl("http://a.app.qq.com/o/simple.jsp?pkgname=com.celerysoft.bedtime")
+                        .withTargetUrl("http://celerysoft.github.io/2016-05-05.html")
                         .setCallback(new UMShareListener() {
                             @Override
                             public void onResult(SHARE_MEDIA share_media) {
@@ -307,6 +307,11 @@ public class PresenterMainActivity implements IPresenterMainActivity {
         mSocialSharingDialog = builder.setView(listView, 0, 20, 0, 24)
                 .setTitle(R.string.main_dialog_share_title)
                 .show();
+    }
+
+    @Override
+    public void copyAssetsFileToExternalStorage() {
+        AssetsUtil.getInstance().copyFilesFromAssetsToExternalStorage(mContext);
     }
 
     private void hideFloatActionButton() {

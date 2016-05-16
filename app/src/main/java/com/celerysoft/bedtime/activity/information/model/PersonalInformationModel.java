@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 
 import com.celerysoft.bedtime.R;
 import com.celerysoft.bedtime.fragment.main.model.BedTimeModel;
-import com.celerysoft.bedtime.fragment.main.presenter.PresenterMain;
+import com.celerysoft.bedtime.util.AlarmUtil;
 
 /**
  * Created by admin on 16/5/3.
@@ -80,7 +80,7 @@ public class PersonalInformationModel {
 
         mBedTimeModel.refreshBedTime();
 
-        PresenterMain.enableAlarm(mContext);
+        AlarmUtil.getInstance().setUpNextAlarm(mContext);
     }
 
     private void setSleepTimeHour(int hour) {

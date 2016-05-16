@@ -3,7 +3,7 @@ package com.celerysoft.bedtime.receiver;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import com.celerysoft.bedtime.fragment.main.presenter.PresenterMain;
+import com.celerysoft.bedtime.util.AlarmUtil;
 
 /**
  * Created by admin on 16/4/27.
@@ -14,7 +14,7 @@ public class DeviceBootReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         if (intent.getAction().equals("android.intent.action.BOOT_COMPLETED")) {
             // After device boot completed, set current day's alarm.
-            PresenterMain.enableAlarm(context);
+            AlarmUtil.getInstance().setUpNextAlarm(context);
         }
     }
 }

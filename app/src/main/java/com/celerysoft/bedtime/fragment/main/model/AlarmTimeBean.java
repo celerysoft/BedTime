@@ -19,4 +19,33 @@ public class AlarmTimeBean extends BaseTimeBean {
     public void setType(Type type) {
         mType = type;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        AlarmTimeBean bean;
+
+        if (o instanceof AlarmTimeBean) {
+            bean = (AlarmTimeBean) o;
+        } else {
+            return false;
+        }
+
+        if (!bean.getType().equals(getType())) {
+            return false;
+        }
+
+        if (bean.getDayOfTheWeek() != getDayOfTheWeek()) {
+            return false;
+        }
+
+        if (bean.getHour() != getHour()) {
+            return false;
+        }
+
+        if (bean.getMinute() != getMinute()) {
+            return false;
+        }
+
+        return true;
+    }
 }

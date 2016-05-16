@@ -7,13 +7,18 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Build;
+import android.os.Environment;
 import android.os.PowerManager;
 import android.support.v7.app.NotificationCompat;
 
 import com.celerysoft.bedtime.R;
 import com.celerysoft.bedtime.activity.main.view.MainActivity;
-import com.celerysoft.bedtime.fragment.main.presenter.PresenterMain;
+import com.celerysoft.bedtime.util.AlarmUtil;
+import com.celerysoft.bedtime.util.Const;
+
+import java.io.File;
 
 /**
  * Created by Celery on 16/4/14.
@@ -35,10 +40,14 @@ public class BedTimeReceiver extends BroadcastReceiver {
 
         String action = intent.getAction();
         if (action.equals(context.getString(R.string.action_go_bed))) {
+            String soundPath = context.getExternalFilesDir(Environment.DIRECTORY_NOTIFICATIONS).getPath() + File.separator + Const.NOTIFICATION_FILE_NAME;
+            Uri uri = Uri.fromFile(new File(soundPath));
+
             builder.setContentTitle(context.getString(R.string.notification_bed_time_in_30_minutes_title))
                     .setContentText(context.getString(R.string.notification_bed_time_in_30_minutes) + getNickname(context))
                     .setTicker(context.getString(R.string.notification_bed_time_in_30_minutes) + getNickname(context))
-                    .setDefaults(NotificationCompat.DEFAULT_SOUND | NotificationCompat.DEFAULT_VIBRATE);
+                    .setDefaults(NotificationCompat.DEFAULT_VIBRATE)
+                    .setSound(uri);
         } else if (action.equals(context.getString(R.string.action_bed_time))) {
             builder.setContentTitle(context.getString(R.string.notification_it_is_bed_time_title))
                     .setContentText(context.getString(R.string.notification_it_is_bed_time) + getNickname(context))
@@ -66,7 +75,7 @@ public class BedTimeReceiver extends BroadcastReceiver {
     }
 
     private void setNextAlarm(Context context) {
-        PresenterMain.enableAlarm(context);
+        AlarmUtil.getInstance().setUpNextAlarm(context);
     }
 
     private String getNickname(Context context) {

@@ -4,6 +4,7 @@ import android.app.Fragment;
 
 /**
  * Created by Celery on 16/4/11.
+ *
  */
 public interface IPresenterMainActivity {
         void setMainFragment();
@@ -21,4 +22,5 @@ public interface IPresenterMainActivity {
     boolean isNewToBedTime();
     void showWelcomeDialog();
     void showSocialSharingDialog();
+    void copyAssetsFileToExternalStorage();
 }

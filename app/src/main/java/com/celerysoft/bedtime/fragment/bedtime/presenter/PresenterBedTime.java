@@ -11,8 +11,8 @@ import com.celerysoft.bedtime.fragment.bedtime.model.WakeupTimeBean;
 import com.celerysoft.bedtime.fragment.bedtime.model.WakeupTimeModel;
 import com.celerysoft.bedtime.fragment.bedtime.view.IViewBedTime;
 import com.celerysoft.bedtime.fragment.main.model.BedTimeModel;
-import com.celerysoft.bedtime.fragment.main.presenter.PresenterMain;
 import com.celerysoft.bedtime.fragment.settings.model.SettingsModel;
+import com.celerysoft.bedtime.util.AlarmUtil;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
 import java.util.ArrayList;
@@ -109,6 +109,6 @@ public class PresenterBedTime implements IPresenterBedTime {
     }
 
     private void updateAlarm() {
-        PresenterMain.enableAlarm(mContext);
+        AlarmUtil.getInstance().setUpNextAlarm(mContext);
     }
 }

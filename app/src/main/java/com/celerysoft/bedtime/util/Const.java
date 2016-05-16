@@ -11,4 +11,6 @@ public class Const {
     public static String getDefaultSharedPreferencesKey(Context context) {
         return context.getString(R.string.shared_preferences_key_default);
     }
+
+    public static String NOTIFICATION_FILE_NAME = "notification.mp3";
 }
