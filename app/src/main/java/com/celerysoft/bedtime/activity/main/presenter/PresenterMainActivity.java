@@ -26,6 +26,7 @@ import com.celerysoft.bedtime.fragment.main.view.MainFragment;
 import com.celerysoft.bedtime.fragment.settings.view.SettingsFragment;
 import com.celerysoft.bedtime.util.ActivityManagerUtil;
 import com.celerysoft.bedtime.util.AssetsUtil;
+import com.celerysoft.bedtime.util.Const;
 import com.celerysoft.bedtime.view.BaseActivity;
 import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.UMShareListener;
@@ -253,6 +254,29 @@ public class PresenterMainActivity implements IPresenterMainActivity {
     }
 
     @Override
+    public boolean isNewVersion() {
+        SharedPreferences sharedPreferences = mContext.getSharedPreferences(Const.getDefaultSharedPreferencesKey(mContext), Context.MODE_PRIVATE);
+        int lastLaunchVersionCode = sharedPreferences.getInt(mContext.getString(R.string.shared_preferences_key_last_time_version_code), 0);
+
+        int thisLaunchVersionCode = BuildConfig.VERSION_CODE;
+
+        if (lastLaunchVersionCode == thisLaunchVersionCode) {
+            return true;
+        } else {
+            sharedPreferences.edit()
+                    .putInt(mContext.getString(R.string.shared_preferences_key_last_time_version_code), thisLaunchVersionCode)
+                    .apply();
+
+            return false;
+        }
+    }
+
+    @Override
+    public void copyAssetsFileToExternalStorage() {
+        AssetsUtil.getInstance().copyFilesFromAssetsToExternalStorage(mContext);
+    }
+
+    @Override
     public void showSocialSharingDialog() {
         ListViewCompat listView = new ListViewCompat(mContext);
         listView.setAdapter(new SocialSharingListViewAdapter(mContext));
@@ -307,11 +331,6 @@ public class PresenterMainActivity implements IPresenterMainActivity {
         mSocialSharingDialog = builder.setView(listView, 0, 20, 0, 24)
                 .setTitle(R.string.main_dialog_share_title)
                 .show();
-    }
-
-    @Override
-    public void copyAssetsFileToExternalStorage() {
-        AssetsUtil.getInstance().copyFilesFromAssetsToExternalStorage(mContext);
     }
 
     private void hideFloatActionButton() {

@@ -33,7 +33,7 @@
     <string name="main_could_not_send_feedback_dialog_message">"检测到您的设备无法正常发送邮件，如果您想给我发送任何反馈，请发送到：\ncelerysoft@gmail.com\n\n十分感谢您的建议和意见。"</string>
     <string name="main_could_not_send_feedback_dialog_btn_text">复制邮箱地址到剪贴板</string>
     <string name="main_tv_sleep_time_text">睡眠时间：</string>
-    <string name="main_dialog_welcome_title">欢迎使用睡觉时间</string>
+    <string name="main_dialog_welcome_title">欢迎使用夜堪眠</string>
     <string name="main_dialog_welcome_message">因为这是您第一次打开App，为了更好的为您服务，首先需要你设置一些个人信息，请放心，这些信息都只是存在本地，不会上传到服务器。</string>
     <string name="main_dialog_welcome_positive_btn_text">前往设置</string>
     <string name="main_snack_bar_share_success">分享成功</string>

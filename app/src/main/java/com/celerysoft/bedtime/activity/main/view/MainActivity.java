@@ -61,6 +61,10 @@ public class MainActivity extends BaseActivity
 
         if(mPresenter.isNewToBedTime()) {
             mPresenter.showWelcomeDialog();
+
+        }
+
+        if (mPresenter.isNewVersion()) {
             mPresenter.copyAssetsFileToExternalStorage();
         }
     }

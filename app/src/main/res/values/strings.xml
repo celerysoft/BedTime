@@ -16,6 +16,7 @@
     <string name="shared_preferences_key_default">shared_preferences_key_default</string>
 
     <string name="shared_preferences_key_is_new_user">shared_preferences_key_is_new_user</string>
+    <string name="shared_preferences_key_last_time_version_code">shared_preferences_key_last_time_version_code</string>
 
     <!-- Wake up time -->
     <string name="shared_preferences_key_wakeup_time_monday_hour">shared_preferences_key_wakeup_time_monday_hour</string>

@@ -20,6 +20,7 @@ public interface IPresenterMainActivity {
     String getNickname();
     String getSleepTime();
     boolean isNewToBedTime();
+    boolean isNewVersion();
     void showWelcomeDialog();
     void showSocialSharingDialog();
     void copyAssetsFileToExternalStorage();
