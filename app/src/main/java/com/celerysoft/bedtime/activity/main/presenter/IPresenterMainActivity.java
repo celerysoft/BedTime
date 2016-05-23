@@ -23,6 +23,7 @@ public interface IPresenterMainActivity {
     String getSleepTime();
     boolean isNewToBedTime();
     boolean isNewVersion();
+    boolean isCopyAssetsFileToExternalStorage();
     void showWelcomeDialog();
     void showSocialSharingDialog();
     void copyAssetsFileToExternalStorage();

@@ -36,32 +36,49 @@ public class AssetsUtil {
      * Copy all the files from assets to external storage
      * @param context Context instance
      */
-    public void copyFilesFromAssetsToExternalStorage(Context context) {
-        File file = context.getExternalFilesDir(Environment.DIRECTORY_NOTIFICATIONS);
-        if (!file.exists()) {
-            file.mkdirs();
-        }
-
-        String[] paths = new String[] {
-                Const.NOTIFICATION_FILE_NAME
-        };
-
-        for (String path : paths) {
-            try {
-                InputStream is = context.getAssets().open(path);
-                FileOutputStream fos = new FileOutputStream(new File(file.getPath() + File.separator + path));
-                byte[] buffer = new byte[1024];
-
-                int byteCount;
-                while((byteCount = is.read(buffer)) != -1) {
-                    fos.write(buffer, 0, byteCount);
-                }
-                fos.flush();
-                is.close();
-                fos.close();
-            } catch (IOException e) {
-                e.printStackTrace();
+    public boolean copyFilesFromAssetsToExternalStorage(Context context) {
+        if (isExternalStorageWritable()) {
+            File file = context.getExternalFilesDir(Environment.DIRECTORY_NOTIFICATIONS);
+            if (!file.exists()) {
+                file.mkdirs();
             }
+
+            String[] paths = new String[] {
+                    Const.NOTIFICATION_FILE_NAME
+            };
+
+            for (String path : paths) {
+                try {
+                    InputStream is = context.getAssets().open(path);
+                    FileOutputStream fos = new FileOutputStream(new File(file.getPath() + File.separator + path));
+                    byte[] buffer = new byte[1024];
+
+                    int byteCount;
+                    while((byteCount = is.read(buffer)) != -1) {
+                        fos.write(buffer, 0, byteCount);
+                    }
+                    fos.flush();
+                    is.close();
+                    fos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            return true;
+        } else {
+            return false;
         }
+    }
+
+    /**
+     *  Checks if external storage is available for read and write
+     */
+    public boolean isExternalStorageWritable() {
+        String state = Environment.getExternalStorageState();
+        if (Environment.MEDIA_MOUNTED.equals(state)) {
+            return true;
+        }
+        return false;
     }
 }

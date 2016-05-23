@@ -72,6 +72,10 @@ public class MainActivity extends BaseActivity
         if (mPresenter.isNewVersion()) {
             mPresenter.copyAssetsFileToExternalStorage();
         }
+
+        if (mPresenter.isCopyAssetsFileToExternalStorage()) {
+            mPresenter.copyAssetsFileToExternalStorage();
+        }
     }
 
     private void initActivity() {
