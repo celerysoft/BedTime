@@ -1,5 +1,7 @@
 package com.celerysoft.bedtime.activity.main.view;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
@@ -24,6 +26,7 @@ import com.celerysoft.bedtime.fragment.main.view.MainFragment;
 import com.celerysoft.bedtime.fragment.settings.view.SettingsFragment;
 import com.celerysoft.bedtime.view.BaseActivity;
 import com.celerysoft.bedtime.view.BaseFragment;
+import com.celerysoft.rippletransitionanimationview.RippleTransitionAnimationView;
 import com.umeng.socialize.UMShareAPI;
 
 public class MainActivity extends BaseActivity
@@ -45,6 +48,8 @@ public class MainActivity extends BaseActivity
     private MainFragment mMainFragment;
     private BedTimeFragment mBedTimeFragment;
     private SettingsFragment mSettingsFragment;
+
+    private RippleTransitionAnimationView mAnimationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,7 +82,16 @@ public class MainActivity extends BaseActivity
         mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mPresenter.turnToBedTimeFragment();
+                mPresenter.performFabAnimation();
+
+            }
+        });
+
+        mAnimationView = (RippleTransitionAnimationView) findViewById(R.id.main_ripple_animation_view);
+        mAnimationView.setAnimatorListenerAdapter(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                mPresenter.turnToBedTimeFragmentQuickly();
             }
         });
 
@@ -228,6 +242,11 @@ public class MainActivity extends BaseActivity
         super.onDestroy();
 
         mPresenter = null;
+    }
+
+    @Override
+    public RippleTransitionAnimationView getAnimationView() {
+        return mAnimationView;
     }
 
     @Override

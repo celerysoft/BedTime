@@ -97,6 +97,10 @@ public class PresenterMainActivity implements IPresenterMainActivity {
     }
 
     private void turnToFragment(Fragment fromFragment, Fragment toFragment) {
+        turnToFragment(fromFragment, toFragment, R.animator.move_in, R.animator.move_out, R.animator.move_in, R.animator.move_out);
+    }
+
+    private void turnToFragment(Fragment fromFragment, Fragment toFragment, int enter, int exit, int popEnter, int popExit) {
         if (fromFragment != null && fromFragment.equals(toFragment)) {
             return;
         }
@@ -104,7 +108,7 @@ public class PresenterMainActivity implements IPresenterMainActivity {
         FragmentTransaction ft = mView.getFragmentManager().beginTransaction();
 
         if (fromFragment != null) {
-            ft.setCustomAnimations(R.animator.move_in, R.animator.move_out, R.animator.move_in, R.animator.move_out);
+            ft.setCustomAnimations(enter, exit, popEnter, popExit);
             ft.replace(R.id.main_fragment_container, toFragment);
         } else {
             ft.add(R.id.main_fragment_container, toFragment);
@@ -152,6 +156,11 @@ public class PresenterMainActivity implements IPresenterMainActivity {
     }
 
     @Override
+    public void turnToBedTimeFragmentQuickly() {
+        turnToFragment(mCurrentFragment, mView.getBedTimeFragment(), R.animator.fade_in_quickly, R.animator.fade_out_quickly, R.animator.move_in, R.animator.move_out);
+    }
+
+    @Override
     public void turnToSettingsFragment() {
         turnToFragment(mCurrentFragment, mView.getSettingsFragment());
     }
@@ -183,7 +192,7 @@ public class PresenterMainActivity implements IPresenterMainActivity {
                 + "\n\n----------------\n\n";
 
 
-        Intent intent = new Intent(Intent.ACTION_SENDTO);
+        Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("plain/text");
         intent.putExtra(Intent.EXTRA_EMAIL, "celerysoft@gmail.com");
         intent.putExtra(Intent.EXTRA_SUBJECT, "BedTime Feedback");
@@ -264,13 +273,13 @@ public class PresenterMainActivity implements IPresenterMainActivity {
         int thisLaunchVersionCode = BuildConfig.VERSION_CODE;
 
         if (lastLaunchVersionCode == thisLaunchVersionCode) {
-            return true;
+            return false;
         } else {
             sharedPreferences.edit()
                     .putInt(mContext.getString(R.string.shared_preferences_key_last_time_version_code), thisLaunchVersionCode)
                     .apply();
 
-            return false;
+            return true;
         }
     }
 
@@ -362,6 +371,17 @@ public class PresenterMainActivity implements IPresenterMainActivity {
             default:
                 break;
         }
+    }
+
+    @Override
+    public void performFabAnimation() {
+        mView.getFloatActionButton().hide();
+        mView.getFloatActionButton().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mView.getAnimationView().performAnimation();
+            }
+        }, 150);
     }
 
     private void hideFloatActionButton() {

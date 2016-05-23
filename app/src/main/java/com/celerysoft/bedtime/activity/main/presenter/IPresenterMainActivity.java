@@ -15,6 +15,7 @@ public interface IPresenterMainActivity {
     void updateViewByFragmentInfo(Fragment fragment);
     void turnToMainFragment();
     void turnToBedTimeFragment();
+    void turnToBedTimeFragmentQuickly();
     void turnToSettingsFragment();
     void sendFeedback();
     void startPersonalInformationActivity();
@@ -27,4 +28,5 @@ public interface IPresenterMainActivity {
     void copyAssetsFileToExternalStorage();
     void openAboutBedTimeActivity();
     void handleActivityResult(int requestCode, int resultCode, Intent data);
+    void performFabAnimation();
 }

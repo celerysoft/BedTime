@@ -1,9 +1,11 @@
 package com.celerysoft.bedtime.activity.abuotus;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.view.View;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 
 import com.celerysoft.bedtime.R;
@@ -15,6 +17,8 @@ import com.celerysoft.bedtime.view.BaseActivity;
  *
  */
 public class AboutUsActivity extends BaseActivity {
+    private WebView mWebView;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,11 +28,15 @@ public class AboutUsActivity extends BaseActivity {
         initActivity();
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     private void initActivity() {
-        WebView webView = (WebView) findViewById(R.id.about_us_web_view);
-        if (webView != null) {
-            webView.getSettings().setJavaScriptEnabled(true);
-            webView.loadUrl(Const.ABOUT_BED_TIME_URL);
+        mWebView = (WebView) findViewById(R.id.about_us_web_view);
+        if (mWebView != null) {
+            WebSettings webSettings = mWebView.getSettings();
+            if (webSettings != null) {
+                webSettings.setJavaScriptEnabled(true);
+            }
+            mWebView.loadUrl(Const.ABOUT_BED_TIME_URL);
         }
 
         final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.about_us_fab);
@@ -52,5 +60,12 @@ public class AboutUsActivity extends BaseActivity {
                 }
             });
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        mWebView.destroy();
     }
 }

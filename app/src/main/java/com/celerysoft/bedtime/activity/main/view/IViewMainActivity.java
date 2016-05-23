@@ -8,6 +8,8 @@ import android.support.design.widget.NavigationView;
 import android.support.v7.app.ActionBar;
 import android.view.View;
 
+import com.celerysoft.rippletransitionanimationview.RippleTransitionAnimationView;
+
 /**
  * Created by Celery on 16/4/11.
  */
@@ -20,4 +22,5 @@ public interface IViewMainActivity {
     Fragment getSettingsFragment();
     Fragment getBedTimeFragment();
     ActionBar getSupportActionBar();
+    RippleTransitionAnimationView getAnimationView();
 }
