@@ -97,7 +97,7 @@ public class PresenterMainActivity implements IPresenterMainActivity {
     }
 
     private void turnToFragment(Fragment fromFragment, Fragment toFragment) {
-        turnToFragment(fromFragment, toFragment, R.animator.move_in, R.animator.move_out, R.animator.move_in, R.animator.move_out);
+        turnToFragment(fromFragment, toFragment, R.animator.move_in, R.animator.move_out, R.animator.move_in_pop, R.animator.move_out_pop);
     }
 
     private void turnToFragment(Fragment fromFragment, Fragment toFragment, int enter, int exit, int popEnter, int popExit) {
@@ -157,7 +157,7 @@ public class PresenterMainActivity implements IPresenterMainActivity {
 
     @Override
     public void turnToBedTimeFragmentQuickly() {
-        turnToFragment(mCurrentFragment, mView.getBedTimeFragment(), R.animator.fade_in_quickly, R.animator.fade_out_quickly, R.animator.move_in, R.animator.move_out);
+        turnToFragment(mCurrentFragment, mView.getBedTimeFragment(), R.animator.fade_in_quickly, R.animator.fade_out_quickly, R.animator.move_in_pop, R.animator.move_out_pop);
     }
 
     @Override
