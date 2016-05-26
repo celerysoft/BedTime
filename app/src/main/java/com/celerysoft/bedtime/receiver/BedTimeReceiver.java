@@ -22,6 +22,7 @@ import java.io.File;
 
 /**
  * Created by Celery on 16/4/14.
+ * 
  */
 public class BedTimeReceiver extends BroadcastReceiver {
     @Override
@@ -29,7 +30,7 @@ public class BedTimeReceiver extends BroadcastReceiver {
         acquireWakeLock(context, 10 * 1000);
 
         Intent openIntent = new Intent(context, MainActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, openIntent, PendingIntent.FLAG_ONE_SHOT);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, openIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         Notification notification;
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
@@ -38,10 +39,14 @@ public class BedTimeReceiver extends BroadcastReceiver {
                 .setWhen(System.currentTimeMillis())
                 .setContentIntent(pendingIntent);
 
+        int notifyId = 0;
+
         String action = intent.getAction();
         if (action.equals(context.getString(R.string.action_go_bed))) {
             String soundPath = context.getExternalFilesDir(Environment.DIRECTORY_NOTIFICATIONS).getPath() + File.separator + Const.NOTIFICATION_FILE_NAME;
             Uri uri = Uri.fromFile(new File(soundPath));
+
+            notifyId = 0;
 
             builder.setContentTitle(context.getString(R.string.notification_bed_time_in_30_minutes_title))
                     .setContentText(context.getString(R.string.notification_bed_time_in_30_minutes) + getNickname(context))
@@ -49,6 +54,8 @@ public class BedTimeReceiver extends BroadcastReceiver {
                     .setDefaults(NotificationCompat.DEFAULT_VIBRATE)
                     .setSound(uri);
         } else if (action.equals(context.getString(R.string.action_bed_time))) {
+            notifyId = 1;
+
             builder.setContentTitle(context.getString(R.string.notification_it_is_bed_time_title))
                     .setContentText(context.getString(R.string.notification_it_is_bed_time) + getNickname(context))
                     .setTicker(context.getString(R.string.notification_it_is_bed_time) + getNickname(context))
@@ -58,17 +65,19 @@ public class BedTimeReceiver extends BroadcastReceiver {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             notification = builder.build();
         } else {
+            //noinspection deprecation
             notification = builder.getNotification();
         }
 
         NotificationManager manager = (NotificationManager) context.getSystemService((Context.NOTIFICATION_SERVICE));
-        manager.notify(1, notification);
+        manager.notify(notifyId, notification);
 
         setNextAlarm(context);
     }
 
     private void acquireWakeLock(Context context, long timeout) {
         PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
+        //noinspection deprecation
         PowerManager.WakeLock wakeLock = pm.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP
                 | PowerManager.ON_AFTER_RELEASE, "BedTime Notification");
         wakeLock.acquire(timeout);
