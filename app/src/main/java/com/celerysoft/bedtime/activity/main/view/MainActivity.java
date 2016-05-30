@@ -24,8 +24,8 @@ import com.celerysoft.bedtime.activity.main.presenter.PresenterMainActivity;
 import com.celerysoft.bedtime.fragment.bedtime.view.BedTimeFragment;
 import com.celerysoft.bedtime.fragment.main.view.MainFragment;
 import com.celerysoft.bedtime.fragment.settings.view.SettingsFragment;
-import com.celerysoft.bedtime.view.BaseActivity;
-import com.celerysoft.bedtime.view.BaseFragment;
+import com.celerysoft.bedtime.base.BaseActivity;
+import com.celerysoft.bedtime.base.BaseFragment;
 import com.celerysoft.rippletransitionanimationview.RippleTransitionAnimationView;
 import com.umeng.socialize.UMShareAPI;
 

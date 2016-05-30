@@ -1,4 +1,4 @@
-package com.celerysoft.bedtime.view;
+package com.celerysoft.bedtime.base;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,6 +8,7 @@ import com.celerysoft.bedtime.util.ActivityManagerUtil;
 
 /**
  * Created by admin on 16/4/25.
+ *
  */
 public class BaseActivity extends AppCompatActivity {
     ActivityManagerUtil mActivityManagerUtil;

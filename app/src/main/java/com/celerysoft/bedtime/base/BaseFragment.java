@@ -1,4 +1,4 @@
-package com.celerysoft.bedtime.view;
+package com.celerysoft.bedtime.base;
 
 import android.app.Fragment;
 import android.os.Bundle;

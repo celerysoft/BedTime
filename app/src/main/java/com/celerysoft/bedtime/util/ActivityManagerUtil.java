@@ -1,6 +1,6 @@
 package com.celerysoft.bedtime.util;
 
-import com.celerysoft.bedtime.view.BaseActivity;
+import com.celerysoft.bedtime.base.BaseActivity;
 
 import java.util.ArrayList;
 

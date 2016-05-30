@@ -22,7 +22,7 @@ import java.io.File;
 
 /**
  * Created by Celery on 16/4/14.
- * 
+ *
  */
 public class BedTimeReceiver extends BroadcastReceiver {
     @Override

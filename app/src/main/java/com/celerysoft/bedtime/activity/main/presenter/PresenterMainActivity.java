@@ -17,7 +17,7 @@ import android.widget.AdapterView;
 
 import com.celerysoft.bedtime.BuildConfig;
 import com.celerysoft.bedtime.R;
-import com.celerysoft.bedtime.activity.abuotus.AboutUsActivity;
+import com.celerysoft.bedtime.activity.browser.view.BrowserActivity;
 import com.celerysoft.bedtime.activity.information.model.PersonalInformationModel;
 import com.celerysoft.bedtime.activity.information.view.PersonalInformationActivity;
 import com.celerysoft.bedtime.activity.main.adapter.SocialSharingListViewAdapter;
@@ -28,7 +28,7 @@ import com.celerysoft.bedtime.fragment.settings.view.SettingsFragment;
 import com.celerysoft.bedtime.util.ActivityManagerUtil;
 import com.celerysoft.bedtime.util.AssetsUtil;
 import com.celerysoft.bedtime.util.Const;
-import com.celerysoft.bedtime.view.BaseActivity;
+import com.celerysoft.bedtime.base.BaseActivity;
 import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
@@ -371,7 +371,8 @@ public class PresenterMainActivity implements IPresenterMainActivity {
         mView.getFloatActionButton().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(mContext, AboutUsActivity.class);
+                Intent intent = new Intent(mContext, BrowserActivity.class);
+                intent.putExtra(BrowserActivity.INTENT_EXTRA_STRING_NAME_OF_URL, Const.ABOUT_BED_TIME_URL);
                 ((Activity) mContext).startActivityForResult(intent, REQUEST_CODE_OPEN_ABOUT_US_ACTIVITY);
             }
         }, 300);

@@ -12,7 +12,7 @@ import android.view.View;
 import com.celerysoft.bedtime.R;
 import com.celerysoft.bedtime.activity.information.presenter.IPresenterPersonalInformationActivity;
 import com.celerysoft.bedtime.activity.information.presenter.PresenterPersonalInformationActivity;
-import com.celerysoft.bedtime.view.BaseActivity;
+import com.celerysoft.bedtime.base.BaseActivity;
 
 /**
  * Created by admin on 16/5/3.

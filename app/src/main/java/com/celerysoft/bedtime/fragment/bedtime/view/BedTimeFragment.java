@@ -13,7 +13,7 @@ import com.celerysoft.bedtime.fragment.bedtime.adapter.WakeupTimeListViewAdapter
 import com.celerysoft.bedtime.fragment.bedtime.model.WakeupTimeBean;
 import com.celerysoft.bedtime.fragment.bedtime.presenter.IPresenterBedTime;
 import com.celerysoft.bedtime.fragment.bedtime.presenter.PresenterBedTime;
-import com.celerysoft.bedtime.view.BaseFragment;
+import com.celerysoft.bedtime.base.BaseFragment;
 import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 

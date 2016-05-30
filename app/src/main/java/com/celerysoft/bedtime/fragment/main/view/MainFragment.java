@@ -13,7 +13,7 @@ import android.widget.CompoundButton;
 import com.celerysoft.bedtime.R;
 import com.celerysoft.bedtime.fragment.main.presenter.IPresenterMain;
 import com.celerysoft.bedtime.fragment.main.presenter.PresenterMain;
-import com.celerysoft.bedtime.view.BaseFragment;
+import com.celerysoft.bedtime.base.BaseFragment;
 
 /**
  * Created by Celery on 16/4/12.

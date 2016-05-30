@@ -12,7 +12,7 @@ import android.widget.CompoundButton;
 import com.celerysoft.bedtime.R;
 import com.celerysoft.bedtime.fragment.settings.presenter.IPresenterSettings;
 import com.celerysoft.bedtime.fragment.settings.presenter.PresenterSettings;
-import com.celerysoft.bedtime.view.BaseFragment;
+import com.celerysoft.bedtime.base.BaseFragment;
 
 /**
  * Created by admin on 16/4/29.
