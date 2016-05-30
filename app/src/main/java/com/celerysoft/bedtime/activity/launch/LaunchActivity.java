@@ -1,22 +1,32 @@
 package com.celerysoft.bedtime.activity.launch;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.DisplayMetrics;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import com.celerysoft.bedtime.R;
 import com.celerysoft.bedtime.activity.main.view.MainActivity;
 import com.celerysoft.bedtime.fragment.settings.model.SettingsModel;
 import com.celerysoft.bedtime.base.BaseActivity;
+import com.celerysoft.rippletransitionanimationview.RippleTransitionAnimationView;
+import com.celerysoft.rippletransitionanimationview.RippleTransitionAnimationViewGroup;
 import com.umeng.socialize.PlatformConfig;
 
 /**
  * Created by admin on 16/4/29.
+ *
  */
 public class LaunchActivity extends BaseActivity {
+    private ProgressBar mProgressBar;
+    private RippleTransitionAnimationViewGroup mAnimationView;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,11 +37,20 @@ public class LaunchActivity extends BaseActivity {
     }
 
     private void initActivity() {
+        mProgressBar = (ProgressBar) findViewById(R.id.launcher_progress_bar);
+        mAnimationView = (RippleTransitionAnimationViewGroup) findViewById(R.id.launcher_animation);
+        mAnimationView.setAnimatorListenerAdapter(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                startMainActivity();
+            }
+        });
+
         initSocialSharing();
 
         setAppLanguage();
 
-        startMainActivity();
+        displayTransitionAnimation();
     }
 
     private void initSocialSharing() {
@@ -50,8 +69,14 @@ public class LaunchActivity extends BaseActivity {
         resources.updateConfiguration(config, displayMetrics);
     }
 
+    private void displayTransitionAnimation() {
+        mProgressBar.setVisibility(View.GONE);
+        mAnimationView.performAnimation();
+    }
+
     private void startMainActivity() {
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(LaunchActivity.this, MainActivity.class);
         startActivity(intent);
+        overridePendingTransition(R.anim.ripple_alpha_in, R.anim.ripple_alpha_out);
     }
 }
