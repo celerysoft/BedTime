@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
@@ -37,8 +38,6 @@ public class BrowserActivity extends BaseActivity implements IViewBrowserActivit
     private FloatingActionButton mFloatingActionButton;
     private RippleTransitionAnimationView mAnimationView;
 
-    private String mUrl;
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,7 +51,7 @@ public class BrowserActivity extends BaseActivity implements IViewBrowserActivit
     private void initActivity() {
         mPresenter = new PresenterBrowserActivity(this);
 
-        mUrl = getIntent().getStringExtra(INTENT_EXTRA_STRING_NAME_OF_URL);
+        String url = getIntent().getStringExtra(INTENT_EXTRA_STRING_NAME_OF_URL);
 
         mAnimationView = (RippleTransitionAnimationView) findViewById(R.id.browser_ripple_animation);
         mAnimationView.setAnimatorListenerAdapter(new AnimatorListenerAdapter() {
@@ -114,8 +113,20 @@ public class BrowserActivity extends BaseActivity implements IViewBrowserActivit
 
 
         });
+        mWebView.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getAction() == KeyEvent.ACTION_DOWN){
+                    if (keyCode == KeyEvent.KEYCODE_BACK && mWebView.canGoBack()) {
+                        mWebView.goBack();
+                        return true;
+                    }
+                }
+                return false;
+            }
+        });
 
-        mWebView.loadUrl(mUrl);
+        mWebView.loadUrl(url);
 
         mFloatingActionButton = (FloatingActionButton) findViewById(R.id.browser_fab);
         if (mFloatingActionButton != null) {
