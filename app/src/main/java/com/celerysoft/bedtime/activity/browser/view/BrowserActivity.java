@@ -6,7 +6,6 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.JsResult;
@@ -37,6 +36,8 @@ public class BrowserActivity extends BaseActivity implements IViewBrowserActivit
     private ProgressBar mProgressBar;
     private FloatingActionButton mFloatingActionButton;
     private RippleTransitionAnimationView mAnimationView;
+
+    WebSettings mWebSettings;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -126,6 +127,8 @@ public class BrowserActivity extends BaseActivity implements IViewBrowserActivit
             }
         });
 
+        mWebSettings = mWebView.getSettings();
+
         mWebView.loadUrl(url);
 
         mFloatingActionButton = (FloatingActionButton) findViewById(R.id.browser_fab);
@@ -150,9 +153,8 @@ public class BrowserActivity extends BaseActivity implements IViewBrowserActivit
     protected void onStart() {
         super.onStart();
 
-        WebSettings webSettings = mWebView.getSettings();
-        if (webSettings != null) {
-            webSettings.setJavaScriptEnabled(true);
+        if (mWebSettings != null) {
+            mWebSettings.setJavaScriptEnabled(true);
         }
     }
 
@@ -160,9 +162,8 @@ public class BrowserActivity extends BaseActivity implements IViewBrowserActivit
     protected void onStop() {
         super.onStop();
 
-        WebSettings webSettings = mWebView.getSettings();
-        if (webSettings != null) {
-            webSettings.setJavaScriptEnabled(false);
+        if (mWebSettings != null) {
+            mWebSettings.setJavaScriptEnabled(false);
         }
     }
 

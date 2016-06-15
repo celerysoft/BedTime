@@ -43,16 +43,20 @@ public class BedTimeReceiver extends BroadcastReceiver {
 
         String action = intent.getAction();
         if (action.equals(context.getString(R.string.action_go_bed))) {
-            String soundPath = context.getExternalFilesDir(Environment.DIRECTORY_NOTIFICATIONS).getPath() + File.separator + Const.NOTIFICATION_FILE_NAME;
-            Uri uri = Uri.fromFile(new File(soundPath));
+
+            File notificationsDirectory = context.getExternalFilesDir(Environment.DIRECTORY_NOTIFICATIONS);
+            if (notificationsDirectory != null) {
+                String soundPath = notificationsDirectory.getPath() + File.separator + Const.NOTIFICATION_FILE_NAME;
+                Uri uri = Uri.fromFile(new File(soundPath));
+                builder.setSound(uri);
+            }
 
             notifyId = 0;
 
             builder.setContentTitle(context.getString(R.string.notification_bed_time_in_30_minutes_title))
                     .setContentText(context.getString(R.string.notification_bed_time_in_30_minutes) + getNickname(context))
                     .setTicker(context.getString(R.string.notification_bed_time_in_30_minutes) + getNickname(context))
-                    .setDefaults(NotificationCompat.DEFAULT_VIBRATE)
-                    .setSound(uri);
+                    .setDefaults(NotificationCompat.DEFAULT_VIBRATE);
         } else if (action.equals(context.getString(R.string.action_bed_time))) {
             notifyId = 1;
 

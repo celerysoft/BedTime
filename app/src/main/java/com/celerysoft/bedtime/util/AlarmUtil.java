@@ -50,9 +50,11 @@ public class AlarmUtil {
     }
 
     public void setUpNextAlarm(Context context) {
-        boolean isNotificationOpened = getSharedPreferences(context).getBoolean(context.getString(R.string.shared_preferences_key_open_notification), true);
-        if (!isNotificationOpened) {
-            return;
+        if (getSharedPreferences(context) != null) {
+            boolean isNotificationOpened = getSharedPreferences(context).getBoolean(context.getString(R.string.shared_preferences_key_open_notification), true);
+            if (!isNotificationOpened) {
+                return;
+            }
         }
 
         AlarmTimeModel alarmTimeModel = new AlarmTimeModel(context);

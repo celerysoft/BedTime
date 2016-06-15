@@ -15,6 +15,7 @@ import com.celerysoft.bedtime.R;
 import com.celerysoft.bedtime.activity.main.view.MainActivity;
 import com.celerysoft.bedtime.fragment.settings.model.SettingsModel;
 import com.celerysoft.bedtime.base.BaseActivity;
+import com.celerysoft.bedtime.util.AlarmUtil;
 import com.celerysoft.rippletransitionanimationview.RippleTransitionAnimationView;
 import com.celerysoft.rippletransitionanimationview.RippleTransitionAnimationViewGroup;
 import com.umeng.socialize.PlatformConfig;
@@ -49,6 +50,8 @@ public class LaunchActivity extends BaseActivity {
         initSocialSharing();
 
         setAppLanguage();
+
+        AlarmUtil.getInstance().setUpNextAlarm(this);
 
         displayTransitionAnimation();
     }
