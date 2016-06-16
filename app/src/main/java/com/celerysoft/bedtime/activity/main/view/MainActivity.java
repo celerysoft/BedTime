@@ -245,6 +245,8 @@ public class MainActivity extends BaseActivity
     protected void onDestroy() {
         super.onDestroy();
 
+        mPresenter.exitApp();
+
         mPresenter = null;
     }
 
