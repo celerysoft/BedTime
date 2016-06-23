@@ -143,22 +143,24 @@ public class PresenterPersonalInformationActivity implements IPresenterPersonalI
             sleepHour = 12;
             sleepMinute = 0;
         } else if (age <= 12) {
-            sleepHour = 10;
-            sleepMinute = 0;
+            int minute = 10 * 60 - (age - 8) * 15;
+            sleepHour = minute / 60;
+            sleepMinute = minute % 60;
         } else if (age <= 18) {
-            sleepHour = 19;
-            sleepMinute = 0;
+            int minute = 9 * 60 - (age - 13) * 10;
+            sleepHour = minute / 60;
+            sleepMinute = minute % 60;
         } else if (age < 60) {
             int minute = 8 * 60 - (int) ((age - 19) * 1.5);
             sleepHour = minute / 60;
             sleepMinute = minute % 60;
         } else if (age <= 70) {
-            int minute = 7 * 60 - (70 - age) * 9;
+            int minute = 7 * 60 - (age - 60) * 9;
             sleepHour = minute / 60;
             sleepMinute = minute % 60;
         } else {
             sleepHour = 5;
-            sleepMinute = 0;
+            sleepMinute = 30;
         }
 
         mModel.setSleepTime(sleepHour, sleepMinute);
