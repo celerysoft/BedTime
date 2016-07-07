@@ -65,7 +65,7 @@ public class SocialSharingListViewAdapter extends BaseAdapter {
         ViewHolder viewHolder = null;
 
         if (convertView == null) {
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.dialog_list_item_signle_line_icon_with_text, parent, false);
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.dialog_list_item_single_line_icon_with_text, parent, false);
             viewHolder = new ViewHolder();
             viewHolder.icon = (ImageView) convertView.findViewById(R.id.dialog_list_item_single_line_iv);
             viewHolder.text = (TextView) convertView.findViewById(R.id.dialog_list_item_single_line_tv);

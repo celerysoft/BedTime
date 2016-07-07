@@ -20,6 +20,8 @@
     <string name="personal_information_hours_text">小时</string>
     <string name="personal_information_minute_text">分钟</string>
     <string name="personal_information_minutes_text">分钟</string>
+    <string name="personal_information_avatar_dialog_camera">拍照</string>
+    <string name="personal_information_avatar_dialog_gallery">图库</string>
 
     // Main Activity
     <string name="action_about_us">关于夜堪眠</string>
@@ -80,4 +82,5 @@
     <string name="settings_fragment_category_general">常规</string>
     <string name="settings_fragment_tv_language_text">语言</string>
     <string name="settings_fragment_tv_personal_information_text">个人信息</string>
+    <string name="settings_fragment_tv_current_version_text">当前版本</string>
 </resources>

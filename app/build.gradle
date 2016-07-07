@@ -6,6 +6,8 @@ android {
 
     defaultConfig {
         applicationId "com.celerysoft.bedtime"
+        versionCode 10
+        versionName "1.2.4"
         minSdkVersion 14
         targetSdkVersion 23
     }
@@ -13,11 +15,45 @@ android {
         debug {
             storeFile file('debug.keystore')
         }
+
+        release {
+            storeFile file("celerysoft.jks")
+            storePassword CELERY_STORE_PASSWORD
+            keyAlias CELERY_KEY_ALIAS
+            keyPassword CELERY_KEY_PASSWORD
+        }
     }
     buildTypes {
+        debug {
+            applicationIdSuffix ".debug"
+            versionNameSuffix " - Debug"
+            signingConfig signingConfigs.debug
+
+            applicationVariants.all { variant ->
+                variant.outputs.each { output ->
+                    def outputFile = output.outputFile
+                    if (outputFile != null && outputFile.name.endsWith('debug.apk')) {
+                        def newName = "BedTime-" + "${defaultConfig.versionName}" + "-debug.apk"
+                        output.outputFile = new File(outputFile.parent, newName)
+                    }
+                }
+            }
+        }
+
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+
+            applicationVariants.all { variant ->
+                variant.outputs.each { output ->
+                    def outputFile = output.outputFile
+                    if (outputFile != null && outputFile.name.endsWith('release.apk')) {
+                        def newName = "BedTime-" + "${defaultConfig.versionName}" + "-release.apk"
+                        output.outputFile = new File(outputFile.parent, newName)
+                    }
+                }
+            }
         }
     }
 

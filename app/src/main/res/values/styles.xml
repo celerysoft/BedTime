@@ -29,4 +29,20 @@
         <item name="android:maxHeight">20dip</item>
     </style>
 
+    <style name="AppTheme.Dialog.Light.Bottom" parent="Base.Theme.AppCompat.Light.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@android:color/white</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowAnimationStyle">@style/AppTheme.Animation.Dialog.Bottom</item>
+    </style>
+
+    <style name="AppTheme.Animation.Dialog.Bottom" parent="android:Animation">
+        <item name="@android:windowEnterAnimation">@anim/slide_in_from_bottom</item>
+        <item name="@android:windowExitAnimation">@anim/slide_out_of_bottom</item>
+    </style>
+
+
 </resources>

@@ -116,4 +116,13 @@
         android:clickable="true"
         style="@style/Base.Widget.AppCompat.Toolbar.Button.Navigation"/>
 
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/tv_settings_fragment_current_version"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:textColor="@color/colorSecondaryText"
+        android:text="@string/settings_fragment_tv_current_version_text"/>
+
 </LinearLayout>

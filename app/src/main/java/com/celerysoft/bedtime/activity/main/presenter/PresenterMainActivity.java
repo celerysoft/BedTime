@@ -26,7 +26,7 @@ import com.celerysoft.bedtime.fragment.bedtime.view.BedTimeFragment;
 import com.celerysoft.bedtime.fragment.main.view.MainFragment;
 import com.celerysoft.bedtime.fragment.settings.view.SettingsFragment;
 import com.celerysoft.bedtime.util.ActivityManagerUtil;
-import com.celerysoft.bedtime.util.AssetsUtil;
+import com.celerysoft.bedtime.util.FileUtil;
 import com.celerysoft.bedtime.util.Const;
 import com.celerysoft.bedtime.base.BaseActivity;
 import com.umeng.socialize.ShareAction;
@@ -63,7 +63,10 @@ public class PresenterMainActivity implements IPresenterMainActivity {
         mModel = new PersonalInformationModel(mContext);
     }
 
-    @Override
+    public boolean readyToExitApp() {
+        return System.currentTimeMillis() - mLastPressBackTime <= 2000;
+    }
+
     public void preExitApp() {
         showExitAppSnackBar();
         mLastPressBackTime = System.currentTimeMillis();
@@ -71,12 +74,11 @@ public class PresenterMainActivity implements IPresenterMainActivity {
 
     @Override
     public void exitApp() {
-        ActivityManagerUtil.getInstance().exitApp((BaseActivity) mView);
-    }
-
-    @Override
-    public boolean readyToExitApp() {
-        return System.currentTimeMillis() - mLastPressBackTime <= 2000;
+        if (readyToExitApp()) {
+            ActivityManagerUtil.getInstance().exitApp((BaseActivity) mView);
+        } else {
+            preExitApp();
+        }
     }
 
     public void showExitAppSnackBar() {
@@ -163,6 +165,11 @@ public class PresenterMainActivity implements IPresenterMainActivity {
     @Override
     public void turnToSettingsFragment() {
         turnToFragment(mCurrentFragment, mView.getSettingsFragment());
+    }
+
+    @Override
+    public Fragment getCurrentFragment() {
+        return mCurrentFragment;
     }
 
     @Override
@@ -298,7 +305,7 @@ public class PresenterMainActivity implements IPresenterMainActivity {
 
     @Override
     public void copyAssetsFileToExternalStorage() {
-        boolean isCopied = AssetsUtil.getInstance().copyFilesFromAssetsToExternalStorage(mContext);
+        boolean isCopied = FileUtil.getInstance().copyFilesFromAssetsToExternalStorage(mContext);
 
         if (isCopied) {
             SharedPreferences sharedPreferences = mContext.getSharedPreferences(Const.getDefaultSharedPreferencesKey(mContext), Context.MODE_PRIVATE);

@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.view.View;
@@ -19,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.celerysoft.bedtime.R;
+import com.celerysoft.bedtime.activity.information.model.PersonalInformationModel;
 import com.celerysoft.bedtime.activity.main.presenter.IPresenterMainActivity;
 import com.celerysoft.bedtime.activity.main.presenter.PresenterMainActivity;
 import com.celerysoft.bedtime.fragment.bedtime.view.BedTimeFragment;
@@ -51,12 +53,15 @@ public class MainActivity extends BaseActivity
 
     private RippleTransitionAnimationView mAnimationView;
 
+    private PersonalInformationModel mPersonalInformationModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         mPresenter = new PresenterMainActivity(this);
+        mPersonalInformationModel = new PersonalInformationModel(this);
 
         initActivity();
 
@@ -117,6 +122,7 @@ public class MainActivity extends BaseActivity
                 @Override
                 public void onClick(View v) {
                     mPresenter.startPersonalInformationActivity();
+                    mDrawer.closeDrawer(GravityCompat.START);
                 }
             });
 
@@ -160,6 +166,11 @@ public class MainActivity extends BaseActivity
 
         mTvNickname.setText(mPresenter.getNickname());
         mTvSleepTime.setText(mPresenter.getSleepTime());
+
+        Bitmap avatar = mPersonalInformationModel.getAvatar();
+        if (avatar != null) {
+            mIvAvatar.setImageBitmap(avatar);
+        }
     }
 
     @Override
@@ -174,22 +185,9 @@ public class MainActivity extends BaseActivity
         if (mDrawer.isDrawerOpen(GravityCompat.START)) {
             mDrawer.closeDrawer(GravityCompat.START);
         } else {
-//            if (mPresenter.getCurrentFragment().getClass().equals(MainFragment.class)) {
-//                if (mPresenter.readyToExitApp()) {
-//                    mPresenter.exitApp();
-//                } else {
-//                    mPresenter.preExitApp();
-//                }
-//            } else {
-//                mPresenter.turnToMainFragment();
-//            }
-
-            if (!getFragmentManager().popBackStackImmediate()) {
-                if (mPresenter.readyToExitApp()) {
-                    mPresenter.exitApp();
-                } else {
-                    mPresenter.preExitApp();
-                }
+            if (mPresenter.getCurrentFragment().getClass().equals(MainFragment.class)
+                    || !getFragmentManager().popBackStackImmediate()) {
+                mPresenter.exitApp();
             }
         }
     }
@@ -244,8 +242,6 @@ public class MainActivity extends BaseActivity
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
-        mPresenter.exitApp();
 
         mPresenter = null;
     }

@@ -79,6 +79,8 @@
     <string name="personal_information_hours_text">hours</string>
     <string name="personal_information_minute_text">minute</string>
     <string name="personal_information_minutes_text">minutes</string>
+    <string name="personal_information_avatar_dialog_camera">Camera</string>
+    <string name="personal_information_avatar_dialog_gallery">Gallery</string>
 
     // Main Activity
     <string name="action_about_us">About us</string>
@@ -139,5 +141,6 @@
     <string name="settings_fragment_category_general">General</string>
     <string name="settings_fragment_tv_language_text">Language</string>
     <string name="settings_fragment_tv_personal_information_text">Personal Information</string>
+    <string name="settings_fragment_tv_current_version_text">Current Version</string>
 
 </resources>

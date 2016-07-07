@@ -2,10 +2,17 @@ package com.celerysoft.bedtime.activity.information.model;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Environment;
 
 import com.celerysoft.bedtime.R;
 import com.celerysoft.bedtime.fragment.main.model.BedTimeModel;
 import com.celerysoft.bedtime.util.AlarmUtil;
+import com.celerysoft.bedtime.util.Const;
+import com.celerysoft.bedtime.util.FileUtil;
+
+import java.io.File;
 
 /**
  * Created by admin on 16/5/3.
@@ -93,6 +100,31 @@ public class PersonalInformationModel {
         mSharedPreferences.edit()
                 .putInt(mContext.getString(R.string.shared_preferences_key_personal_information_sleep_minute), minute)
                 .apply();
+    }
+
+    public void setAvatar(Bitmap bitmap) {
+        FileUtil.getInstance().saveAvatarToExternalStorage(mContext, bitmap);
+    }
+
+    public Bitmap getAvatar() {
+        File file = mContext.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        if (file == null) {
+            return null;
+        }
+
+        String path = file.getPath() + File.separator + Const.USER_AVATAR_FILE_NAME;
+
+        Bitmap bitmap = null;
+        try {
+            File avatarFile = new File(path);
+            if(avatarFile.exists()) {
+                bitmap = BitmapFactory.decodeFile(path);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return bitmap;
     }
 
 

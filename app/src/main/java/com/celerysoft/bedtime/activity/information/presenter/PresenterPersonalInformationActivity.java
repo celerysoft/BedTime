@@ -1,14 +1,28 @@
 package com.celerysoft.bedtime.activity.information.presenter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Build;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.ListViewCompat;
+import android.view.Gravity;
 import android.view.View;
+import android.widget.AdapterView;
 
 import com.celerysoft.bedtime.R;
+import com.celerysoft.bedtime.activity.information.adapter.ModifyAvatarDialogAdapter;
 import com.celerysoft.bedtime.activity.information.model.PersonalInformationModel;
 import com.celerysoft.bedtime.activity.information.view.IViewPersonalInformationActivity;
+import com.celerysoft.bedtime.util.FileUtil;
+import com.celerysoft.bedtime.util.Util;
 import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
+
+import java.io.File;
 
 /**
  * Created by admin on 16/5/3.
@@ -18,6 +32,8 @@ public class PresenterPersonalInformationActivity implements IPresenterPersonalI
     private PersonalInformationModel mModel;
 
     private Context mContext;
+
+    private AlertDialog mModifyAvatarDialog;
 
     public PresenterPersonalInformationActivity(IViewPersonalInformationActivity view) {
         mView = view;
@@ -167,5 +183,79 @@ public class PresenterPersonalInformationActivity implements IPresenterPersonalI
         mView.getTvSleepTime().setText(getSleepTimeString(sleepHour, sleepMinute));
     }
 
+    @Override
+    public void showModifyAvatarDialog() {
+        ListViewCompat listView = new ListViewCompat(mContext);
+        listView.setAdapter(new ModifyAvatarDialogAdapter(mContext));
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                switch (position) {
+                    case ModifyAvatarDialogAdapter.CAMERA:
+                        takePhoto();
+                        break;
+                    case ModifyAvatarDialogAdapter.GALLERY:
+                        pickPhotoFromGallery();
+                        break;
+                    case ModifyAvatarDialogAdapter.CANCEL:
+                        break;
+                    default:
+                        break;
+                }
 
+                if (mModifyAvatarDialog != null && mModifyAvatarDialog.isShowing()) {
+                    mModifyAvatarDialog.dismiss();
+                }
+            }
+        });
+
+        mModifyAvatarDialog = new AlertDialog.Builder(mContext, R.style.AppTheme_Dialog_Light_Bottom).setView(listView).create();
+        mModifyAvatarDialog.getWindow().setGravity(Gravity.BOTTOM);
+        mModifyAvatarDialog.setCanceledOnTouchOutside(true);
+        mModifyAvatarDialog.show();
+    }
+
+    public void takePhoto() {
+        Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
+        if (FileUtil.getInstance().isExternalStorageWritable()) {
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(FileUtil.getInstance().getAvatarTempPath(mContext))));
+        }
+        mView.startActivityForResult(intent, REQUEST_CODE_CAMERA);
+    }
+
+    public void pickPhotoFromGallery() {
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType("image/*");
+        mView.startActivityForResult(intent, REQUEST_CODE_GALLERY);
+    }
+
+
+    @Override
+    public void crop(Uri uri) {
+        // 裁剪图片意图
+        Intent intent = new Intent("com.android.camera.action.CROP");
+        intent.setDataAndType(uri, "image/*");
+        intent.putExtra("crop", "true");
+        // 裁剪框的比例，1：1
+        intent.putExtra("aspectX", 1);
+        intent.putExtra("aspectY", 1);
+        // 裁剪后输出图片的尺寸大小
+        intent.putExtra("outputX", Util.dip2px(mContext, 60));
+        intent.putExtra("outputY", Util.dip2px(mContext, 60));
+        // 图片格式
+        intent.putExtra("outputFormat", "JPEG");
+        intent.putExtra("noFaceDetection", true);// 取消人脸识别
+        intent.putExtra("return-data", true);// true:不返回uri，false：返回uri
+        mView.startActivityForResult(intent, REQUEST_CODE_CROP);
+    }
+
+    @Override
+    public Bitmap getAvatar() {
+        return mModel.getAvatar();
+    }
+
+    @Override
+    public void saveAvatar(Bitmap bitmap) {
+        mModel.setAvatar(bitmap);
+    }
 }

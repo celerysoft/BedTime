@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 
+import com.celerysoft.bedtime.BuildConfig;
 import com.celerysoft.bedtime.R;
 import com.celerysoft.bedtime.fragment.settings.presenter.IPresenterSettings;
 import com.celerysoft.bedtime.fragment.settings.presenter.PresenterSettings;
@@ -29,6 +30,7 @@ public class SettingsFragment extends BaseFragment implements IViewSettings {
     private View mViewLanguage;
     private AppCompatTextView mTvLanguage;
     private View mViewPersonalInformation;
+    private AppCompatTextView mTvCurrentVersion;
 
     @Nullable
     @Override
@@ -81,6 +83,9 @@ public class SettingsFragment extends BaseFragment implements IViewSettings {
                 mPresenter.showPersonalInformation();
             }
         });
+
+        mTvCurrentVersion = (AppCompatTextView) v.findViewById(R.id.tv_settings_fragment_current_version);
+        mTvCurrentVersion.setText(String.format("%s  %s", getString(R.string.settings_fragment_tv_current_version_text), BuildConfig.VERSION_NAME));
 
         return v;
     }

@@ -9,9 +9,8 @@ import android.content.Intent;
  */
 public interface IPresenterMainActivity {
     void setMainFragment();
-    void preExitApp();
     void exitApp();
-    boolean readyToExitApp();
+    Fragment getCurrentFragment();
     void updateViewByFragmentInfo(Fragment fragment);
     void turnToMainFragment();
     void turnToBedTimeFragment();
