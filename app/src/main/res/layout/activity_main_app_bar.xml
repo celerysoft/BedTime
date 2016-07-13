@@ -44,6 +44,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
         app:animator_ripple_parent_id="@id/main_ripple_parent"
         app:animator_ripple_color="@color/colorAccent"
         app:animator_ripple_radius="28dp"
@@ -59,7 +60,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        android:src="@mipmap/ic_alarm_white"/>
+        android:layout_margin="@dimen/fab_margin_in_coordinator_layout"
+        android:src="@mipmap/ic_alarm_white"
+        app:borderWidth="0dp"/>
 
 </android.support.design.widget.CoordinatorLayout>
