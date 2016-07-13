@@ -2,8 +2,11 @@
 <resources>
     <string name="app_name">夜堪眠</string>
 
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <!--<string name="navigation_drawer_open">Open navigation drawer</string>-->
+    <!--<string name="navigation_drawer_close">Close navigation drawer</string>-->
+
+    // Common word
+    <string name="got_it">知道啦</string>
 
     // Notifications
     <string name="notification_it_is_bed_time_title">晚安</string>

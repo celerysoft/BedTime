@@ -21,7 +21,7 @@ import com.celerysoft.bedtime.R;
 import com.celerysoft.bedtime.activity.browser.presenter.IPresenterBrowserActivity;
 import com.celerysoft.bedtime.activity.browser.presenter.PresenterBrowserActivity;
 import com.celerysoft.bedtime.base.BaseActivity;
-import com.celerysoft.rippletransitionanimationview.RippleTransitionAnimationView;
+import com.celerysoft.ripple.Wrapper;
 
 /**
  * Created by admin on 16/5/30.
@@ -35,7 +35,7 @@ public class BrowserActivity extends BaseActivity implements IViewBrowserActivit
     private WebView mWebView;
     private ProgressBar mProgressBar;
     private FloatingActionButton mFloatingActionButton;
-    private RippleTransitionAnimationView mAnimationView;
+    private Wrapper mAnimationWrapper;
 
     WebSettings mWebSettings;
 
@@ -54,8 +54,8 @@ public class BrowserActivity extends BaseActivity implements IViewBrowserActivit
 
         String url = getIntent().getStringExtra(INTENT_EXTRA_STRING_NAME_OF_URL);
 
-        mAnimationView = (RippleTransitionAnimationView) findViewById(R.id.browser_ripple_animation);
-        mAnimationView.setAnimatorListenerAdapter(new AnimatorListenerAdapter() {
+        mAnimationWrapper = (Wrapper) findViewById(R.id.browser_ripple_animation);
+        mAnimationWrapper.addAnimatorListenerAdapter(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
                 mPresenter.finishActivityWithAnimation();
@@ -185,7 +185,7 @@ public class BrowserActivity extends BaseActivity implements IViewBrowserActivit
     }
 
     @Override
-    public RippleTransitionAnimationView getAnimationView() {
-        return mAnimationView;
+    public Wrapper getAnimationWrapper() {
+        return mAnimationWrapper;
     }
 }

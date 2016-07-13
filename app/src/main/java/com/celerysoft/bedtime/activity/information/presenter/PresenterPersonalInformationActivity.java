@@ -5,12 +5,12 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.ListViewCompat;
 import android.view.Gravity;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 
 import com.celerysoft.bedtime.R;
@@ -26,6 +26,7 @@ import java.io.File;
 
 /**
  * Created by admin on 16/5/3.
+ * Presenter for PersonalInformationActivity
  */
 public class PresenterPersonalInformationActivity implements IPresenterPersonalInformationActivity {
     private IViewPersonalInformationActivity mView;
@@ -213,6 +214,8 @@ public class PresenterPersonalInformationActivity implements IPresenterPersonalI
         mModifyAvatarDialog.getWindow().setGravity(Gravity.BOTTOM);
         mModifyAvatarDialog.setCanceledOnTouchOutside(true);
         mModifyAvatarDialog.show();
+
+        mModifyAvatarDialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
     }
 
     public void takePhoto() {

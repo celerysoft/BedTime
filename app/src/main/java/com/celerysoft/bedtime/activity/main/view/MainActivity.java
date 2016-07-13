@@ -28,7 +28,7 @@ import com.celerysoft.bedtime.fragment.main.view.MainFragment;
 import com.celerysoft.bedtime.fragment.settings.view.SettingsFragment;
 import com.celerysoft.bedtime.base.BaseActivity;
 import com.celerysoft.bedtime.base.BaseFragment;
-import com.celerysoft.rippletransitionanimationview.RippleTransitionAnimationView;
+import com.celerysoft.ripple.Wrapper;
 import com.umeng.socialize.UMShareAPI;
 
 public class MainActivity extends BaseActivity
@@ -51,7 +51,7 @@ public class MainActivity extends BaseActivity
     private BedTimeFragment mBedTimeFragment;
     private SettingsFragment mSettingsFragment;
 
-    private RippleTransitionAnimationView mAnimationView;
+    private Wrapper mAnimationWrapper;
 
     private PersonalInformationModel mPersonalInformationModel;
 
@@ -71,7 +71,6 @@ public class MainActivity extends BaseActivity
 
         if(mPresenter.isNewToBedTime()) {
             mPresenter.showWelcomeDialog();
-
         }
 
         if (mPresenter.isNewVersion()) {
@@ -96,8 +95,8 @@ public class MainActivity extends BaseActivity
             }
         });
 
-        mAnimationView = (RippleTransitionAnimationView) findViewById(R.id.main_ripple_animation_view);
-        mAnimationView.setAnimatorListenerAdapter(new AnimatorListenerAdapter() {
+        mAnimationWrapper = (Wrapper) findViewById(R.id.main_ripple_animation_view);
+        mAnimationWrapper.addAnimatorListenerAdapter(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
                 mPresenter.turnToBedTimeFragmentQuickly();
@@ -247,8 +246,8 @@ public class MainActivity extends BaseActivity
     }
 
     @Override
-    public RippleTransitionAnimationView getAnimationView() {
-        return mAnimationView;
+    public Wrapper getAnimationWrapper() {
+        return mAnimationWrapper;
     }
 
     @Override

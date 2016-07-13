@@ -19,18 +19,7 @@
         android:indeterminate="false"
         style="@style/AppTheme.ProgressBar.Horizontal.Light"/>
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/browser_fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        android:src="@mipmap/ic_close_white"
-        android:visibility="gone"/>
-    <com.celerysoft.rippletransitionanimationview.RippleTransitionAnimationView
+    <com.celerysoft.ripple.Wrapper
         android:id="@+id/browser_ripple_animation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -38,9 +27,15 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
         app:animator_ripple_radius="28dp"
         app:animator_ripple_color="@color/colorAccent"
-        app:animator_ripple_duration="animator_long"/>
+        app:animator_ripple_duration="animator_long">
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/browser_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_close_white"
+            android:visibility="invisible"/>
+    </com.celerysoft.ripple.Wrapper>
 
 </android.support.design.widget.CoordinatorLayout>

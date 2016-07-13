@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout
+    android:id="@+id/main_ripple_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -38,6 +39,21 @@
         tools:showIn="@layout/activity_main_app_bar"
         tools:context=".activity.main.view.MainActivity"/>
 
+    <com.celerysoft.ripple.Wrapper
+        android:id="@+id/main_ripple_animation_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        app:animator_ripple_parent_id="@id/main_ripple_parent"
+        app:animator_ripple_color="@color/colorAccent"
+        app:animator_ripple_radius="28dp"
+        app:animator_ripple_duration="animator_long">
+        <android.support.design.widget.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"/>
+    </com.celerysoft.ripple.Wrapper>
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
@@ -45,15 +61,5 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         android:src="@mipmap/ic_alarm_white"/>
-
-    <com.celerysoft.rippletransitionanimationview.RippleTransitionAnimationView
-        android:id="@+id/main_ripple_animation_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        app:animator_ripple_color="@color/colorAccent"
-        app:animator_ripple_radius="28dp"
-        app:animator_ripple_duration="animator_long"/>
 
 </android.support.design.widget.CoordinatorLayout>

@@ -19,6 +19,9 @@
     <style name="AppTheme.Dialog.Light" parent="Theme.AppCompat.Light.Dialog">
         <!-- Used for the buttons -->
         <item name="colorAccent">@color/colorPrimary</item>
+        <!--<item name="android:layout_width">wrap_content</item>-->
+        <!--<item name="android:layout_height">wrap_content</item>-->
+        <item name="android:minWidth">280dp</item>
     </style>
 
     <style name="AppTheme.ProgressBar.Horizontal.Light" parent="Widget.AppCompat.ProgressBar.Horizontal">

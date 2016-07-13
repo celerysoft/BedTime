@@ -16,8 +16,7 @@ import com.celerysoft.bedtime.activity.main.view.MainActivity;
 import com.celerysoft.bedtime.fragment.settings.model.SettingsModel;
 import com.celerysoft.bedtime.base.BaseActivity;
 import com.celerysoft.bedtime.util.AlarmUtil;
-import com.celerysoft.rippletransitionanimationview.RippleTransitionAnimationView;
-import com.celerysoft.rippletransitionanimationview.RippleTransitionAnimationViewGroup;
+import com.celerysoft.ripple.Wrapper;
 import com.umeng.socialize.PlatformConfig;
 
 /**
@@ -26,7 +25,7 @@ import com.umeng.socialize.PlatformConfig;
  */
 public class LaunchActivity extends BaseActivity {
     private ProgressBar mProgressBar;
-    private RippleTransitionAnimationViewGroup mAnimationView;
+    private Wrapper mAnimationWrapper;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -39,8 +38,8 @@ public class LaunchActivity extends BaseActivity {
 
     private void initActivity() {
         mProgressBar = (ProgressBar) findViewById(R.id.launcher_progress_bar);
-        mAnimationView = (RippleTransitionAnimationViewGroup) findViewById(R.id.launcher_animation);
-        mAnimationView.setAnimatorListenerAdapter(new AnimatorListenerAdapter() {
+        mAnimationWrapper = (Wrapper) findViewById(R.id.launcher_animation);
+        mAnimationWrapper.addAnimatorListenerAdapter(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
                 startMainActivity();
@@ -74,7 +73,7 @@ public class LaunchActivity extends BaseActivity {
 
     private void displayTransitionAnimation() {
         mProgressBar.setVisibility(View.GONE);
-        mAnimationView.performAnimation();
+        mAnimationWrapper.performAnimation();
     }
 
     private void startMainActivity() {

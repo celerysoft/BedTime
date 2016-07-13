@@ -11,12 +11,14 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.os.PowerManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.NotificationCompat;
 
 import com.celerysoft.bedtime.R;
 import com.celerysoft.bedtime.activity.main.view.MainActivity;
 import com.celerysoft.bedtime.util.AlarmUtil;
 import com.celerysoft.bedtime.util.Const;
+import com.celerysoft.bedtime.util.GlobalValue;
 
 import java.io.File;
 
@@ -27,6 +29,32 @@ import java.io.File;
 public class BedTimeReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
+        if (GlobalValue.isAppRunningForeground) {
+            showNotifyingDialog(context, intent.getAction());
+        } else {
+            sendNotification(context, intent.getAction());
+            GlobalValue.hasNotifications = true;
+        }
+
+        setNextAlarm(context);
+    }
+
+    private void showNotifyingDialog(Context context, String action) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.AppTheme_Dialog_Light);
+
+        if (action.equals(context.getString(R.string.action_go_bed))) {
+            builder.setTitle(context.getString(R.string.notification_bed_time_in_30_minutes_title))
+                    .setMessage(context.getString(R.string.notification_bed_time_in_30_minutes) + getNickname(context));
+        } else if (action.equals(context.getString(R.string.action_bed_time))) {
+            builder.setTitle(context.getString(R.string.notification_it_is_bed_time_title))
+                    .setMessage(context.getString(R.string.notification_it_is_bed_time) + getNickname(context));
+        }
+
+        builder.setPositiveButton(R.string.got_it, null)
+                .show();
+    }
+
+    private void sendNotification(Context context, String action) {
         acquireWakeLock(context, 10 * 1000);
 
         Intent openIntent = new Intent(context, MainActivity.class);
@@ -41,7 +69,6 @@ public class BedTimeReceiver extends BroadcastReceiver {
 
         int notifyId = 0;
 
-        String action = intent.getAction();
         if (action.equals(context.getString(R.string.action_go_bed))) {
 
             File notificationsDirectory = context.getExternalFilesDir(Environment.DIRECTORY_NOTIFICATIONS);
@@ -51,14 +78,14 @@ public class BedTimeReceiver extends BroadcastReceiver {
                 builder.setSound(uri);
             }
 
-            notifyId = 0;
+            notifyId = Const.NOTIFICATION_ID_GO_BED;
 
             builder.setContentTitle(context.getString(R.string.notification_bed_time_in_30_minutes_title))
                     .setContentText(context.getString(R.string.notification_bed_time_in_30_minutes) + getNickname(context))
                     .setTicker(context.getString(R.string.notification_bed_time_in_30_minutes) + getNickname(context))
                     .setDefaults(NotificationCompat.DEFAULT_VIBRATE);
         } else if (action.equals(context.getString(R.string.action_bed_time))) {
-            notifyId = 1;
+            notifyId = Const.NOTIFICATION_ID_BED_TIME;
 
             builder.setContentTitle(context.getString(R.string.notification_it_is_bed_time_title))
                     .setContentText(context.getString(R.string.notification_it_is_bed_time) + getNickname(context))
@@ -75,8 +102,6 @@ public class BedTimeReceiver extends BroadcastReceiver {
 
         NotificationManager manager = (NotificationManager) context.getSystemService((Context.NOTIFICATION_SERVICE));
         manager.notify(notifyId, notification);
-
-        setNextAlarm(context);
     }
 
     private void acquireWakeLock(Context context, long timeout) {

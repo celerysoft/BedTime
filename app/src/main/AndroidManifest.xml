@@ -26,6 +26,7 @@
     <!-- 友盟所需权限 -->
     
     <application
+        android:name=".base.BaseApplication"
         android:allowBackup="true"
         android:fullBackupContent="true"
         android:icon="@mipmap/ic_launcher_bedtime"

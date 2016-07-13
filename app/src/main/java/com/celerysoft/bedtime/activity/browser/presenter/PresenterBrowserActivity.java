@@ -20,7 +20,7 @@ public class PresenterBrowserActivity implements IPresenterBrowserActivity {
         mView.getFloatingActionButton().postDelayed(new Runnable() {
             @Override
             public void run() {
-                mView.getAnimationView().performAnimation();
+                mView.getAnimationWrapper().performAnimation();
             }
         }, 150);
     }

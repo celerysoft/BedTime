@@ -389,12 +389,15 @@ public class PresenterMainActivity implements IPresenterMainActivity {
     public void handleActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
             case REQUEST_CODE_OPEN_ABOUT_US_ACTIVITY:
-                mView.getFloatActionButton().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        mView.getFloatActionButton().show();
-                    }
-                }, 300);
+                if (mCurrentFragment.equals(mView.getMainFragment())) {
+                    mView.getAnimationWrapper().setVisibility(View.VISIBLE);
+                    mView.getFloatActionButton().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            mView.getFloatActionButton().show();
+                        }
+                    }, 300);
+                }
                 break;
             default:
                 break;
@@ -407,16 +410,18 @@ public class PresenterMainActivity implements IPresenterMainActivity {
         mView.getFloatActionButton().postDelayed(new Runnable() {
             @Override
             public void run() {
-                mView.getAnimationView().performAnimation();
+                mView.getAnimationWrapper().performAnimation();
             }
         }, 150);
     }
 
     private void hideFloatActionButton() {
+        mView.getAnimationWrapper().setVisibility(View.INVISIBLE);
         mView.getFloatActionButton().hide();
     }
 
     private void showFloatActionButton() {
+        mView.getAnimationWrapper().setVisibility(View.VISIBLE);
         mView.getFloatActionButton().show();
     }
 }

@@ -11,7 +11,7 @@ import com.celerysoft.bedtime.util.ActivityManagerUtil;
  *
  */
 public class BaseActivity extends AppCompatActivity {
-    ActivityManagerUtil mActivityManagerUtil;
+    private ActivityManagerUtil mActivityManagerUtil;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
