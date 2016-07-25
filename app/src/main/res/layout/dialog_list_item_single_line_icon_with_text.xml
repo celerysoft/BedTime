@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="48dp">
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="48dp">
+
     <ImageView
         android:id="@+id/dialog_list_item_single_line_iv"
         android:layout_width="40dp"
@@ -21,4 +23,5 @@
         android:textSize="@dimen/list_view_font_size"
         android:textColor="@color/colorPrimaryText"
         android:gravity="center_vertical|start"/>
+
 </RelativeLayout>

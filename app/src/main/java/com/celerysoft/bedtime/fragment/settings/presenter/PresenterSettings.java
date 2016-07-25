@@ -13,6 +13,7 @@ import com.celerysoft.bedtime.activity.information.view.PersonalInformationActiv
 import com.celerysoft.bedtime.activity.main.view.MainActivity;
 import com.celerysoft.bedtime.fragment.settings.model.SettingsModel;
 import com.celerysoft.bedtime.fragment.settings.view.IViewSettings;
+import com.celerysoft.bedtime.util.InitViewUtil;
 
 /**
  * Created by admin on 16/4/29.
@@ -57,8 +58,10 @@ public class PresenterSettings implements IPresenterSettings {
                             PresenterSettings.this.changeAppLanguage();
                         }
                     }
-                })
-                .show();
+                });
+
+        AlertDialog dialog = builder.show();
+        InitViewUtil.getInstance().initAlertDialog(dialog);
     }
 
     @Override

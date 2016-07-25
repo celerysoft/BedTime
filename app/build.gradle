@@ -6,8 +6,8 @@ android {
 
     defaultConfig {
         applicationId "com.celerysoft.bedtime"
-        versionCode 12
-        versionName "1.2.6"
+        versionCode 13
+        versionName "1.2.7"
         minSdkVersion 14
         targetSdkVersion 23
     }

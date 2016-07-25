@@ -18,6 +18,7 @@ import com.celerysoft.bedtime.activity.information.adapter.ModifyAvatarDialogAda
 import com.celerysoft.bedtime.activity.information.model.PersonalInformationModel;
 import com.celerysoft.bedtime.activity.information.view.IViewPersonalInformationActivity;
 import com.celerysoft.bedtime.util.FileUtil;
+import com.celerysoft.bedtime.util.InitViewUtil;
 import com.celerysoft.bedtime.util.Util;
 import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
@@ -36,6 +37,8 @@ public class PresenterPersonalInformationActivity implements IPresenterPersonalI
 
     private AlertDialog mModifyAvatarDialog;
 
+    private boolean mIsInEditMode = false;
+
     public PresenterPersonalInformationActivity(IViewPersonalInformationActivity view) {
         mView = view;
 
@@ -45,12 +48,36 @@ public class PresenterPersonalInformationActivity implements IPresenterPersonalI
     }
 
     @Override
+    public boolean isInEditMode() {
+        return mIsInEditMode;
+    }
+
+    @Override
+    public void cancelEditMode() {
+        mIsInEditMode = false;
+
+        mView.getFloatingActionButton().hide();
+
+        if (mView.getTvNickname().getVisibility() == View.GONE) {
+            mView.getTvNickname().setVisibility(View.VISIBLE);
+            mView.getEtNickname().setVisibility(View.GONE);
+        }
+
+        if (mView.getTvAge().getVisibility() == View.GONE) {
+            mView.getTvAge().setVisibility(View.VISIBLE);
+            mView.getEtAge().setVisibility(View.GONE);
+        }
+    }
+
+    @Override
     public String getNickname() {
         return mModel.getNickname();
     }
 
     @Override
     public void editNickname() {
+        mIsInEditMode = true;
+
         mView.getFloatingActionButton().show();
         mView.getTvNickname().setVisibility(View.GONE);
         mView.getEtNickname().setVisibility(View.VISIBLE);
@@ -65,6 +92,8 @@ public class PresenterPersonalInformationActivity implements IPresenterPersonalI
 
     @Override
     public void editAge() {
+        mIsInEditMode = true;
+
         mView.getFloatingActionButton().show();
         mView.getTvAge().setVisibility(View.GONE);
         mView.getEtAge().setVisibility(View.VISIBLE);
@@ -79,6 +108,8 @@ public class PresenterPersonalInformationActivity implements IPresenterPersonalI
 
     @Override
     public void saveInformation() {
+        mIsInEditMode = false;
+
         mView.getFloatingActionButton().hide();
 
         if (mView.getTvNickname().getVisibility() == View.GONE) {
@@ -209,6 +240,7 @@ public class PresenterPersonalInformationActivity implements IPresenterPersonalI
                 }
             }
         });
+        InitViewUtil.getInstance().initListView(listView);
 
         mModifyAvatarDialog = new AlertDialog.Builder(mContext, R.style.AppTheme_Dialog_Light_Bottom).setView(listView).create();
         mModifyAvatarDialog.getWindow().setGravity(Gravity.BOTTOM);
@@ -243,8 +275,8 @@ public class PresenterPersonalInformationActivity implements IPresenterPersonalI
         intent.putExtra("aspectX", 1);
         intent.putExtra("aspectY", 1);
         // 裁剪后输出图片的尺寸大小
-        intent.putExtra("outputX", Util.dip2px(mContext, 60));
-        intent.putExtra("outputY", Util.dip2px(mContext, 60));
+        intent.putExtra("outputX", Util.dp2px(mContext, 60));
+        intent.putExtra("outputY", Util.dp2px(mContext, 60));
         // 图片格式
         intent.putExtra("outputFormat", "JPEG");
         intent.putExtra("noFaceDetection", true);// 取消人脸识别

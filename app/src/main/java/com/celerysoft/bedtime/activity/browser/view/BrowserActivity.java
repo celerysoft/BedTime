@@ -6,6 +6,8 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.ActionBar;
+import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.JsResult;
@@ -16,6 +18,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.celerysoft.bedtime.R;
 import com.celerysoft.bedtime.activity.browser.presenter.IPresenterBrowserActivity;
@@ -29,6 +32,7 @@ import com.celerysoft.ripple.Wrapper;
  */
 public class BrowserActivity extends BaseActivity implements IViewBrowserActivity {
     public static final String INTENT_EXTRA_STRING_NAME_OF_URL = "the key name of url";
+    public static final String INTENT_EXTRA_STRING_NAME_OF_TITLE = "the key name of title";
 
     private IPresenterBrowserActivity mPresenter;
 
@@ -48,11 +52,47 @@ public class BrowserActivity extends BaseActivity implements IViewBrowserActivit
         initActivity();
     }
 
+
+
     @SuppressLint("SetJavaScriptEnabled")
     private void initActivity() {
         mPresenter = new PresenterBrowserActivity(this);
 
         String url = getIntent().getStringExtra(INTENT_EXTRA_STRING_NAME_OF_URL);
+        String title = getIntent().getStringExtra(INTENT_EXTRA_STRING_NAME_OF_TITLE);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            title = (title != null && title.length() > 0) ? title : getString(R.string.app_name);
+
+            TextView tvTitle = (TextView) findViewById(R.id.title);
+            if (tvTitle != null) {
+                tvTitle.setText(title);
+            }
+
+            View btnBack = findViewById(R.id.btn_back);
+            if (btnBack != null) {
+                btnBack.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        onBackPressed();
+                    }
+                });
+            }
+
+            View btnClose = findViewById(R.id.btn_close);
+            if (btnClose != null) {
+                btnClose.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        finish();
+                    }
+                });
+            }
+        }
+
 
         mAnimationWrapper = (Wrapper) findViewById(R.id.browser_ripple_animation);
         mAnimationWrapper.addAnimatorListenerAdapter(new AnimatorListenerAdapter() {
@@ -114,18 +154,18 @@ public class BrowserActivity extends BaseActivity implements IViewBrowserActivit
 
 
         });
-        mWebView.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (event.getAction() == KeyEvent.ACTION_DOWN){
-                    if (keyCode == KeyEvent.KEYCODE_BACK && mWebView.canGoBack()) {
-                        mWebView.goBack();
-                        return true;
-                    }
-                }
-                return false;
-            }
-        });
+//        mWebView.setOnKeyListener(new View.OnKeyListener() {
+//            @Override
+//            public boolean onKey(View v, int keyCode, KeyEvent event) {
+//                if (event.getAction() == KeyEvent.ACTION_DOWN){
+//                    if (keyCode == KeyEvent.KEYCODE_BACK && mWebView.canGoBack()) {
+//                        mWebView.goBack();
+//                        return true;
+//                    }
+//                }
+//                return false;
+//            }
+//        });
 
         mWebSettings = mWebView.getSettings();
 
@@ -145,6 +185,15 @@ public class BrowserActivity extends BaseActivity implements IViewBrowserActivit
                     mPresenter.displayAnimationOfFinishingActivity();
                 }
             });
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (mWebView.canGoBack()) {
+            mWebView.goBack();
+        } else {
+            super.onBackPressed();
         }
     }
 

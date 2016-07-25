@@ -27,8 +27,8 @@
     <string name="personal_information_avatar_dialog_gallery">图库</string>
 
     // Main Activity
-    <string name="action_about_us">关于夜堪眠</string>
-    <string name="main_snack_bar_text">再按一次返回键退出程序</string>
+    <string name="action_about_us">关于『夜堪眠』</string>
+    <string name="main_snack_bar_text">再按一次返回键退出『夜堪眠』</string>
     <string name="main_snack_bar_action_text">退出</string>
     <string name="main_nav_home_text">主页</string>
     <string name="main_nav_bedtime_text">卧榻</string>
@@ -39,14 +39,14 @@
     <string name="main_could_not_send_feedback_dialog_message">"检测到您的设备无法正常发送邮件，如果您想给我发送任何反馈，请发送到：\ncelerysoft@gmail.com\n\n十分感谢您的建议和意见。"</string>
     <string name="main_could_not_send_feedback_dialog_btn_text">复制邮箱地址到剪贴板</string>
     <string name="main_tv_sleep_time_text">睡眠时间：</string>
-    <string name="main_dialog_welcome_title">欢迎使用夜堪眠</string>
+    <string name="main_dialog_welcome_title">欢迎使用『夜堪眠』</string>
     <string name="main_dialog_welcome_message">因为这是您第一次打开App，为了更好的为您服务，首先需要你设置一些个人信息，请放心，这些信息都只是存在本地，不会上传到服务器。</string>
     <string name="main_dialog_welcome_positive_btn_text">前往设置</string>
     <string name="main_snack_bar_share_success">分享成功</string>
     <string name="main_snack_bar_share_fail">分享失败</string>
     <string name="main_snack_bar_share_cancel">分享取消</string>
     <string name="main_share_title">也许你需要一个提醒你按时睡觉的小助手</string>
-    <string name="main_share_message">您只需设定每天的起床时间，并且设定您的年龄，「夜堪眠」会根据您的年龄计算出每天所需睡眠的时间，并在您睡前30分钟提醒你上床睡觉。</string>
+    <string name="main_share_message">您只需设定每天的起床时间，并且设定您的年龄，『夜堪眠』会根据您的年龄计算出每天所需睡眠的时间，并在您睡前30分钟提醒你上床睡觉。</string>
     <string name="main_dialog_share_title">分享到</string>
     <string name="main_dialog_share_wechat">微信</string>
     <string name="main_dialog_share_wechat_timeline">微信朋友圈</string>

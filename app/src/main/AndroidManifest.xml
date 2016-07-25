@@ -47,7 +47,7 @@
 
         <activity
             android:name=".activity.main.view.MainActivity"
-            android:theme="@style/AppTheme.NoActionBar"
+            android:theme="@style/AppTheme.NoActionBarWithTranStatusBar"
             android:launchMode="singleTop"
             android:configChanges="orientation|screenSize|locale">
         </activity>

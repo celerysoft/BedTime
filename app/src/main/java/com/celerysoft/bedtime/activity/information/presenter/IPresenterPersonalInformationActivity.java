@@ -22,4 +22,6 @@ public interface IPresenterPersonalInformationActivity {
     void crop(Uri uri);
     void saveAvatar(Bitmap bitmap);
     Bitmap getAvatar();
+    boolean isInEditMode();
+    void cancelEditMode();
 }

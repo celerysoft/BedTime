@@ -29,6 +29,8 @@ import com.celerysoft.bedtime.util.ActivityManagerUtil;
 import com.celerysoft.bedtime.util.FileUtil;
 import com.celerysoft.bedtime.util.Const;
 import com.celerysoft.bedtime.base.BaseActivity;
+import com.celerysoft.bedtime.util.InitViewUtil;
+import com.celerysoft.bedtime.util.Util;
 import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
@@ -83,7 +85,15 @@ public class PresenterMainActivity implements IPresenterMainActivity {
 
     public void showExitAppSnackBar() {
         String text = mContext.getString(R.string.main_snack_bar_text);
-        Snackbar.make(mView.getFloatActionButton(), text, Snackbar.LENGTH_LONG).show();
+        Snackbar.make(mView.getFloatActionButton(), text, Snackbar.LENGTH_LONG)
+                .setCallback(new Snackbar.Callback() {
+                    @Override
+                    public void onDismissed(Snackbar snackbar, int event) {
+                        super.onDismissed(snackbar, event);
+                        mLastPressBackTime = 0;
+                    }
+                })
+                .show();
     }
 
     @Override
@@ -365,11 +375,13 @@ public class PresenterMainActivity implements IPresenterMainActivity {
                 action.share();
             }
         });
+        InitViewUtil.getInstance().initListView(listView);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext, R.style.AppTheme_Dialog_Light);
-        mSocialSharingDialog = builder.setView(listView, 0, 20, 0, 24)
+        mSocialSharingDialog = builder.setView(listView, 0, Util.dp2px(mContext, 20), 0, Util.dp2px(mContext, 20))
                 .setTitle(R.string.main_dialog_share_title)
                 .show();
+        InitViewUtil.getInstance().initAlertDialog(mSocialSharingDialog);
     }
 
     @Override
@@ -380,6 +392,7 @@ public class PresenterMainActivity implements IPresenterMainActivity {
             public void run() {
                 Intent intent = new Intent(mContext, BrowserActivity.class);
                 intent.putExtra(BrowserActivity.INTENT_EXTRA_STRING_NAME_OF_URL, Const.ABOUT_BED_TIME_URL);
+                intent.putExtra(BrowserActivity.INTENT_EXTRA_STRING_NAME_OF_TITLE, mContext.getString(R.string.action_about_us));
                 ((Activity) mContext).startActivityForResult(intent, REQUEST_CODE_OPEN_ABOUT_US_ACTIVITY);
             }
         }, 300);

@@ -15,4 +15,8 @@
     <color name="colorAccentA100">#FF80AB</color>
     <color name="colorAccentA400">#F50057</color>
     <color name="colorAccentA700">#C51162</color>
+
+    <color name="colorFlatButtonNormal">@android:color/transparent</color>
+    <color name="colorFlatButtonPressed">#66999999</color>
+    <color name="colorFlatButtonFocused">#1E000000</color>
 </resources>

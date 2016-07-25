@@ -143,6 +143,15 @@ public class PersonalInformationActivity extends BaseActivity implements IViewPe
     }
 
     @Override
+    public void onBackPressed() {
+        if (mPresenter.isInEditMode()) {
+            mPresenter.cancelEditMode();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
     public Context getContext() {
         return this;
     }
