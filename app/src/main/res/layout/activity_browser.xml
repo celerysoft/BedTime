@@ -12,45 +12,53 @@
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:layout_scrollFlags="scroll|enterAlways"
-            app:popupTheme="@style/AppTheme.PopupOverlay"
-            android:contentInsetStart="0dp"
-            android:contentInsetLeft="0dp"
-            app:contentInsetLeft="0dp"
-            app:contentInsetStart="0dp">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-                <ImageButton
-                    android:id="@+id/btn_back"
-                    android:layout_width="?attr/actionBarSize"
-                    android:layout_height="match_parent"
-                    android:src="@mipmap/ic_arrow_left"
-                    android:background="@drawable/selector_toolbar_item"/>
-                <ImageButton
-                    android:id="@+id/btn_close"
-                    android:layout_width="?attr/actionBarSize"
-                    android:layout_height="match_parent"
-                    android:src="@mipmap/ic_close"
-                    android:background="@drawable/selector_toolbar_item"/>
-                <TextView
-                    android:id="@+id/title"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:paddingLeft="8dp"
-                    android:paddingRight="8dp"
-                    android:background="@android:color/transparent"
-                    android:textColor="@android:color/white"
-                    android:textSize="@dimen/text_size_title"
-                    android:gravity="center_vertical"/>
-            </LinearLayout>
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        app:layout_scrollFlags="scroll|enterAlways"
+        app:popupTheme="@style/AppTheme.PopupOverlay"/>
 
-        </android.support.v7.widget.Toolbar>
+        <!--<android.support.v7.widget.Toolbar-->
+            <!--android:id="@+id/toolbar"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="?attr/actionBarSize"-->
+            <!--android:background="?attr/colorPrimary"-->
+            <!--app:layout_scrollFlags="scroll|enterAlways"-->
+            <!--app:popupTheme="@style/AppTheme.PopupOverlay"-->
+            <!--android:contentInsetStart="0dp"-->
+            <!--android:contentInsetLeft="0dp"-->
+            <!--app:contentInsetLeft="0dp"-->
+            <!--app:contentInsetStart="0dp">-->
+            <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:orientation="horizontal">-->
+                <!--<ImageButton-->
+                    <!--android:id="@+id/btn_back"-->
+                    <!--android:layout_width="?attr/actionBarSize"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:src="@mipmap/ic_arrow_left"-->
+                    <!--android:background="@drawable/selector_toolbar_item"/>-->
+                <!--<ImageButton-->
+                    <!--android:id="@+id/btn_close"-->
+                    <!--android:layout_width="?attr/actionBarSize"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:src="@mipmap/ic_close"-->
+                    <!--android:background="@drawable/selector_toolbar_item"/>-->
+                <!--<TextView-->
+                    <!--android:id="@+id/title"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:paddingLeft="8dp"-->
+                    <!--android:paddingRight="8dp"-->
+                    <!--android:background="@android:color/transparent"-->
+                    <!--android:textColor="@android:color/white"-->
+                    <!--android:textSize="@dimen/text_size_title"-->
+                    <!--android:gravity="center_vertical"/>-->
+            <!--</LinearLayout>-->
+
+        <!--</android.support.v7.widget.Toolbar>-->
 
     </android.support.design.widget.AppBarLayout>
 

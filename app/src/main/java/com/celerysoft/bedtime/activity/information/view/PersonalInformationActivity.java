@@ -52,17 +52,18 @@ public class PersonalInformationActivity extends BaseActivity implements IViewPe
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.personal_information_toolbar);
         setSupportActionBar(toolbar);
-        if (toolbar != null) {
-            toolbar.setNavigationIcon(R.mipmap.ic_arrow_left);
-            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    PersonalInformationActivity.this.finish();
-                }
-            });
-        }
+//        if (toolbar != null) {
+//            toolbar.setNavigationIcon(R.mipmap.ic_arrow_left);
+//            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    PersonalInformationActivity.this.finish();
+//                }
+//            });
+//        }
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle(R.string.personal_information_title);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
         mIvAvatar = (ImageView) findViewById(R.id.personal_information_iv_avatar);

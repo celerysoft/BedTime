@@ -36,6 +36,7 @@ public class BrowserActivity extends BaseActivity implements IViewBrowserActivit
 
     private IPresenterBrowserActivity mPresenter;
 
+    private ActionBar mActionBar;
     private WebView mWebView;
     private ProgressBar mProgressBar;
     private FloatingActionButton mFloatingActionButton;
@@ -52,49 +53,17 @@ public class BrowserActivity extends BaseActivity implements IViewBrowserActivit
         initActivity();
     }
 
-
-
-    @SuppressLint("SetJavaScriptEnabled")
-    private void initActivity() {
-        mPresenter = new PresenterBrowserActivity(this);
-
-        String url = getIntent().getStringExtra(INTENT_EXTRA_STRING_NAME_OF_URL);
-        String title = getIntent().getStringExtra(INTENT_EXTRA_STRING_NAME_OF_TITLE);
-
+    private void bindView() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            title = (title != null && title.length() > 0) ? title : getString(R.string.app_name);
-
-            TextView tvTitle = (TextView) findViewById(R.id.title);
-            if (tvTitle != null) {
-                tvTitle.setText(title);
-            }
-
-            View btnBack = findViewById(R.id.btn_back);
-            if (btnBack != null) {
-                btnBack.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        onBackPressed();
-                    }
-                });
-            }
-
-            View btnClose = findViewById(R.id.btn_close);
-            if (btnClose != null) {
-                btnClose.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        finish();
-                    }
-                });
-            }
-        }
-
-
+        mActionBar = getSupportActionBar();
         mAnimationWrapper = (Wrapper) findViewById(R.id.browser_ripple_animation);
+        mProgressBar = (ProgressBar) findViewById(R.id.browser_progress_bar);
+        mWebView = (WebView) findViewById(R.id.browser_web_view);
+        mFloatingActionButton = (FloatingActionButton) findViewById(R.id.browser_fab);
+    }
+
+    private void bindListener() {
         mAnimationWrapper.addAnimatorListenerAdapter(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
@@ -102,9 +71,6 @@ public class BrowserActivity extends BaseActivity implements IViewBrowserActivit
             }
         });
 
-        mProgressBar = (ProgressBar) findViewById(R.id.browser_progress_bar);
-
-        mWebView = (WebView) findViewById(R.id.browser_web_view);
         mWebView.setWebChromeClient(new WebChromeClient() {
             private int mOldProgress = 0;
 
@@ -133,9 +99,11 @@ public class BrowserActivity extends BaseActivity implements IViewBrowserActivit
             }
 
         });
+
         mWebView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, final String url) {
+                mActionBar.setHomeAsUpIndicator(R.mipmap.ic_arrow_left);
                 view.loadUrl(url);
                 return true;
             }
@@ -154,6 +122,7 @@ public class BrowserActivity extends BaseActivity implements IViewBrowserActivit
 
 
         });
+
 //        mWebView.setOnKeyListener(new View.OnKeyListener() {
 //            @Override
 //            public boolean onKey(View v, int keyCode, KeyEvent event) {
@@ -163,35 +132,88 @@ public class BrowserActivity extends BaseActivity implements IViewBrowserActivit
 //                        return true;
 //                    }
 //                }
+//
+//                mActionBar.setHomeAsUpIndicator(R.mipmap.ic_close);
 //                return false;
 //            }
 //        });
 
+        mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPresenter.displayAnimationOfFinishingActivity();
+            }
+        });
+    }
+
+    @SuppressLint("SetJavaScriptEnabled")
+    private void initData() {
+        mPresenter = new PresenterBrowserActivity(this);
+
         mWebSettings = mWebView.getSettings();
+    }
+
+    private void initView() {
+        String url = getIntent().getStringExtra(INTENT_EXTRA_STRING_NAME_OF_URL);
+        String title = getIntent().getStringExtra(INTENT_EXTRA_STRING_NAME_OF_TITLE);
+
+        if (mActionBar != null) {
+            title = (title != null && title.length() > 0) ? title : getString(R.string.app_name);
+
+            mActionBar.setTitle(title);
+            mActionBar.setDisplayHomeAsUpEnabled(true);
+            mActionBar.setHomeAsUpIndicator(R.mipmap.ic_close);
+
+//            TextView tvTitle = (TextView) findViewById(R.id.title);
+//            if (tvTitle != null) {
+//                tvTitle.setText(title);
+//            }
+//
+//            View btnBack = findViewById(R.id.btn_back);
+//            if (btnBack != null) {
+//                btnBack.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        onBackPressed();
+//                    }
+//                });
+//            }
+//
+//            View btnClose = findViewById(R.id.btn_close);
+//            if (btnClose != null) {
+//                btnClose.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        finish();
+//                    }
+//                });
+//            }
+        }
+
+        mFloatingActionButton.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mFloatingActionButton.show();
+            }
+        }, 300);
 
         mWebView.loadUrl(url);
+    }
 
-        mFloatingActionButton = (FloatingActionButton) findViewById(R.id.browser_fab);
-        if (mFloatingActionButton != null) {
-            mFloatingActionButton.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    mFloatingActionButton.show();
-                }
-            }, 300);
-            mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mPresenter.displayAnimationOfFinishingActivity();
-                }
-            });
-        }
+    private void initActivity() {
+        bindView();
+        bindListener();
+        initData();
+        initView();
     }
 
     @Override
     public void onBackPressed() {
         if (mWebView.canGoBack()) {
             mWebView.goBack();
+            if (!mWebView.canGoBack()) {
+                mActionBar.setHomeAsUpIndicator(R.mipmap.ic_close);
+            }
         } else {
             super.onBackPressed();
         }

@@ -2,68 +2,68 @@
     <string name="app_name">BedTime</string>
 
     // Common string do not translate -start
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
+    <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
 
     // Language
-    <string name="settings_fragment_language_english">English</string>
-    <string name="settings_fragment_language_chinese">简体中文</string>
+    <string name="settings_fragment_language_english" translatable="false">English</string>
+    <string name="settings_fragment_language_chinese" translatable="false">简体中文</string>
 
     // Action
-    <string name="action_go_bed">com.celerysoft.bedtime.action.GO_BED</string>
-    <string name="action_bed_time">com.celerysoft.bedTime.action.BED_TIME</string>
+    <string name="action_go_bed" translatable="false">com.celerysoft.bedtime.action.GO_BED</string>
+    <string name="action_bed_time" translatable="false">com.celerysoft.bedTime.action.BED_TIME</string>
 
     //SharedPreferences Key
-    <string name="shared_preferences_key_default">shared_preferences_key_default</string>
+    <string name="shared_preferences_key_default" translatable="false">shared_preferences_key_default</string>
 
-    <string name="shared_preferences_key_is_new_user">shared_preferences_key_is_new_user</string>
-    <string name="shared_preferences_key_last_time_version_code">shared_preferences_key_last_time_version_code</string>
-    <string name="shared_preferences_key_is_copy_assets_file_to_external_storage">shared_preferences_key_is_copy_assets_file_to_external_storage</string>
+    <string name="shared_preferences_key_is_new_user" translatable="false">shared_preferences_key_is_new_user</string>
+    <string name="shared_preferences_key_last_time_version_code" translatable="false">shared_preferences_key_last_time_version_code</string>
+    <string name="shared_preferences_key_is_copy_assets_file_to_external_storage" translatable="false">shared_preferences_key_is_copy_assets_file_to_external_storage</string>
 
     <!-- Wake up time -->
-    <string name="shared_preferences_key_wakeup_time_monday_hour">shared_preferences_key_wakeup_time_monday_hour</string>
-    <string name="shared_preferences_key_wakeup_time_monday_minute">shared_preferences_key_wakeup_time_monday_minute</string>
-    <string name="shared_preferences_key_wakeup_time_tuesday_hour">shared_preferences_key_wakeup_time_tuesday_hour</string>
-    <string name="shared_preferences_key_wakeup_time_tuesday_minute">shared_preferences_key_wakeup_time_tuesday_minute</string>
-    <string name="shared_preferences_key_wakeup_time_wednesday_hour">shared_preferences_key_wakeup_time_wednesday_hour</string>
-    <string name="shared_preferences_key_wakeup_time_wednesday_minute">shared_preferences_key_wakeup_time_wednesday_minute</string>
-    <string name="shared_preferences_key_wakeup_time_thursday_hour">shared_preferences_key_wakeup_time_thursday_hour</string>
-    <string name="shared_preferences_key_wakeup_time_thursday_minute">shared_preferences_key_wakeup_time_thursday_minute</string>
-    <string name="shared_preferences_key_wakeup_time_friday_hour">shared_preferences_key_wakeup_time_friday_hour</string>
-    <string name="shared_preferences_key_wakeup_time_friday_minute">shared_preferences_key_wakeup_time_friday_minute</string>
-    <string name="shared_preferences_key_wakeup_time_saturday_hour">shared_preferences_key_wakeup_time_saturday_hour</string>
-    <string name="shared_preferences_key_wakeup_time_saturday_minute">shared_preferences_key_wakeup_time_saturday_minute</string>
-    <string name="shared_preferences_key_wakeup_time_sunday_hour">shared_preferences_key_wakeup_time_sunday_hour</string>
-    <string name="shared_preferences_key_wakeup_time_sunday_minute">shared_preferences_key_wakeup_time_sunday_minute</string>
+    <string name="shared_preferences_key_wakeup_time_monday_hour" translatable="false">shared_preferences_key_wakeup_time_monday_hour</string>
+    <string name="shared_preferences_key_wakeup_time_monday_minute" translatable="false">shared_preferences_key_wakeup_time_monday_minute</string>
+    <string name="shared_preferences_key_wakeup_time_tuesday_hour" translatable="false">shared_preferences_key_wakeup_time_tuesday_hour</string>
+    <string name="shared_preferences_key_wakeup_time_tuesday_minute" translatable="false">shared_preferences_key_wakeup_time_tuesday_minute</string>
+    <string name="shared_preferences_key_wakeup_time_wednesday_hour" translatable="false">shared_preferences_key_wakeup_time_wednesday_hour</string>
+    <string name="shared_preferences_key_wakeup_time_wednesday_minute" translatable="false">shared_preferences_key_wakeup_time_wednesday_minute</string>
+    <string name="shared_preferences_key_wakeup_time_thursday_hour" translatable="false">shared_preferences_key_wakeup_time_thursday_hour</string>
+    <string name="shared_preferences_key_wakeup_time_thursday_minute" translatable="false">shared_preferences_key_wakeup_time_thursday_minute</string>
+    <string name="shared_preferences_key_wakeup_time_friday_hour" translatable="false">shared_preferences_key_wakeup_time_friday_hour</string>
+    <string name="shared_preferences_key_wakeup_time_friday_minute" translatable="false">shared_preferences_key_wakeup_time_friday_minute</string>
+    <string name="shared_preferences_key_wakeup_time_saturday_hour" translatable="false">shared_preferences_key_wakeup_time_saturday_hour</string>
+    <string name="shared_preferences_key_wakeup_time_saturday_minute" translatable="false">shared_preferences_key_wakeup_time_saturday_minute</string>
+    <string name="shared_preferences_key_wakeup_time_sunday_hour" translatable="false">shared_preferences_key_wakeup_time_sunday_hour</string>
+    <string name="shared_preferences_key_wakeup_time_sunday_minute" translatable="false">shared_preferences_key_wakeup_time_sunday_minute</string>
 
     <!-- Go bed time -->
-    <string name="shared_preferences_key_bed_time_monday_hour">shared_preferences_key_bed_time_monday_hour</string>
-    <string name="shared_preferences_key_bed_time_monday_minute">shared_preferences_key_bed_time_monday_minute</string>
-    <string name="shared_preferences_key_bed_time_tuesday_hour">shared_preferences_key_bed_time_tuesday_hour</string>
-    <string name="shared_preferences_key_bed_time_tuesday_minute">shared_preferences_key_bed_time_tuesday_minute</string>
-    <string name="shared_preferences_key_bed_time_wednesday_hour">shared_preferences_key_bed_time_wednesday_hour</string>
-    <string name="shared_preferences_key_bed_time_wednesday_minute">shared_preferences_key_bed_time_wednesday_minute</string>
-    <string name="shared_preferences_key_bed_time_thursday_hour">shared_preferences_key_bed_time_thursday_hour</string>
-    <string name="shared_preferences_key_bed_time_thursday_minute">shared_preferences_key_bed_time_thursday_minute</string>
-    <string name="shared_preferences_key_bed_time_friday_hour">shared_preferences_key_bed_time_friday_hour</string>
-    <string name="shared_preferences_key_bed_time_friday_minute">shared_preferences_key_bed_time_friday_minute</string>
-    <string name="shared_preferences_key_bed_time_saturday_hour">shared_preferences_key_bed_time_saturday_hour</string>
-    <string name="shared_preferences_key_bed_time_saturday_minute">shared_preferences_key_bed_time_saturday_minute</string>
-    <string name="shared_preferences_key_bed_time_sunday_hour">shared_preferences_key_bed_time_sunday_hour</string>
-    <string name="shared_preferences_key_bed_time_sunday_minute">shared_preferences_key_bed_time_sunday_minute</string>
+    <string name="shared_preferences_key_bed_time_monday_hour" translatable="false">shared_preferences_key_bed_time_monday_hour</string>
+    <string name="shared_preferences_key_bed_time_monday_minute" translatable="false">shared_preferences_key_bed_time_monday_minute</string>
+    <string name="shared_preferences_key_bed_time_tuesday_hour" translatable="false">shared_preferences_key_bed_time_tuesday_hour</string>
+    <string name="shared_preferences_key_bed_time_tuesday_minute" translatable="false">shared_preferences_key_bed_time_tuesday_minute</string>
+    <string name="shared_preferences_key_bed_time_wednesday_hour" translatable="false">shared_preferences_key_bed_time_wednesday_hour</string>
+    <string name="shared_preferences_key_bed_time_wednesday_minute" translatable="false">shared_preferences_key_bed_time_wednesday_minute</string>
+    <string name="shared_preferences_key_bed_time_thursday_hour" translatable="false">shared_preferences_key_bed_time_thursday_hour</string>
+    <string name="shared_preferences_key_bed_time_thursday_minute" translatable="false">shared_preferences_key_bed_time_thursday_minute</string>
+    <string name="shared_preferences_key_bed_time_friday_hour" translatable="false">shared_preferences_key_bed_time_friday_hour</string>
+    <string name="shared_preferences_key_bed_time_friday_minute" translatable="false">shared_preferences_key_bed_time_friday_minute</string>
+    <string name="shared_preferences_key_bed_time_saturday_hour" translatable="false">shared_preferences_key_bed_time_saturday_hour</string>
+    <string name="shared_preferences_key_bed_time_saturday_minute" translatable="false">shared_preferences_key_bed_time_saturday_minute</string>
+    <string name="shared_preferences_key_bed_time_sunday_hour" translatable="false">shared_preferences_key_bed_time_sunday_hour</string>
+    <string name="shared_preferences_key_bed_time_sunday_minute" translatable="false">shared_preferences_key_bed_time_sunday_minute</string>
 
     <!-- Notification status -->
-    <string name="shared_preferences_key_open_notification">shared_preferences_key_open_notification</string>
+    <string name="shared_preferences_key_open_notification" translatable="false">shared_preferences_key_open_notification</string>
     
     <!-- settings -->
-    <string name="shared_preferences_key_settings_language">shared_preferences_key_settings_language</string>
-    <string name="shared_preferences_key_settings_24_hour_time">shared_preferences_key_settings_24_hour_time</string>
+    <string name="shared_preferences_key_settings_language" translatable="false">shared_preferences_key_settings_language</string>
+    <string name="shared_preferences_key_settings_24_hour_time" translatable="false">shared_preferences_key_settings_24_hour_time</string>
 
     <!-- personal information -->
-    <string name="shared_preferences_key_personal_information_nickname">shared_preferences_key_personal_information_nickname</string>
-    <string name="shared_preferences_key_personal_information_age">shared_preferences_key_personal_information_age</string>
-    <string name="shared_preferences_key_personal_information_sleep_hour">shared_preferences_key_personal_information_sleep_hour</string>
-    <string name="shared_preferences_key_personal_information_sleep_minute">shared_preferences_key_personal_information_sleep_minute</string>
+    <string name="shared_preferences_key_personal_information_nickname" translatable="false">shared_preferences_key_personal_information_nickname</string>
+    <string name="shared_preferences_key_personal_information_age" translatable="false">shared_preferences_key_personal_information_age</string>
+    <string name="shared_preferences_key_personal_information_sleep_hour" translatable="false">shared_preferences_key_personal_information_sleep_hour</string>
+    <string name="shared_preferences_key_personal_information_sleep_minute" translatable="false">shared_preferences_key_personal_information_sleep_minute</string>
     // Common string do not translate -end
 
     // Common word
