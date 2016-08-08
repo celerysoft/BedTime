@@ -252,7 +252,7 @@ public class PresenterPersonalInformationActivity implements IPresenterPersonalI
 
     public void takePhoto() {
         Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
-        if (FileUtil.getInstance().isExternalStorageWritable()) {
+        if (FileUtil.getInstance().isExternalStorageMounted()) {
             intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(FileUtil.getInstance().getAvatarTempPath(mContext))));
         }
         mView.startActivityForResult(intent, REQUEST_CODE_CAMERA);

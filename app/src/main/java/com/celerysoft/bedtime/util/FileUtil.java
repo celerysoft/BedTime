@@ -2,6 +2,7 @@ package com.celerysoft.bedtime.util;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Environment;
 
 import java.io.ByteArrayInputStream;
@@ -21,7 +22,7 @@ public class FileUtil {
     public static FileUtil getInstance() {
         FileUtil instance = sInstance;
         if (instance == null) {
-            synchronized (AlarmUtil.class) {
+            synchronized (FileUtil.class) {
                 instance = sInstance;
                 if (instance == null) {
                     instance = new FileUtil();
@@ -35,7 +36,7 @@ public class FileUtil {
     private FileUtil() {}
 
     public String getAvatarTempPath(Context context) {
-        if (isExternalStorageWritable()) {
+        if (isExternalStorageMounted()) {
             File file = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
             if (!file.exists()) {
                 file.mkdirs();
@@ -48,7 +49,7 @@ public class FileUtil {
     }
 
     public String getAvatarPath(Context context) {
-        if (isExternalStorageWritable()) {
+        if (isExternalStorageMounted()) {
             File file = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
             if (!file.exists()) {
                 file.mkdirs();
@@ -61,7 +62,7 @@ public class FileUtil {
     }
 
     public boolean saveAvatarToExternalStorage(Context context, Bitmap bitmap) {
-        if (isExternalStorageWritable()) {
+        if (isExternalStorageMounted()) {
             File file = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
             if (!file.exists()) {
                 file.mkdirs();
@@ -94,11 +95,72 @@ public class FileUtil {
     }
 
     /**
+     * 获取通知声音文件的Uri
+     * @param context Context
+     * @return 通知声音文件的Uri
+     */
+    public Uri getNotificationSoundUri(Context context) {
+        if (!isExternalStorageMounted()) {
+            return null;
+        } else {
+            return Uri.fromFile(getNotificationSoundFile(context));
+        }
+
+    }
+
+    /**
+     * 获取通知声音文件
+     * @param context Context
+     * @return 通知声音文件
+     */
+    @SuppressWarnings("ConstantConditions")
+    private File getNotificationSoundFile(Context context) {
+        if (isNotificationSoundFileExist(context)) {
+            return new File(getNotificationSoundFilePath(context));
+        } else {
+            if (copyFilesFromAssetsToExternalStorage(context)) {
+                return new File(getNotificationSoundFilePath(context));
+            } else {
+                return null;
+            }
+        }
+    }
+
+    /**
+     * 判断通知声音文件是否存在
+     * @param context Context
+     * @return 通知声音文件是否存在
+     */
+    private boolean isNotificationSoundFileExist(Context context) {
+        String notificationSoundFilePath = getNotificationSoundFilePath(context);
+        if (notificationSoundFilePath != null) {
+            File notificationSoundFile = new File(notificationSoundFilePath);
+            return notificationSoundFile.exists();
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * 获取通知声音文件路径
+     * @param context Context
+     * @return 通知声音文件路径
+     */
+    private String getNotificationSoundFilePath(Context context) {
+        File notificationsDirectory = context.getExternalFilesDir(Environment.DIRECTORY_NOTIFICATIONS);
+        if (notificationsDirectory != null) {
+            return notificationsDirectory.getPath() + File.separator + Const.NOTIFICATION_FILE_NAME;
+        } else {
+            return null;
+        }
+    }
+
+    /**
      * Copy all the files from assets to external storage
      * @param context Context instance
      */
     public boolean copyFilesFromAssetsToExternalStorage(Context context) {
-        if (isExternalStorageWritable()) {
+        if (isExternalStorageMounted()) {
             File file = context.getExternalFilesDir(Environment.DIRECTORY_NOTIFICATIONS);
             if (!file.exists()) {
                 file.mkdirs();
@@ -135,7 +197,7 @@ public class FileUtil {
     /**
      *  Checks if external storage is available for read and write
      */
-    public boolean isExternalStorageWritable() {
+    public boolean isExternalStorageMounted() {
         String state = Environment.getExternalStorageState();
         if (Environment.MEDIA_MOUNTED.equals(state)) {
             return true;

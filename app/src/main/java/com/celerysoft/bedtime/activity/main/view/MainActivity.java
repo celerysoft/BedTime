@@ -28,6 +28,7 @@ import com.celerysoft.bedtime.fragment.main.view.MainFragment;
 import com.celerysoft.bedtime.fragment.settings.view.SettingsFragment;
 import com.celerysoft.bedtime.base.BaseActivity;
 import com.celerysoft.bedtime.base.BaseFragment;
+import com.celerysoft.bedtime.util.TestUtil;
 import com.celerysoft.ripple.Wrapper;
 import com.umeng.socialize.UMShareAPI;
 
@@ -72,14 +73,6 @@ public class MainActivity extends BaseActivity
         if(mPresenter.isNewToBedTime()) {
             mPresenter.showWelcomeDialog();
         }
-
-        if (mPresenter.isNewVersion()) {
-            mPresenter.copyAssetsFileToExternalStorage();
-        }
-
-        if (mPresenter.isCopyAssetsFileToExternalStorage()) {
-            mPresenter.copyAssetsFileToExternalStorage();
-        }
     }
 
     private void initActivity() {
@@ -90,8 +83,8 @@ public class MainActivity extends BaseActivity
         mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+//                TestUtil.createTestNotification(MainActivity.this);
                 mPresenter.performFabAnimation();
-
             }
         });
 

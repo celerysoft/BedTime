@@ -7,9 +7,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Build;
-import android.os.Environment;
 import android.os.PowerManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.NotificationCompat;
@@ -18,9 +16,8 @@ import com.celerysoft.bedtime.R;
 import com.celerysoft.bedtime.activity.main.view.MainActivity;
 import com.celerysoft.bedtime.util.AlarmUtil;
 import com.celerysoft.bedtime.util.Const;
+import com.celerysoft.bedtime.util.FileUtil;
 import com.celerysoft.bedtime.util.GlobalValue;
-
-import java.io.File;
 
 /**
  * Created by Celery on 16/4/14.
@@ -54,9 +51,8 @@ public class BedTimeReceiver extends BroadcastReceiver {
                 .show();
     }
 
+    @SuppressWarnings("deprecation")
     private void sendNotification(Context context, String action) {
-        acquireWakeLock(context, 10 * 1000);
-
         Intent openIntent = new Intent(context, MainActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, openIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
@@ -70,33 +66,28 @@ public class BedTimeReceiver extends BroadcastReceiver {
         int notifyId = 0;
 
         if (action.equals(context.getString(R.string.action_go_bed))) {
-
-            File notificationsDirectory = context.getExternalFilesDir(Environment.DIRECTORY_NOTIFICATIONS);
-            if (notificationsDirectory != null) {
-                String soundPath = notificationsDirectory.getPath() + File.separator + Const.NOTIFICATION_FILE_NAME;
-                Uri uri = Uri.fromFile(new File(soundPath));
-                builder.setSound(uri);
-            }
-
             notifyId = Const.NOTIFICATION_ID_GO_BED;
+
+            acquireWakeLock(context, 10 * 1000);
 
             builder.setContentTitle(context.getString(R.string.notification_bed_time_in_30_minutes_title))
                     .setContentText(context.getString(R.string.notification_bed_time_in_30_minutes) + getNickname(context))
                     .setTicker(context.getString(R.string.notification_bed_time_in_30_minutes) + getNickname(context))
-                    .setDefaults(NotificationCompat.DEFAULT_VIBRATE);
+                    .setLights(context.getResources().getColor(R.color.colorPrimary), 1000, 1000)
+                    .setSound(FileUtil.getInstance().getNotificationSoundUri(context))
+                    .setVibrate(new long[] {0, 1000, 500, 1000, 500, 1000});
         } else if (action.equals(context.getString(R.string.action_bed_time))) {
             notifyId = Const.NOTIFICATION_ID_BED_TIME;
 
             builder.setContentTitle(context.getString(R.string.notification_it_is_bed_time_title))
                     .setContentText(context.getString(R.string.notification_it_is_bed_time) + getNickname(context))
                     .setTicker(context.getString(R.string.notification_it_is_bed_time) + getNickname(context))
-                    .setDefaults(NotificationCompat.DEFAULT_VIBRATE);
+                    .setVibrate(new long[] {0, 100});
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             notification = builder.build();
         } else {
-            //noinspection deprecation
             notification = builder.getNotification();
         }
 

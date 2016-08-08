@@ -21,11 +21,8 @@ public interface IPresenterMainActivity {
     String getNickname();
     String getSleepTime();
     boolean isNewToBedTime();
-    boolean isNewVersion();
-    boolean isCopyAssetsFileToExternalStorage();
     void showWelcomeDialog();
     void showSocialSharingDialog();
-    void copyAssetsFileToExternalStorage();
     void openAboutBedTimeActivity();
     void handleActivityResult(int requestCode, int resultCode, Intent data);
     void performFabAnimation();

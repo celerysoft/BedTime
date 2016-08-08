@@ -17,8 +17,6 @@
     <string name="shared_preferences_key_default" translatable="false">shared_preferences_key_default</string>
 
     <string name="shared_preferences_key_is_new_user" translatable="false">shared_preferences_key_is_new_user</string>
-    <string name="shared_preferences_key_last_time_version_code" translatable="false">shared_preferences_key_last_time_version_code</string>
-    <string name="shared_preferences_key_is_copy_assets_file_to_external_storage" translatable="false">shared_preferences_key_is_copy_assets_file_to_external_storage</string>
 
     <!-- Wake up time -->
     <string name="shared_preferences_key_wakeup_time_monday_hour" translatable="false">shared_preferences_key_wakeup_time_monday_hour</string>

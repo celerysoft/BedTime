@@ -283,49 +283,6 @@ public class PresenterMainActivity implements IPresenterMainActivity {
     }
 
     @Override
-    public boolean isNewVersion() {
-        SharedPreferences sharedPreferences = mContext.getSharedPreferences(Const.getDefaultSharedPreferencesKey(mContext), Context.MODE_PRIVATE);
-        int lastLaunchVersionCode = sharedPreferences.getInt(mContext.getString(R.string.shared_preferences_key_last_time_version_code), 0);
-
-        int thisLaunchVersionCode = BuildConfig.VERSION_CODE;
-
-        if (lastLaunchVersionCode == thisLaunchVersionCode) {
-            return false;
-        } else {
-            sharedPreferences.edit()
-                    .putInt(mContext.getString(R.string.shared_preferences_key_last_time_version_code), thisLaunchVersionCode)
-                    .putBoolean(mContext.getString(R.string.shared_preferences_key_is_copy_assets_file_to_external_storage), false)
-                    .apply();
-
-            return true;
-        }
-    }
-
-    @Override
-    public boolean isCopyAssetsFileToExternalStorage() {
-        SharedPreferences sharedPreferences = mContext.getSharedPreferences(Const.getDefaultSharedPreferencesKey(mContext), Context.MODE_PRIVATE);
-        boolean isCopied = sharedPreferences.getBoolean(mContext.getString(R.string.shared_preferences_key_is_copy_assets_file_to_external_storage), false);
-
-        if (isCopied) {
-            return true;
-        } else {
-            return true;
-        }
-    }
-
-    @Override
-    public void copyAssetsFileToExternalStorage() {
-        boolean isCopied = FileUtil.getInstance().copyFilesFromAssetsToExternalStorage(mContext);
-
-        if (isCopied) {
-            SharedPreferences sharedPreferences = mContext.getSharedPreferences(Const.getDefaultSharedPreferencesKey(mContext), Context.MODE_PRIVATE);
-            sharedPreferences.edit()
-                    .putBoolean(mContext.getString(R.string.shared_preferences_key_is_copy_assets_file_to_external_storage), true)
-                    .apply();
-        }
-    }
-
-    @Override
     public void showSocialSharingDialog() {
         ListViewCompat listView = new ListViewCompat(mContext);
         listView.setAdapter(new SocialSharingListViewAdapter(mContext));
