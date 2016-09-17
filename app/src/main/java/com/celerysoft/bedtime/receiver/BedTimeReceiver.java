@@ -14,6 +14,7 @@ import android.support.v7.app.NotificationCompat;
 
 import com.celerysoft.bedtime.R;
 import com.celerysoft.bedtime.activity.main.view.MainActivity;
+import com.celerysoft.bedtime.util.ActivityManagerUtil;
 import com.celerysoft.bedtime.util.AlarmUtil;
 import com.celerysoft.bedtime.util.Const;
 import com.celerysoft.bedtime.util.FileUtil;
@@ -27,7 +28,7 @@ public class BedTimeReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         if (GlobalValue.isAppRunningForeground) {
-            showNotifyingDialog(context, intent.getAction());
+            showNotifyingDialog(intent.getAction());
         } else {
             sendNotification(context, intent.getAction());
             GlobalValue.hasNotifications = true;
@@ -36,7 +37,8 @@ public class BedTimeReceiver extends BroadcastReceiver {
         setNextAlarm(context);
     }
 
-    private void showNotifyingDialog(Context context, String action) {
+    private void showNotifyingDialog(String action) {
+        Context context = ActivityManagerUtil.getInstance().getCurrentActivity();
         AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.AppTheme_Dialog_Light);
 
         if (action.equals(context.getString(R.string.action_go_bed))) {

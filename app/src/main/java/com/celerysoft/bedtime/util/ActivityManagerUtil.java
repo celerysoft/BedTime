@@ -2,14 +2,14 @@ package com.celerysoft.bedtime.util;
 
 import com.celerysoft.bedtime.base.BaseActivity;
 
-import java.util.ArrayList;
+import java.util.Stack;
 
 /**
  * Created by admin on 16/4/25.
  * util to manager activity
  */
 public class ActivityManagerUtil {
-    private ArrayList<BaseActivity> mActivities;
+    private Stack<BaseActivity> mActivities;
 
     private static volatile ActivityManagerUtil sInstance = null;
 
@@ -28,20 +28,25 @@ public class ActivityManagerUtil {
     }
 
     private ActivityManagerUtil() {
-        mActivities = new ArrayList<>();
+        mActivities = new Stack<>();
     }
 
     public void registerActivity(BaseActivity activity) {
-        if (!mActivities.contains(activity)) {
-            mActivities.add(activity);
-        }
+        mActivities.push(activity);
     }
 
     public void unregisterActivity(BaseActivity activity) {
         if (mActivities.contains(activity)) {
             mActivities.remove(activity);
         }
+    }
 
+    private BaseActivity mCurrentActivity;
+    public BaseActivity getCurrentActivity() {
+        return mCurrentActivity;
+    }
+    public void setCurrentActivity(BaseActivity currentActivity) {
+        mCurrentActivity = currentActivity;
     }
 
     public void exitApp(BaseActivity currentActivity) {

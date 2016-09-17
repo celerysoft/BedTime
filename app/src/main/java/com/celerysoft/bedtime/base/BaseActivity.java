@@ -1,19 +1,28 @@
 package com.celerysoft.bedtime.base;
 
+import android.app.ActivityManager;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 
 import com.celerysoft.bedtime.R;
 import com.celerysoft.bedtime.util.ActivityManagerUtil;
+import com.celerysoft.bedtime.util.GlobalValue;
+
+import java.util.List;
 
 /**
  * Created by admin on 16/4/25.
  *
  */
 public class BaseActivity extends AppCompatActivity {
-    private ActivityManagerUtil mActivityManagerUtil;
+    private final String TAG = this.getClass().getSimpleName();
+
+    protected ActivityManagerUtil mActivityManagerUtil;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -41,9 +50,60 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     @Override
-    public void finish() {
+    protected void onStart() {
+        super.onStart();
+
+        if (!GlobalValue.isAppRunningForeground) {
+            if (GlobalValue.hasNotifications) {
+                cancelAllNotification();
+            }
+
+            GlobalValue.isAppRunningForeground = true;
+            Log.v(TAG, "App turn to foreground.");
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        mActivityManagerUtil.setCurrentActivity(this);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        GlobalValue.isAppRunningForeground = isRunningForeground();
+
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onDestroy() {
         mActivityManagerUtil.unregisterActivity(this);
 
-        super.finish();
+        super.onDestroy();
+    }
+
+    public boolean isRunningForeground() {
+        ActivityManager activityManager = (ActivityManager) this.getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningAppProcessInfo> runningAppProcesses = activityManager.getRunningAppProcesses();
+        for (ActivityManager.RunningAppProcessInfo runningAppProcessInfo : runningAppProcesses) {
+            if (runningAppProcessInfo.importance == ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND) {
+                if (runningAppProcessInfo.processName.equals(this.getApplicationInfo().processName)) {
+                    Log.v(TAG, "App is still running foreground.");
+                    return true;
+                }
+            }
+        }
+
+        Log.v(TAG, "App turn to background.");
+        return false;
+    }
+
+    private void cancelAllNotification() {
+        NotificationManager manager = (NotificationManager) getSystemService((Context.NOTIFICATION_SERVICE));
+        manager.cancelAll();
+
+        GlobalValue.hasNotifications = false;
     }
 }
