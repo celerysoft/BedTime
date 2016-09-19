@@ -99,13 +99,13 @@ public class FileUtil {
      * @param context Context
      * @return 通知声音文件的Uri
      */
+    @Deprecated
     public Uri getNotificationSoundUri(Context context) {
         if (!isExternalStorageMounted()) {
             return null;
         } else {
             return Uri.fromFile(getNotificationSoundFile(context));
         }
-
     }
 
     /**
@@ -114,7 +114,8 @@ public class FileUtil {
      * @return 通知声音文件
      */
     @SuppressWarnings("ConstantConditions")
-    private File getNotificationSoundFile(Context context) {
+    @Deprecated
+    public File getNotificationSoundFile(Context context) {
         if (isNotificationSoundFileExist(context)) {
             return new File(getNotificationSoundFilePath(context));
         } else {
@@ -131,6 +132,7 @@ public class FileUtil {
      * @param context Context
      * @return 通知声音文件是否存在
      */
+    @Deprecated
     private boolean isNotificationSoundFileExist(Context context) {
         String notificationSoundFilePath = getNotificationSoundFilePath(context);
         if (notificationSoundFilePath != null) {
@@ -146,6 +148,7 @@ public class FileUtil {
      * @param context Context
      * @return 通知声音文件路径
      */
+    @Deprecated
     private String getNotificationSoundFilePath(Context context) {
         File notificationsDirectory = context.getExternalFilesDir(Environment.DIRECTORY_NOTIFICATIONS);
         if (notificationsDirectory != null) {
@@ -199,9 +202,6 @@ public class FileUtil {
      */
     public boolean isExternalStorageMounted() {
         String state = Environment.getExternalStorageState();
-        if (Environment.MEDIA_MOUNTED.equals(state)) {
-            return true;
-        }
-        return false;
+        return Environment.MEDIA_MOUNTED.equals(state);
     }
 }

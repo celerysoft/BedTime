@@ -2,6 +2,7 @@ package com.celerysoft.bedtime.util;
 
 import android.content.Context;
 
+import com.celerysoft.bedtime.BuildConfig;
 import com.celerysoft.bedtime.R;
 
 /**
@@ -12,6 +13,9 @@ public class Const {
         return context.getString(R.string.shared_preferences_key_default);
     }
 
+    public static final String FILE_PROVIDER_AUTHORITIES = BuildConfig.APPLICATION_ID + ".provider";
+
+    @Deprecated
     public static final String NOTIFICATION_FILE_NAME = "notification.mp3";
 
     public static final String USER_AVATAR_FILE_NAME = "avatar.png";

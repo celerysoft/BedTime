@@ -2,10 +2,13 @@ package com.celerysoft.bedtime.activity.information.presenter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.ListViewCompat;
 import android.view.Gravity;
@@ -17,6 +20,7 @@ import com.celerysoft.bedtime.R;
 import com.celerysoft.bedtime.activity.information.adapter.ModifyAvatarDialogAdapter;
 import com.celerysoft.bedtime.activity.information.model.PersonalInformationModel;
 import com.celerysoft.bedtime.activity.information.view.IViewPersonalInformationActivity;
+import com.celerysoft.bedtime.util.Const;
 import com.celerysoft.bedtime.util.FileUtil;
 import com.celerysoft.bedtime.util.InitViewUtil;
 import com.celerysoft.bedtime.util.Util;
@@ -24,6 +28,7 @@ import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
 import java.io.File;
+import java.util.List;
 
 /**
  * Created by admin on 16/5/3.
@@ -150,6 +155,7 @@ public class PresenterPersonalInformationActivity implements IPresenterPersonalI
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             timePickerDialog.setAccentColor(mContext.getResources().getColor(R.color.colorPrimary, null));
         } else {
+            //noinspection deprecation
             timePickerDialog.setAccentColor(mContext.getResources().getColor(R.color.colorPrimary));
         }
 
@@ -252,9 +258,22 @@ public class PresenterPersonalInformationActivity implements IPresenterPersonalI
 
     public void takePhoto() {
         Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
-        if (FileUtil.getInstance().isExternalStorageMounted()) {
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(FileUtil.getInstance().getAvatarTempPath(mContext))));
+
+        Uri uri = FileProvider.getUriForFile(mContext, Const.FILE_PROVIDER_AUTHORITIES, new File(FileUtil.getInstance().getAvatarTempPath(mContext)));
+
+        PackageManager packageManager = mContext.getPackageManager();
+        List<ResolveInfo> activities = packageManager.queryIntentActivities(intent, 0);
+        for (ResolveInfo activity : activities) {
+            mContext.grantUriPermission(activity.activityInfo.packageName, uri, Intent.FLAG_GRANT_READ_URI_PERMISSION|Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
         }
+
+        if (FileUtil.getInstance().isExternalStorageMounted()) {
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+        } else {
+            // TODO add External Storage not Mounted hint
+            return;
+        }
+
         mView.startActivityForResult(intent, REQUEST_CODE_CAMERA);
     }
 
@@ -281,6 +300,14 @@ public class PresenterPersonalInformationActivity implements IPresenterPersonalI
         intent.putExtra("outputFormat", "JPEG");
         intent.putExtra("noFaceDetection", true);// 取消人脸识别
         intent.putExtra("return-data", true);// true:不返回uri，false：返回uri
+
+        // 赋予其他App处理这个Uri的权限
+        PackageManager packageManager = mContext.getPackageManager();
+        List<ResolveInfo> activities = packageManager.queryIntentActivities(intent, 0);
+        for (ResolveInfo activity : activities) {
+            mContext.grantUriPermission(activity.activityInfo.packageName, uri, Intent.FLAG_GRANT_READ_URI_PERMISSION|Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+        }
+
         mView.startActivityForResult(intent, REQUEST_CODE_CROP);
     }
 

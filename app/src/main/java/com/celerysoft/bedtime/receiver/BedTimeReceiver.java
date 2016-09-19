@@ -7,6 +7,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Build;
 import android.os.PowerManager;
 import android.support.v7.app.AlertDialog;
@@ -76,8 +77,11 @@ public class BedTimeReceiver extends BroadcastReceiver {
                     .setContentText(context.getString(R.string.notification_bed_time_in_30_minutes) + getNickname(context))
                     .setTicker(context.getString(R.string.notification_bed_time_in_30_minutes) + getNickname(context))
                     .setLights(context.getResources().getColor(R.color.colorPrimary), 1000, 1000)
-                    .setSound(FileUtil.getInstance().getNotificationSoundUri(context))
                     .setVibrate(new long[] {0, 1000, 500, 1000, 500, 1000});
+
+            Uri soundUri = Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.notification);
+            builder.setSound(soundUri);
+
         } else if (action.equals(context.getString(R.string.action_bed_time))) {
             notifyId = Const.NOTIFICATION_ID_BED_TIME;
 

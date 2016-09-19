@@ -6,9 +6,9 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.FileProvider;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
@@ -19,12 +19,14 @@ import com.celerysoft.bedtime.R;
 import com.celerysoft.bedtime.activity.information.presenter.IPresenterPersonalInformationActivity;
 import com.celerysoft.bedtime.activity.information.presenter.PresenterPersonalInformationActivity;
 import com.celerysoft.bedtime.base.BaseActivity;
+import com.celerysoft.bedtime.util.Const;
 import com.celerysoft.bedtime.util.FileUtil;
 
 import java.io.File;
 
 /**
  * Created by admin on 16/5/3.
+ *
  */
 public class PersonalInformationActivity extends BaseActivity implements IViewPersonalInformationActivity {
     private ImageView mIvAvatar;
@@ -129,7 +131,7 @@ public class PersonalInformationActivity extends BaseActivity implements IViewPe
             if (resultCode == Activity.RESULT_OK) {
                 File file = new File(FileUtil.getInstance().getAvatarTempPath(this));
                 if (file.exists()) {
-                    mPresenter.crop(Uri.fromFile(file));
+                    mPresenter.crop(FileProvider.getUriForFile(this, Const.FILE_PROVIDER_AUTHORITIES, file));
                 }
             }
         } else if (requestCode == IPresenterPersonalInformationActivity.REQUEST_CODE_CROP) {

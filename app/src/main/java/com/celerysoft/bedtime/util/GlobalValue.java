@@ -9,5 +9,5 @@ public class GlobalValue {
     public static boolean hasNotifications = false;
 
     /** indicate if the app is running foreground **/
-    public static boolean isAppRunningForeground = true;
+    public static boolean isAppRunningForeground = false;
 }

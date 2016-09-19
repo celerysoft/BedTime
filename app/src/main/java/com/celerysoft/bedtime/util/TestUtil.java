@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.NotificationCompat;
 
@@ -29,8 +30,15 @@ public class TestUtil {
 
         Notification notification;
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            builder.setSmallIcon(R.mipmap.ic_launcher_bedtime);
+        } else {
+            builder.setSmallIcon(R.mipmap.ic_notification_sdk_21);
+            builder.setColor(context.getResources().getColor(R.color.colorPrimary));
+        }
+
         builder.setAutoCancel(true)
-                .setSmallIcon(R.mipmap.ic_launcher_bedtime)
                 .setWhen(System.currentTimeMillis())
                 .setContentIntent(pendingIntent)
                 .setContentTitle(context.getString(R.string.notification_it_is_bed_time_title))
@@ -38,8 +46,7 @@ public class TestUtil {
                 .setTicker(context.getString(R.string.notification_it_is_bed_time))
                 .setLights(context.getResources().getColor(R.color.colorPrimary), 1000, 1000)
                 .setVibrate(new long[] {0, 1000, 500, 1000, 500, 1000})
-                .setVibrate(new long[] {0, 100})
-                .setSound(FileUtil.getInstance().getNotificationSoundUri(context));
+                .setSound(Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.notification));
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             notification = builder.build();

@@ -88,8 +88,8 @@ public class BaseActivity extends AppCompatActivity {
         ActivityManager activityManager = (ActivityManager) this.getSystemService(Context.ACTIVITY_SERVICE);
         List<ActivityManager.RunningAppProcessInfo> runningAppProcesses = activityManager.getRunningAppProcesses();
         for (ActivityManager.RunningAppProcessInfo runningAppProcessInfo : runningAppProcesses) {
-            if (runningAppProcessInfo.importance == ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND) {
-                if (runningAppProcessInfo.processName.equals(this.getApplicationInfo().processName)) {
+            if (runningAppProcessInfo.processName.equals(this.getApplicationInfo().processName)) {
+                if (runningAppProcessInfo.importance == ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND) {
                     Log.v(TAG, "App is still running foreground.");
                     return true;
                 }
