@@ -84,6 +84,7 @@
     <string name="personal_information_minutes_text">minutes</string>
     <string name="personal_information_avatar_dialog_camera">Camera</string>
     <string name="personal_information_avatar_dialog_gallery">Gallery</string>
+    <string name="personal_information_avatar_modify_success">Modify avatar successfully</string>
 
     // Main Activity
     <string name="action_about_us">About us</string>

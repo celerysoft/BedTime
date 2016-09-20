@@ -35,63 +35,88 @@ public class FileUtil {
 
     private FileUtil() {}
 
+    public File getAvatarTempFile(Context context) {
+        if (isExternalStorageMounted()) {
+            File file = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+            if (file != null) {
+                if (!file.exists()) {
+                    //noinspection ResultOfMethodCallIgnored
+                    file.mkdirs();
+                }
+
+                return new File(file.getPath() + File.separator + "temp" + Const.USER_AVATAR_FILE_NAME);
+            }
+        }
+
+        return null;
+    }
+
     public String getAvatarTempPath(Context context) {
         if (isExternalStorageMounted()) {
             File file = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-            if (!file.exists()) {
-                file.mkdirs();
-            }
+            if (file != null) {
+                if (!file.exists()) {
+                    //noinspection ResultOfMethodCallIgnored
+                    file.mkdirs();
+                }
 
-            return file.getPath() + File.separator + "temp" + Const.USER_AVATAR_FILE_NAME;
-        } else {
-            return null;
+                return file.getPath() + File.separator + "temp" + Const.USER_AVATAR_FILE_NAME;
+            }
         }
+
+        return null;
     }
 
     public String getAvatarPath(Context context) {
         if (isExternalStorageMounted()) {
             File file = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-            if (!file.exists()) {
-                file.mkdirs();
-            }
+            if (file != null) {
+                if (!file.exists()) {
+                    //noinspection ResultOfMethodCallIgnored
+                    file.mkdirs();
+                }
 
-            return file.getPath() + File.separator + Const.USER_AVATAR_FILE_NAME;
-        } else {
-            return null;
+                return file.getPath() + File.separator + Const.USER_AVATAR_FILE_NAME;
+            }
         }
+
+        return null;
     }
 
     public boolean saveAvatarToExternalStorage(Context context, Bitmap bitmap) {
         if (isExternalStorageMounted()) {
             File file = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-            if (!file.exists()) {
-                file.mkdirs();
-            }
-
-            String path = Const.USER_AVATAR_FILE_NAME;
-            try {
-                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
-                InputStream is = new ByteArrayInputStream(byteArrayOutputStream.toByteArray());
-
-                FileOutputStream fos = new FileOutputStream(new File(file.getPath() + File.separator + path));
-                byte[] buffer = new byte[1024];
-
-                int byteCount;
-                while((byteCount = is.read(buffer)) != -1) {
-                    fos.write(buffer, 0, byteCount);
+            if (file != null) {
+                if (!file.exists()) {
+                    //noinspection ResultOfMethodCallIgnored
+                    file.mkdirs();
                 }
-                fos.flush();
-                is.close();
-                fos.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
 
-            return true;
-        } else {
-            return false;
+                String path = Const.USER_AVATAR_FILE_NAME;
+                try {
+                    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+                    InputStream is = new ByteArrayInputStream(byteArrayOutputStream.toByteArray());
+
+                    FileOutputStream fos = new FileOutputStream(new File(file.getPath() + File.separator + path));
+                    byte[] buffer = new byte[1024];
+
+                    int byteCount;
+                    while ((byteCount = is.read(buffer)) != -1) {
+                        fos.write(buffer, 0, byteCount);
+                    }
+                    fos.flush();
+                    is.close();
+                    fos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                return true;
+            }
         }
+
+        return false;
     }
 
     /**

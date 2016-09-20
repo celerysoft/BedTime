@@ -22,6 +22,7 @@
     <string name="personal_information_minutes_text">分钟</string>
     <string name="personal_information_avatar_dialog_camera">拍照</string>
     <string name="personal_information_avatar_dialog_gallery">图库</string>
+    <string name="personal_information_avatar_modify_success">修改头像成功</string>
 
     // Main Activity
     <string name="action_about_us">关于『夜堪眠』</string>

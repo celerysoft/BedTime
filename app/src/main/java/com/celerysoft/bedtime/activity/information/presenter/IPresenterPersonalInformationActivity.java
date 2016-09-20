@@ -1,10 +1,12 @@
 package com.celerysoft.bedtime.activity.information.presenter;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 
 /**
  * Created by admin on 16/5/3.
+ *
  */
 public interface IPresenterPersonalInformationActivity {
     int REQUEST_CODE_CAMERA = 8001;
@@ -24,4 +26,8 @@ public interface IPresenterPersonalInformationActivity {
     Bitmap getAvatar();
     boolean isInEditMode();
     void cancelEditMode();
+    void deriveBitmapAndStore(Intent intent);
+    void cropBitmapAndStore(Bitmap bitmap);
+    boolean isTempAvatarFileExists();
+    Bitmap deriveTempAvatar();
 }

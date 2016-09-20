@@ -19,8 +19,10 @@ import com.celerysoft.bedtime.R;
 import com.celerysoft.bedtime.activity.information.presenter.IPresenterPersonalInformationActivity;
 import com.celerysoft.bedtime.activity.information.presenter.PresenterPersonalInformationActivity;
 import com.celerysoft.bedtime.base.BaseActivity;
+import com.celerysoft.bedtime.util.BitmapUtil;
 import com.celerysoft.bedtime.util.Const;
 import com.celerysoft.bedtime.util.FileUtil;
+import com.celerysoft.bedtime.util.Util;
 
 import java.io.File;
 
@@ -124,7 +126,11 @@ public class PersonalInformationActivity extends BaseActivity implements IViewPe
             if (resultCode == Activity.RESULT_OK) {
                 if (data != null) {
                     Uri uri = data.getData();
-                    mPresenter.crop(uri);
+                    try {
+                        mPresenter.crop(uri);
+                    } catch (SecurityException e) {
+                        mPresenter.deriveBitmapAndStore(data);
+                    }
                 }
             }
         } else if (requestCode == IPresenterPersonalInformationActivity.REQUEST_CODE_CAMERA) {
@@ -136,9 +142,12 @@ public class PersonalInformationActivity extends BaseActivity implements IViewPe
             }
         } else if (requestCode == IPresenterPersonalInformationActivity.REQUEST_CODE_CROP) {
             if (resultCode == Activity.RESULT_OK) {
-                Bitmap bitmap = data.getParcelableExtra("data");
-                mIvAvatar.setImageBitmap(bitmap);
-                mPresenter.saveAvatar(bitmap);
+                mPresenter.deriveBitmapAndStore(data);
+            } else {
+                if (mPresenter.isTempAvatarFileExists()) {
+                    Bitmap bitmap = mPresenter.deriveTempAvatar();
+                    mPresenter.cropBitmapAndStore(bitmap);
+                }
             }
         }
 
@@ -187,5 +196,10 @@ public class PersonalInformationActivity extends BaseActivity implements IViewPe
     @Override
     public FloatingActionButton getFloatingActionButton() {
         return mFloatingActionButton;
+    }
+
+    @Override
+    public ImageView getIvAvatar() {
+        return mIvAvatar;
     }
 }

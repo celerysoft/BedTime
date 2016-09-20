@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatTextView;
+import android.widget.ImageView;
 
 /**
  * Created by admin on 16/5/3.
@@ -19,5 +20,6 @@ public interface IViewPersonalInformationActivity {
     AppCompatEditText getEtAge();
     AppCompatTextView getTvSleepTime();
     FloatingActionButton getFloatingActionButton();
+    ImageView getIvAvatar();
     void startActivityForResult(Intent intent, int requestCode);
 }

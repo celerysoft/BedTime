@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
+import android.support.design.widget.Snackbar;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.ListViewCompat;
@@ -20,6 +21,7 @@ import com.celerysoft.bedtime.R;
 import com.celerysoft.bedtime.activity.information.adapter.ModifyAvatarDialogAdapter;
 import com.celerysoft.bedtime.activity.information.model.PersonalInformationModel;
 import com.celerysoft.bedtime.activity.information.view.IViewPersonalInformationActivity;
+import com.celerysoft.bedtime.util.BitmapUtil;
 import com.celerysoft.bedtime.util.Const;
 import com.celerysoft.bedtime.util.FileUtil;
 import com.celerysoft.bedtime.util.InitViewUtil;
@@ -309,6 +311,56 @@ public class PresenterPersonalInformationActivity implements IPresenterPersonalI
         }
 
         mView.startActivityForResult(intent, REQUEST_CODE_CROP);
+    }
+
+    @Override
+    public void deriveBitmapAndStore(Intent intent) {
+        try {
+            Bitmap bitmap = intent.getParcelableExtra("data");
+            if (bitmap == null) {
+                bitmap = MediaStore.Images.Media.getBitmap(mContext.getContentResolver(), intent.getData());
+            }
+
+            bitmap = BitmapUtil.getInstance().autoCropSquareBitmap(bitmap);
+
+            cropBitmapAndStore(bitmap);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void cropBitmapAndStore(Bitmap bitmap) {
+        File tempFile = FileUtil.getInstance().getAvatarTempFile(mContext);
+        if (tempFile != null && tempFile.exists()) {
+            //noinspection ResultOfMethodCallIgnored
+            tempFile.delete();
+        }
+
+        if (bitmap != null && !bitmap.isRecycled()) {
+            saveAvatar(bitmap);
+            mView.getIvAvatar().setImageBitmap(bitmap);
+            Snackbar.make(mView.getFloatingActionButton(), mContext.getString(R.string.personal_information_avatar_modify_success), Snackbar.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
+    public boolean isTempAvatarFileExists() {
+        File file = FileUtil.getInstance().getAvatarTempFile(mContext);
+        if (file != null) {
+            if (file.exists()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public Bitmap deriveTempAvatar() {
+        String tempAvatarFilePath = FileUtil.getInstance().getAvatarTempPath(mContext);
+        int bitmapLength = Util.dp2px(mContext, 72);
+
+        return BitmapUtil.getInstance().deriveSquareBitmap(tempAvatarFilePath, bitmapLength);
     }
 
     @Override
