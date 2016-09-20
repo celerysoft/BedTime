@@ -59,5 +59,6 @@ public class ActivityManagerUtil {
         }
 
         currentActivity.finish();
+        GlobalValue.isAppRunningForeground = false;
     }
 }

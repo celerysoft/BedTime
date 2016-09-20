@@ -83,8 +83,8 @@ public class MainActivity extends BaseActivity
         mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                TestUtil.createTestNotification(MainActivity.this);
-                mPresenter.performFabAnimation();
+                TestUtil.createTestNotification(MainActivity.this);
+//                mPresenter.performFabAnimation();
             }
         });
 

@@ -1,7 +1,6 @@
 package com.celerysoft.bedtime.base;
 
 import android.app.ActivityManager;
-import android.app.NotificationManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,9 +8,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 
-import com.celerysoft.bedtime.R;
 import com.celerysoft.bedtime.util.ActivityManagerUtil;
 import com.celerysoft.bedtime.util.GlobalValue;
+import com.celerysoft.bedtime.util.NotificationUtil;
 
 import java.util.List;
 
@@ -54,8 +53,8 @@ public class BaseActivity extends AppCompatActivity {
         super.onStart();
 
         if (!GlobalValue.isAppRunningForeground) {
-            if (GlobalValue.hasNotifications) {
-                cancelAllNotification();
+            if (NotificationUtil.getInstance(this).hasNotifications()) {
+                NotificationUtil.getInstance(this).cancelAllNotification();
             }
 
             GlobalValue.isAppRunningForeground = true;
@@ -98,12 +97,5 @@ public class BaseActivity extends AppCompatActivity {
 
         Log.v(TAG, "App turn to background.");
         return false;
-    }
-
-    private void cancelAllNotification() {
-        NotificationManager manager = (NotificationManager) getSystemService((Context.NOTIFICATION_SERVICE));
-        manager.cancelAll();
-
-        GlobalValue.hasNotifications = false;
     }
 }

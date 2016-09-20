@@ -1,7 +1,6 @@
 package com.celerysoft.bedtime.receiver;
 
 import android.app.Notification;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -18,8 +17,8 @@ import com.celerysoft.bedtime.activity.main.view.MainActivity;
 import com.celerysoft.bedtime.util.ActivityManagerUtil;
 import com.celerysoft.bedtime.util.AlarmUtil;
 import com.celerysoft.bedtime.util.Const;
-import com.celerysoft.bedtime.util.FileUtil;
 import com.celerysoft.bedtime.util.GlobalValue;
+import com.celerysoft.bedtime.util.NotificationUtil;
 
 /**
  * Created by Celery on 16/4/14.
@@ -32,7 +31,6 @@ public class BedTimeReceiver extends BroadcastReceiver {
             showNotifyingDialog(intent.getAction());
         } else {
             sendNotification(context, intent.getAction());
-            GlobalValue.hasNotifications = true;
         }
 
         setNextAlarm(context);
@@ -61,8 +59,15 @@ public class BedTimeReceiver extends BroadcastReceiver {
 
         Notification notification;
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            builder.setSmallIcon(R.mipmap.ic_launcher);
+        } else {
+            builder.setSmallIcon(R.mipmap.ic_notification_sdk_21);
+            builder.setColor(context.getResources().getColor(R.color.colorPrimary));
+        }
+
         builder.setAutoCancel(true)
-                .setSmallIcon(R.mipmap.ic_launcher_bedtime)
                 .setWhen(System.currentTimeMillis())
                 .setContentIntent(pendingIntent);
 
@@ -97,8 +102,7 @@ public class BedTimeReceiver extends BroadcastReceiver {
             notification = builder.getNotification();
         }
 
-        NotificationManager manager = (NotificationManager) context.getSystemService((Context.NOTIFICATION_SERVICE));
-        manager.notify(notifyId, notification);
+        NotificationUtil.getInstance(context).sendNotification(notifyId, notification);
     }
 
     private void acquireWakeLock(Context context, long timeout) {
