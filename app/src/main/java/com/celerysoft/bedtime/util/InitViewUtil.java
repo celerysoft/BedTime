@@ -1,6 +1,7 @@
 package com.celerysoft.bedtime.util;
 
 import android.content.Context;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.view.WindowManager;
 import android.widget.ListView;
@@ -63,5 +64,9 @@ public class InitViewUtil {
 
     public void initListView(ListView listView) {
         listView.setSelector(R.drawable.selector_list_item);
+    }
+
+    public void initSwipeRefreshLayout(SwipeRefreshLayout swipeRefreshLayout) {
+        swipeRefreshLayout.setColorSchemeResources(R.color.colorAccentA100, R.color.colorAccent, R.color.colorAccentA400, R.color.colorAccentA700);
     }
 }

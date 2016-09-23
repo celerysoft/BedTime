@@ -6,9 +6,9 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
-import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
@@ -18,12 +18,14 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.celerysoft.bedtime.R;
 import com.celerysoft.bedtime.activity.browser.presenter.IPresenterBrowserActivity;
 import com.celerysoft.bedtime.activity.browser.presenter.PresenterBrowserActivity;
 import com.celerysoft.bedtime.base.BaseActivity;
+import com.celerysoft.bedtime.util.InitViewUtil;
+import com.celerysoft.bedtime.view.NestedWebView;
+import com.celerysoft.bedtime.view.SwipeRefreshLayoutForWebView;
 import com.celerysoft.ripple.Wrapper;
 
 /**
@@ -37,7 +39,8 @@ public class BrowserActivity extends BaseActivity implements IViewBrowserActivit
     private IPresenterBrowserActivity mPresenter;
 
     private ActionBar mActionBar;
-    private WebView mWebView;
+    private SwipeRefreshLayoutForWebView mSwipeRefreshLayout;
+    private NestedWebView mWebView;
     private ProgressBar mProgressBar;
     private FloatingActionButton mFloatingActionButton;
     private Wrapper mAnimationWrapper;
@@ -57,9 +60,10 @@ public class BrowserActivity extends BaseActivity implements IViewBrowserActivit
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         mActionBar = getSupportActionBar();
+        mSwipeRefreshLayout = (SwipeRefreshLayoutForWebView) findViewById(R.id.swipe_refresh_layout);
         mAnimationWrapper = (Wrapper) findViewById(R.id.browser_ripple_animation);
         mProgressBar = (ProgressBar) findViewById(R.id.browser_progress_bar);
-        mWebView = (WebView) findViewById(R.id.browser_web_view);
+        mWebView = (NestedWebView) findViewById(R.id.browser_web_view);
         mFloatingActionButton = (FloatingActionButton) findViewById(R.id.browser_fab);
     }
 
@@ -68,6 +72,13 @@ public class BrowserActivity extends BaseActivity implements IViewBrowserActivit
             @Override
             public void onAnimationEnd(Animator animation) {
                 mPresenter.finishActivityWithAnimation();
+            }
+        });
+
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mWebView.reload();
             }
         });
 
@@ -87,6 +98,7 @@ public class BrowserActivity extends BaseActivity implements IViewBrowserActivit
                 }
 
                 if (progress == 100) {
+                    mSwipeRefreshLayout.setRefreshing(false);
                     mProgressBar.postDelayed(new Runnable() {
                         @Override
                         public void run() {
@@ -146,7 +158,6 @@ public class BrowserActivity extends BaseActivity implements IViewBrowserActivit
         });
     }
 
-    @SuppressLint("SetJavaScriptEnabled")
     private void initData() {
         mPresenter = new PresenterBrowserActivity(this);
 
@@ -154,6 +165,9 @@ public class BrowserActivity extends BaseActivity implements IViewBrowserActivit
     }
 
     private void initView() {
+        InitViewUtil.getInstance().initSwipeRefreshLayout(mSwipeRefreshLayout);
+        mSwipeRefreshLayout.setWebView(mWebView);
+
         String url = getIntent().getStringExtra(INTENT_EXTRA_STRING_NAME_OF_URL);
         String title = getIntent().getStringExtra(INTENT_EXTRA_STRING_NAME_OF_TITLE);
 

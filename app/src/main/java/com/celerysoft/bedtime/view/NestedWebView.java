@@ -11,9 +11,10 @@ import android.webkit.WebView;
 
 /**
  * Created by Celery on 16/7/25.
- *
+ * WebView with nested scroll.
  */
 public class NestedWebView extends WebView implements NestedScrollingChild {
+
     private int mLastY;
     private final int[] mScrollOffset = new int[2];
     private final int[] mScrollConsumed = new int[2];
@@ -41,10 +42,18 @@ public class NestedWebView extends WebView implements NestedScrollingChild {
     private void initView() {
         mChildHelper = new NestedScrollingChildHelper(this);
         setNestedScrollingEnabled(true);
+        setScrollContainer(true);
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//            // 判断ListView能否滚动,如不能滚动将无法触发嵌套滚动,需要另外处理
+//            if(canScrollVertically(-1) || canScrollVertically(1)) {
+//                return super.onTouchEvent(ev);
+//            }
+//        }
+
         boolean result = false;
 
         MotionEvent event = MotionEvent.obtain(ev);
@@ -67,7 +76,10 @@ public class NestedWebView extends WebView implements NestedScrollingChild {
                     mLastY = eventY - mScrollOffset[1];
                     event.offsetLocation(0, -mScrollOffset[1]);
                     mNestedOffsetY += mScrollOffset[1];
+                } else {
+                    mLastY = eventY;
                 }
+
                 result = super.onTouchEvent(event);
 
                 if (dispatchNestedScroll(0, mScrollOffset[1], 0, deltaY, mScrollOffset)) {
@@ -84,6 +96,8 @@ public class NestedWebView extends WebView implements NestedScrollingChild {
         }
         return result;
     }
+
+
 
     @Override
     public void setNestedScrollingEnabled(boolean enabled) {

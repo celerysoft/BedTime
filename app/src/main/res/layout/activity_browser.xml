@@ -2,7 +2,6 @@
 <android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -62,11 +61,16 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <com.celerysoft.bedtime.view.NestedWebView
-        android:id="@+id/browser_web_view"
+    <com.celerysoft.bedtime.view.SwipeRefreshLayoutForWebView
+        android:id="@+id/swipe_refresh_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        <com.celerysoft.bedtime.view.NestedWebView
+            android:id="@+id/browser_web_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </com.celerysoft.bedtime.view.SwipeRefreshLayoutForWebView>
 
     <ProgressBar
         android:id="@+id/browser_progress_bar"
@@ -77,25 +81,49 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         style="@style/AppTheme.ProgressBar.Horizontal.Light"/>
 
+    <!--<com.celerysoft.ripple.Wrapper-->
+        <!--android:id="@+id/browser_ripple_animation"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_alignParentRight="true"-->
+        <!--android:layout_alignParentEnd="true"-->
+        <!--android:layout_gravity="bottom|end"-->
+        <!--android:layout_margin="@dimen/fab_margin"-->
+        <!--app:animator_ripple_radius="28dp"-->
+        <!--app:animator_ripple_color="@color/colorAccent"-->
+        <!--app:animator_ripple_duration="animator_long">-->
+        <!--<android.support.design.widget.FloatingActionButton-->
+            <!--android:id="@+id/browser_fab"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:src="@mipmap/ic_close_white"-->
+            <!--android:visibility="invisible"-->
+            <!--app:borderWidth="0dp"/>-->
+    <!--</com.celerysoft.ripple.Wrapper>-->
+
     <com.celerysoft.ripple.Wrapper
         android:id="@+id/browser_ripple_animation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        app:animator_ripple_radius="28dp"
         app:animator_ripple_color="@color/colorAccent"
+        app:animator_ripple_radius="28dp"
         app:animator_ripple_duration="animator_long">
         <android.support.design.widget.FloatingActionButton
-            android:id="@+id/browser_fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/ic_close_white"
-            android:visibility="invisible"
-            app:borderWidth="0dp"/>
+            android:visibility="invisible"/>
     </com.celerysoft.ripple.Wrapper>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/browser_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin_in_coordinator_layout"
+        android:src="@mipmap/ic_close_white"
+        app:borderWidth="0dp"/>
 
 </android.support.design.widget.CoordinatorLayout>
