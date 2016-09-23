@@ -11,6 +11,7 @@ import android.support.v7.app.NotificationCompat;
 
 import com.celerysoft.bedtime.R;
 import com.celerysoft.bedtime.activity.main.view.MainActivity;
+import com.celerysoft.bedtime.receiver.OnNotificationClickReceiver;
 
 /**
  * Created by admin on 16/7/13.
@@ -21,8 +22,8 @@ public class TestUtil {
         int notifyId = (int) (Math.random() * 1000);
 //        notifyId = 1;
 
-        Intent openIntent = new Intent(context, MainActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, openIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        Intent openIntent = new Intent(context, OnNotificationClickReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, openIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         Notification notification;
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
@@ -40,7 +41,7 @@ public class TestUtil {
                 .setContentTitle(context.getString(R.string.notification_it_is_bed_time_title))
                 .setContentText(context.getString(R.string.notification_it_is_bed_time))
                 .setTicker(context.getString(R.string.notification_it_is_bed_time))
-                .setLights(context.getResources().getColor(R.color.colorPrimary), 1000, 1000)
+                .setLights(context.getResources().getColor(R.color.colorPrimary), 500, 2000)
                 .setVibrate(new long[] {0, 1000, 500, 1000, 500, 1000})
                 .setSound(Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.notification));
 

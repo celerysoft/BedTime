@@ -54,8 +54,8 @@ public class BedTimeReceiver extends BroadcastReceiver {
 
     @SuppressWarnings("deprecation")
     private void sendNotification(Context context, String action) {
-        Intent openIntent = new Intent(context, MainActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, openIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        Intent openIntent = new Intent(context, OnNotificationClickReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, openIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         Notification notification;
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
@@ -81,7 +81,7 @@ public class BedTimeReceiver extends BroadcastReceiver {
             builder.setContentTitle(context.getString(R.string.notification_bed_time_in_30_minutes_title))
                     .setContentText(context.getString(R.string.notification_bed_time_in_30_minutes) + getNickname(context))
                     .setTicker(context.getString(R.string.notification_bed_time_in_30_minutes) + getNickname(context))
-                    .setLights(context.getResources().getColor(R.color.colorPrimary), 1000, 1000)
+                    .setLights(context.getResources().getColor(R.color.colorPrimary), 500, 2000)
                     .setVibrate(new long[] {0, 1000, 500, 1000, 500, 1000});
 
             Uri soundUri = Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.notification);

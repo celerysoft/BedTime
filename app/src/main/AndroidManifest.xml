@@ -58,6 +58,7 @@
 
         <service android:name=".service.AlarmService" />
 
+        <receiver android:name=".receiver.OnNotificationClickReceiver" />
         <receiver android:name=".receiver.BedTimeReceiver" />
         <receiver android:name=".receiver.DeviceBootReceiver"
             android:enabled="false">

@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -88,6 +89,9 @@ public class MainActivity extends BaseActivity
 //                        com.celerysoft.bedtime.util.TestUtil.createTestNotification(MainActivity.this);
 //                    }
 //                }, 3000);
+//                finish();
+//                Intent intent = new Intent(MainActivity.this, com.celerysoft.bedtime.activity.launch.LaunchActivity.class);
+//                startActivity(intent);
                 mPresenter.performFabAnimation();
             }
         });
@@ -213,12 +217,11 @@ public class MainActivity extends BaseActivity
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
         if (id == R.id.nav_main) {
-            // Handle the camera action
             mPresenter.turnToMainFragment();
         } else if (id == R.id.nav_bedtime) {
             mPresenter.turnToBedTimeFragment();

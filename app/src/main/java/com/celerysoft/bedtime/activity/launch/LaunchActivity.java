@@ -10,6 +10,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 
@@ -26,8 +27,14 @@ import com.umeng.socialize.PlatformConfig;
  *
  */
 public class LaunchActivity extends BaseActivity {
+    public static final String KEY_LOADING_DELAY = "KEY_LOADING_DELAY";
+
     private ProgressBar mProgressBar;
     private Wrapper mAnimationWrapper;
+
+    private long mLoadingDelay;
+    private boolean mIsInitializationFinished = false;
+    private boolean mIsOnResume = false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -39,15 +46,12 @@ public class LaunchActivity extends BaseActivity {
     }
 
     private void initActivity() {
-        mProgressBar = (ProgressBar) findViewById(R.id.launcher_progress_bar);
-        mAnimationWrapper = (Wrapper) findViewById(R.id.launcher_animation);
-        mAnimationWrapper.addAnimatorListenerAdapter(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                startMainActivity();
-                finish();
-            }
-        });
+        bindView();
+        bindListener();
+
+        mLoadingDelay = getIntent().getLongExtra(KEY_LOADING_DELAY, 0);
+        mIsInitializationFinished = false;
+        mIsOnResume = false;
 
         initView();
 
@@ -57,7 +61,23 @@ public class LaunchActivity extends BaseActivity {
 
         AlarmUtil.getInstance().setUpNextAlarm(this);
 
-        displayTransitionAnimation();
+        mIsInitializationFinished = true;
+        startMainActivityWhenReady();
+    }
+
+    private void bindView() {
+        mProgressBar = (ProgressBar) findViewById(R.id.launcher_progress_bar);
+        mAnimationWrapper = (Wrapper) findViewById(R.id.launcher_animation);
+    }
+
+    private void bindListener() {
+        mAnimationWrapper.addAnimatorListenerAdapter(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                startMainActivity();
+                finish();
+            }
+        });
     }
 
     private void initView() {
@@ -82,8 +102,32 @@ public class LaunchActivity extends BaseActivity {
         DisplayMetrics displayMetrics = resources.getDisplayMetrics();
 
         Configuration config = resources.getConfiguration();
-        config.locale = model.getLocale();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            config.setLocale(model.getLocale());
+        } else {
+            //noinspection deprecation
+            config.locale = model.getLocale();
+        }
         resources.updateConfiguration(config, displayMetrics);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        mIsOnResume = true;
+        startMainActivityWhenReady();
+    }
+
+    private void startMainActivityWhenReady() {
+        if (mIsOnResume && mIsInitializationFinished) {
+            mAnimationWrapper.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    displayTransitionAnimation();
+                }
+            }, mLoadingDelay);
+        }
     }
 
     private void displayTransitionAnimation() {

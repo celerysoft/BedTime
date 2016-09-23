@@ -54,7 +54,7 @@ public class ActivityManagerUtil {
 
         int count = mActivities.size();
         for (int i = 0; i < count; ++i) {
-            BaseActivity activity = mActivities.get(0);
+            BaseActivity activity = mActivities.get(i);
             activity.finish();
         }
 
