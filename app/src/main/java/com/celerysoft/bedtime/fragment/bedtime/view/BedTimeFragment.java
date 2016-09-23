@@ -70,11 +70,11 @@ public class BedTimeFragment extends BaseFragment implements IViewBedTime {
         });
     }
 
-    @Override
-    public void onHiddenChanged(boolean hidden) {
-        mAdapter = mPresenter.fetchDataToCreateAdapter();
-        mListViewWakeupTime.setAdapter(mAdapter);
-    }
+//    @Override
+//    public void onHiddenChanged(boolean hidden) {
+//        mAdapter = mPresenter.fetchDataToCreateAdapter();
+//        mListViewWakeupTime.setAdapter(mAdapter);
+//    }
 
     private int positionToDayOfTheWeek(int position) {
         int dayOfTheWeek = Calendar.SUNDAY;

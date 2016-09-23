@@ -78,15 +78,15 @@ public class MainFragment extends BaseFragment implements IViewMain {
         super.onDestroyView();
     }
 
-    @Override
-    public void onHiddenChanged(boolean hidden) {
-        if(hidden) {
-            mPresenter.stopCountDownThread();
-        } else {
-            mPresenter.startCountDownThread();
-        }
-        super.onHiddenChanged(hidden);
-    }
+//    @Override
+//    public void onHiddenChanged(boolean hidden) {
+//        if(hidden) {
+//            mPresenter.stopCountDownThread();
+//        } else {
+//            mPresenter.startCountDownThread();
+//        }
+//        super.onHiddenChanged(hidden);
+//    }
 
     @Override
     public AppCompatTextView getTvLeftHour() {
