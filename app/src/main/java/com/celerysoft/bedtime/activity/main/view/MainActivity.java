@@ -28,7 +28,6 @@ import com.celerysoft.bedtime.fragment.main.view.MainFragment;
 import com.celerysoft.bedtime.fragment.settings.view.SettingsFragment;
 import com.celerysoft.bedtime.base.BaseActivity;
 import com.celerysoft.bedtime.base.BaseFragment;
-import com.celerysoft.bedtime.util.TestUtil;
 import com.celerysoft.ripple.Wrapper;
 import com.umeng.socialize.UMShareAPI;
 
@@ -83,7 +82,12 @@ public class MainActivity extends BaseActivity
         mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                TestUtil.createTestNotification(MainActivity.this);
+//                new android.os.Handler().postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        com.celerysoft.bedtime.util.TestUtil.createTestNotification(MainActivity.this);
+//                    }
+//                }, 3000);
                 mPresenter.performFabAnimation();
             }
         });

@@ -76,7 +76,7 @@ public class BedTimeReceiver extends BroadcastReceiver {
         if (action.equals(context.getString(R.string.action_go_bed))) {
             notifyId = Const.NOTIFICATION_ID_GO_BED;
 
-            acquireWakeLock(context, 10 * 1000);
+            //acquireWakeLock(context, 10 * 1000);
 
             builder.setContentTitle(context.getString(R.string.notification_bed_time_in_30_minutes_title))
                     .setContentText(context.getString(R.string.notification_bed_time_in_30_minutes) + getNickname(context))
@@ -105,6 +105,15 @@ public class BedTimeReceiver extends BroadcastReceiver {
         NotificationUtil.getInstance(context).sendNotification(notifyId, notification);
     }
 
+    /**
+     * light the screen on
+     * @param context Context instance
+     * @param timeout after timeout the screen black out
+     * @deprecated this action require "android.permission.WAKE_LOCK" permission,
+     * and it is needed on ancient Android device like below 5.0, so i don't want my app
+     * need this permission for just lighting the screen on.
+     */
+    @Deprecated
     private void acquireWakeLock(Context context, long timeout) {
         PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
         //noinspection deprecation
