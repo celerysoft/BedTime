@@ -2,9 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.celerysoft.bedtime" >
 
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <!--<uses-permission android:name="android.permission.WAKE_LOCK" />-->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="18"/>
     <uses-permission android:name="android.permission.INTERNET" />
 
     <!-- 友盟所需权限 -->

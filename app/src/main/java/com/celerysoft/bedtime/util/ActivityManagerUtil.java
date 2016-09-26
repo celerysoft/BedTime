@@ -49,8 +49,8 @@ public class ActivityManagerUtil {
         mCurrentActivity = currentActivity;
     }
 
-    public void exitApp(BaseActivity currentActivity) {
-        mActivities.remove(currentActivity);
+    public void exitApp() {
+        mActivities.remove(mCurrentActivity);
 
         int count = mActivities.size();
         for (int i = 0; i < count; ++i) {
@@ -58,7 +58,7 @@ public class ActivityManagerUtil {
             activity.finish();
         }
 
-        currentActivity.finish();
+        mCurrentActivity.finish();
         GlobalValue.isAppRunningForeground = false;
     }
 }

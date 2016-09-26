@@ -97,8 +97,6 @@ public class NestedWebView extends WebView implements NestedScrollingChild {
         return result;
     }
 
-
-
     @Override
     public void setNestedScrollingEnabled(boolean enabled) {
         mChildHelper.setNestedScrollingEnabled(enabled);

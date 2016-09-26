@@ -65,25 +65,16 @@ public class PresenterMainActivity implements IPresenterMainActivity {
         mModel = new PersonalInformationModel(mContext);
     }
 
-    public boolean readyToExitApp() {
+    private boolean readyToExitApp() {
         return System.currentTimeMillis() - mLastPressBackTime <= 2000;
     }
 
-    public void preExitApp() {
+    private void preExitApp() {
         showExitAppSnackBar();
         mLastPressBackTime = System.currentTimeMillis();
     }
 
-    @Override
-    public void exitApp() {
-        if (readyToExitApp()) {
-            ActivityManagerUtil.getInstance().exitApp((BaseActivity) mView);
-        } else {
-            preExitApp();
-        }
-    }
-
-    public void showExitAppSnackBar() {
+    private void showExitAppSnackBar() {
         String text = mContext.getString(R.string.main_snack_bar_text);
         Snackbar.make(mView.getFloatActionButton(), text, Snackbar.LENGTH_LONG)
                 .setCallback(new Snackbar.Callback() {
@@ -94,6 +85,15 @@ public class PresenterMainActivity implements IPresenterMainActivity {
                     }
                 })
                 .show();
+    }
+
+    @Override
+    public void exitApp() {
+        if (readyToExitApp()) {
+            ActivityManagerUtil.getInstance().exitApp();
+        } else {
+            preExitApp();
+        }
     }
 
     @Override
