@@ -14,6 +14,16 @@ public class BaseTimeBean {
         this.mDayOfTheWeek = dayOfTheWeek;
     }
 
+    private String mDayOfTheWeekDescription;
+
+    public String getDayOfTheWeekDescription() {
+        return mDayOfTheWeekDescription;
+    }
+
+    public void setDayOfTheWeekDescription(String dayOfTheWeekDescription) {
+        mDayOfTheWeekDescription = dayOfTheWeekDescription;
+    }
+
     private int mHour;
 
     public int getHour() {

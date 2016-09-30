@@ -51,8 +51,8 @@ public class AlarmUtil {
 
     public void setUpNextAlarm(Context context) {
         if (getSharedPreferences(context) != null) {
-            boolean isNotificationOpened = getSharedPreferences(context).getBoolean(context.getString(R.string.shared_preferences_key_open_notification), true);
-            if (!isNotificationOpened) {
+            boolean isEnabledAlarm = getSharedPreferences(context).getBoolean(context.getString(R.string.shared_preferences_key_open_notification), true);
+            if (!isEnabledAlarm) {
                 return;
             }
         }
@@ -66,9 +66,24 @@ public class AlarmUtil {
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
-        calendar.set(Calendar.DAY_OF_WEEK, nextAlarm.getDayOfTheWeek());
-        calendar.set(Calendar.HOUR_OF_DAY, nextAlarm.getHour());
-        calendar.set(Calendar.MINUTE, nextAlarm.getMinute());
+
+        nextAlarm.getDayOfTheWeek();
+        nextAlarm.getHour();
+        nextAlarm.getMinute();
+
+        int differentInMinute;
+        int currentDayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+        int currentHour = calendar.get(Calendar.HOUR_OF_DAY);
+        int currentMinute = calendar.get(Calendar.MINUTE);
+        if (currentDayOfWeek != nextAlarm.getDayOfTheWeek()) {
+            differentInMinute = ((nextAlarm.getDayOfTheWeek() - currentDayOfWeek) * 24 + nextAlarm.getHour() - currentHour) * 60 + nextAlarm.getMinute() - currentMinute;
+        } else {
+            differentInMinute = (nextAlarm.getHour() - currentHour) * 60 + nextAlarm.getMinute() - currentMinute;
+        }
+//        calendar.set(Calendar.DAY_OF_WEEK, nextAlarm.getDayOfTheWeek());
+//        calendar.set(Calendar.HOUR_OF_DAY, nextAlarm.getHour());
+//        calendar.set(Calendar.MINUTE, nextAlarm.getMinute());
+        calendar.add(Calendar.MINUTE, differentInMinute);
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);
 

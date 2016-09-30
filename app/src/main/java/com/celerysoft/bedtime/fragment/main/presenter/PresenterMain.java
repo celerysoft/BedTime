@@ -16,11 +16,9 @@ import com.celerysoft.bedtime.R;
 import com.celerysoft.bedtime.fragment.bedtime.model.WakeupTimeBean;
 import com.celerysoft.bedtime.fragment.bedtime.model.WakeupTimeModel;
 import com.celerysoft.bedtime.fragment.main.model.AlarmTimeBean;
-import com.celerysoft.bedtime.fragment.main.model.AlarmTimeModel;
 import com.celerysoft.bedtime.fragment.main.model.BedTimeBean;
 import com.celerysoft.bedtime.fragment.main.model.BedTimeModel;
 import com.celerysoft.bedtime.fragment.main.view.IViewMain;
-import com.celerysoft.bedtime.receiver.BedTimeReceiver;
 import com.celerysoft.bedtime.receiver.DeviceBootReceiver;
 import com.celerysoft.bedtime.util.AlarmUtil;
 import com.celerysoft.bedtime.util.Const;
@@ -30,6 +28,7 @@ import java.util.Locale;
 
 /**
  * Created by Celery on 16/4/14.
+ *
  */
 public class PresenterMain implements IPresenterMain {
     private IViewMain mView;
@@ -119,6 +118,7 @@ public class PresenterMain implements IPresenterMain {
 
     @Override
     public void startCountDownThread() {
+        mIsCountDownThreadRun = true;
         if (mCountDownThread == null) {
             mCountDownThread = new Thread(new Runnable() {
                 @Override
@@ -148,6 +148,9 @@ public class PresenterMain implements IPresenterMain {
                         calendarCurrentDayWakeupTime.set(Calendar.SECOND, 0);
 
                         Calendar calendarNextDayBedTime = Calendar.getInstance();
+                        if (!nextDayBedTime.isBedTimeInPrevDay()) {
+                            calendarNextDayBedTime.add(Calendar.DAY_OF_MONTH, 1);
+                        }
                         calendarNextDayBedTime.set(Calendar.DAY_OF_WEEK, nextDayBedTime.getActualDayOfWeek());
                         calendarNextDayBedTime.set(Calendar.HOUR_OF_DAY, nextDayBedTime.getHour());
                         calendarNextDayBedTime.set(Calendar.MINUTE, nextDayBedTime.getMinute());
@@ -195,8 +198,6 @@ public class PresenterMain implements IPresenterMain {
             });
             mCountDownThread.start();
         }
-
-        mIsCountDownThreadRun = true;
     }
 
     @Override

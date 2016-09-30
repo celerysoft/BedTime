@@ -6,6 +6,7 @@ import java.util.Calendar;
 
 /**
  * Created by admin on 16/4/27.
+ *
  */
 public class BedTimeBean extends BaseTimeBean {
     private boolean mIsBedTimeInPrevDay;
@@ -27,7 +28,7 @@ public class BedTimeBean extends BaseTimeBean {
         setActualDayOfWeek(actualDayOfWeek);
     }
 
-    int mActualDayOfWeek;
+    private int mActualDayOfWeek;
 
     public int getActualDayOfWeek() {
         return mActualDayOfWeek;

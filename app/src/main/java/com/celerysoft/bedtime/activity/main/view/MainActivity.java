@@ -24,11 +24,14 @@ import com.celerysoft.bedtime.R;
 import com.celerysoft.bedtime.activity.information.model.PersonalInformationModel;
 import com.celerysoft.bedtime.activity.main.presenter.IPresenterMainActivity;
 import com.celerysoft.bedtime.activity.main.presenter.PresenterMainActivity;
+import com.celerysoft.bedtime.fragment.bedtime.model.WakeupTimeBean;
 import com.celerysoft.bedtime.fragment.bedtime.view.BedTimeFragment;
+import com.celerysoft.bedtime.fragment.main.model.BedTimeBean;
 import com.celerysoft.bedtime.fragment.main.view.MainFragment;
 import com.celerysoft.bedtime.fragment.settings.view.SettingsFragment;
 import com.celerysoft.bedtime.base.BaseActivity;
 import com.celerysoft.bedtime.base.BaseFragment;
+import com.celerysoft.bedtime.util.TestUtil;
 import com.celerysoft.ripple.Wrapper;
 import com.umeng.socialize.UMShareAPI;
 
@@ -83,15 +86,7 @@ public class MainActivity extends BaseActivity
         mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                new android.os.Handler().postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        com.celerysoft.bedtime.util.TestUtil.createTestNotification(MainActivity.this);
-//                    }
-//                }, 3000);
-//                finish();
-//                Intent intent = new Intent(MainActivity.this, com.celerysoft.bedtime.activity.launch.LaunchActivity.class);
-//                startActivity(intent);
+//                test();
                 mPresenter.performFabAnimation();
             }
         });
@@ -278,5 +273,22 @@ public class MainActivity extends BaseActivity
     @Override
     public Fragment getBedTimeFragment() {
         return mBedTimeFragment;
+    }
+
+    private void test() {
+        if (1 == 1) {
+            return;
+        }
+
+//        int delay = 0;
+//        new android.os.Handler().postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                com.celerysoft.bedtime.util.TestUtil.createTestNotification(MainActivity.this);
+//            }
+//        }, delay * 1000);
+//        finish();
+//        Intent intent = new Intent(MainActivity.this, com.celerysoft.bedtime.activity.launch.LaunchActivity.class);
+//        startActivity(intent);
     }
 }

@@ -8,7 +8,7 @@ import com.celerysoft.bedtime.activity.launch.LaunchActivity;
 
 /**
  * Created by admin on 16/9/21.
- *
+ * Receiver activated when user click the status bar notification.
  */
 
 public class OnNotificationClickReceiver extends BroadcastReceiver {
@@ -17,7 +17,7 @@ public class OnNotificationClickReceiver extends BroadcastReceiver {
         Intent nextIntent = new Intent(context, LaunchActivity.class);
         nextIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         nextIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        nextIntent.putExtra(LaunchActivity.KEY_LOADING_DELAY, 250L);
+        nextIntent.putExtra(LaunchActivity.KEY_LOADING_DELAY, 500L);
         context.startActivity(nextIntent);
     }
 }

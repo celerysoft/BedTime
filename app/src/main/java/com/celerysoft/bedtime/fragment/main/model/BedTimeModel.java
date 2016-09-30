@@ -2,6 +2,7 @@ package com.celerysoft.bedtime.fragment.main.model;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import com.celerysoft.bedtime.R;
 import com.celerysoft.bedtime.fragment.bedtime.model.WakeupTimeBean;
@@ -11,8 +12,11 @@ import java.util.Calendar;
 
 /**
  * Created by admin on 16/4/27.
+ *
  */
 public class BedTimeModel {
+    private static final String TAG = "BedTimeModel";
+
     private SharedPreferences mSharedPreferences;
     private Context mContext;
 
@@ -35,35 +39,43 @@ public class BedTimeModel {
         int goBedMinute = 0;
         switch (dayOfTheWeek) {
             case Calendar.MONDAY:
+                bean.setDayOfTheWeekDescription("MONDAY");
                 goBedHour = mSharedPreferences.getInt(mContext.getString(R.string.shared_preferences_key_bed_time_monday_hour), 1);
                 goBedMinute = mSharedPreferences.getInt(mContext.getString(R.string.shared_preferences_key_bed_time_monday_minute), 0);
                 break;
             case Calendar.TUESDAY:
+                bean.setDayOfTheWeekDescription("TUESDAY");
                 goBedHour = mSharedPreferences.getInt(mContext.getString(R.string.shared_preferences_key_bed_time_tuesday_hour), 1);
                 goBedMinute = mSharedPreferences.getInt(mContext.getString(R.string.shared_preferences_key_bed_time_tuesday_minute), 0);
                 break;
             case Calendar.WEDNESDAY:
+                bean.setDayOfTheWeekDescription("WEDNESDAY");
                 goBedHour = mSharedPreferences.getInt(mContext.getString(R.string.shared_preferences_key_bed_time_wednesday_hour), 1);
                 goBedMinute = mSharedPreferences.getInt(mContext.getString(R.string.shared_preferences_key_bed_time_wednesday_minute), 0);
                 break;
             case Calendar.THURSDAY:
+                bean.setDayOfTheWeekDescription("THURSDAY");
                 goBedHour = mSharedPreferences.getInt(mContext.getString(R.string.shared_preferences_key_bed_time_thursday_hour), 1);
                 goBedMinute = mSharedPreferences.getInt(mContext.getString(R.string.shared_preferences_key_bed_time_thursday_minute), 0);
                 break;
             case Calendar.FRIDAY:
+                bean.setDayOfTheWeekDescription("FRIDAY");
                 goBedHour = mSharedPreferences.getInt(mContext.getString(R.string.shared_preferences_key_bed_time_friday_hour), 1);
                 goBedMinute = mSharedPreferences.getInt(mContext.getString(R.string.shared_preferences_key_bed_time_friday_minute), 0);
                 break;
             case Calendar.SATURDAY:
+                bean.setDayOfTheWeekDescription("SATURDAY");
                 goBedHour = mSharedPreferences.getInt(mContext.getString(R.string.shared_preferences_key_bed_time_saturday_hour), 1);
                 goBedMinute = mSharedPreferences.getInt(mContext.getString(R.string.shared_preferences_key_bed_time_saturday_minute), 0);
                 break;
             case Calendar.SUNDAY:
+                bean.setDayOfTheWeekDescription("SUNDAY");
                 goBedHour = mSharedPreferences.getInt(mContext.getString(R.string.shared_preferences_key_bed_time_sunday_hour), 1);
                 goBedMinute = mSharedPreferences.getInt(mContext.getString(R.string.shared_preferences_key_bed_time_sunday_minute), 0);
                 break;
             default:
-                break;
+                Log.w(TAG, "findWakeUpTimeByDayOfTheWeek with an illegal weekday, please use Calendar.SUNDAY, etc.");
+                throw new RuntimeException("findWakeUpTimeByDayOfTheWeek with an illegal weekday, please use Calendar.SUNDAY, etc.");
         }
 
         if (goBedMinute < 0) {
@@ -127,7 +139,8 @@ public class BedTimeModel {
                         .putInt(mContext.getString(R.string.shared_preferences_key_bed_time_sunday_minute), bedMinute);
                 break;
             default:
-                break;
+                Log.w(TAG, "findWakeUpTimeByDayOfTheWeek with an illegal weekday, please use Calendar.SUNDAY, etc.");
+                throw new RuntimeException("findWakeUpTimeByDayOfTheWeek with an illegal weekday, please use Calendar.SUNDAY, etc.");
         }
         editor.apply();
     }

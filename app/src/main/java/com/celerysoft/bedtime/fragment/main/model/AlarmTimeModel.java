@@ -2,10 +2,14 @@ package com.celerysoft.bedtime.fragment.main.model;
 
 import android.content.Context;
 
+import com.celerysoft.bedtime.fragment.bedtime.model.WakeupTimeBean;
+import com.celerysoft.bedtime.fragment.bedtime.model.WakeupTimeModel;
+
 import java.util.Calendar;
 
 /**
  * Created by admin on 16/4/28.
+ *
  */
 public class AlarmTimeModel {
     private Context mContext;
@@ -56,10 +60,17 @@ public class AlarmTimeModel {
             calendar30minutesBeforeNextDayBedTime.set(Calendar.SECOND, 0);
             calendar30minutesBeforeNextDayBedTime.add(Calendar.MINUTE, -30);
 
-            alarmTime.setDayOfTheWeek(calendar30minutesBeforeNextDayBedTime.get(Calendar.DAY_OF_WEEK));
-            alarmTime.setHour(calendar30minutesBeforeNextDayBedTime.get(Calendar.HOUR_OF_DAY));
-            alarmTime.setMinute(calendar30minutesBeforeNextDayBedTime.get(Calendar.MINUTE));
-            alarmTime.setType(AlarmTimeBean.Type.GO_BED);
+            if (calendarNow.before(calendar30minutesBeforeNextDayBedTime)) {
+                alarmTime.setDayOfTheWeek(calendar30minutesBeforeNextDayBedTime.get(Calendar.DAY_OF_WEEK));
+                alarmTime.setHour(calendar30minutesBeforeNextDayBedTime.get(Calendar.HOUR_OF_DAY));
+                alarmTime.setMinute(calendar30minutesBeforeNextDayBedTime.get(Calendar.MINUTE));
+                alarmTime.setType(AlarmTimeBean.Type.GO_BED);
+            } else {
+                alarmTime.setDayOfTheWeek(nextDayBedTime.getActualDayOfWeek());
+                alarmTime.setHour(nextDayBedTime.getHour());
+                alarmTime.setMinute(nextDayBedTime.getMinute());
+                alarmTime.setType(AlarmTimeBean.Type.BED_TIME);
+            }
         }
 
         return alarmTime;
