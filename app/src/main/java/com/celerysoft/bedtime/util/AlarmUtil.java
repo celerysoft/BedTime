@@ -12,7 +12,9 @@ import com.celerysoft.bedtime.fragment.main.model.AlarmTimeBean;
 import com.celerysoft.bedtime.fragment.main.model.AlarmTimeModel;
 import com.celerysoft.bedtime.receiver.BedTimeReceiver;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by admin on 16/5/16.
@@ -65,7 +67,6 @@ public class AlarmUtil {
         }
 
         Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(System.currentTimeMillis());
 
         nextAlarm.getDayOfTheWeek();
         nextAlarm.getHour();
@@ -108,6 +109,8 @@ public class AlarmUtil {
         }
 
         mLastAlarm = nextAlarm;
+
+        writeDebugLog2ExternalStorage(context, calendar);
     }
 
     public void cancelAllAlarm(Context context) {
@@ -116,6 +119,16 @@ public class AlarmUtil {
         PendingIntent alarmIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
 
         alarmMgr.cancel(alarmIntent);
+    }
+
+    private void writeDebugLog2ExternalStorage(Context context, Calendar calendar) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+        String content = simpleDateFormat.format(new Date());
+        content += " set up next alarm ringed on: ";
+        content += simpleDateFormat.format(calendar.getTime());
+
+        FileUtil.getInstance().writeToExternalCache(context, "Alarm", null, content);
     }
 
 }

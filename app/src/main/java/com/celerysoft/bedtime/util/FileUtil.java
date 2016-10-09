@@ -11,6 +11,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by admin on 16/5/16.
@@ -228,5 +230,46 @@ public class FileUtil {
     public boolean isExternalStorageMounted() {
         String state = Environment.getExternalStorageState();
         return Environment.MEDIA_MOUNTED.equals(state);
+    }
+
+    public boolean writeToExternalCache(Context context, String path, String fileName, String fileContent) {
+        if (isExternalStorageMounted()) {
+            if (fileContent == null || fileContent.length() == 0) {
+                return false;
+            }
+
+            if (fileName == null || fileName.length() == 0) {
+                long timestamp = System.currentTimeMillis();
+                String time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+                fileName = time + " - " + timestamp + ".log";
+            }
+
+            try {
+                File dir;
+                if (path == null || path.length() == 0) {
+                    dir = context.getExternalCacheDir();
+                } else {
+                    dir = new File(context.getExternalCacheDir() + File.separator + path);
+                }
+
+                if (!dir.exists())
+                    //noinspection ResultOfMethodCallIgnored
+                    dir.mkdirs();
+
+                FileOutputStream fos = new FileOutputStream(new File(dir, fileName));
+                fos.write(fileContent.getBytes());
+                fos.close();
+
+                return true;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return false;
+    }
+
+    public void writeToExternalStorage() {
+
     }
 }

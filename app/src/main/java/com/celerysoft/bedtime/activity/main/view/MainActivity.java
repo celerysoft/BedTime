@@ -276,9 +276,8 @@ public class MainActivity extends BaseActivity
     }
 
     private void test() {
-        if (1 == 1) {
-            return;
-        }
+        mPresenter = null;
+        mPresenter.exitApp();
 
 //        int delay = 0;
 //        new android.os.Handler().postDelayed(new Runnable() {

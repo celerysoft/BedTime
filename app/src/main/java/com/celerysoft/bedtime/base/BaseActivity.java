@@ -77,6 +77,15 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onStop() {
+        super.onStop();
+
+        if (mActivityManagerUtil.getCurrentActivity() == this) {
+            mActivityManagerUtil.setCurrentActivity(null);
+        }
+    }
+
+    @Override
     protected void onDestroy() {
         mActivityManagerUtil.unregisterActivity(this);
 
