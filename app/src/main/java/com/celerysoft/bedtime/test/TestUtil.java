@@ -1,4 +1,4 @@
-package com.celerysoft.bedtime.util;
+package com.celerysoft.bedtime.test;
 
 import android.app.Notification;
 import android.app.PendingIntent;
@@ -16,6 +16,7 @@ import com.celerysoft.bedtime.fragment.bedtime.model.WakeupTimeModel;
 import com.celerysoft.bedtime.fragment.main.model.BedTimeBean;
 import com.celerysoft.bedtime.fragment.main.model.BedTimeModel;
 import com.celerysoft.bedtime.receiver.OnNotificationClickReceiver;
+import com.celerysoft.bedtime.util.NotificationUtil;
 
 /**
  * Created by admin on 16/7/13.

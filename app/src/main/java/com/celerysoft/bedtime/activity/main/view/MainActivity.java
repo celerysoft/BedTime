@@ -24,14 +24,11 @@ import com.celerysoft.bedtime.R;
 import com.celerysoft.bedtime.activity.information.model.PersonalInformationModel;
 import com.celerysoft.bedtime.activity.main.presenter.IPresenterMainActivity;
 import com.celerysoft.bedtime.activity.main.presenter.PresenterMainActivity;
-import com.celerysoft.bedtime.fragment.bedtime.model.WakeupTimeBean;
 import com.celerysoft.bedtime.fragment.bedtime.view.BedTimeFragment;
-import com.celerysoft.bedtime.fragment.main.model.BedTimeBean;
 import com.celerysoft.bedtime.fragment.main.view.MainFragment;
 import com.celerysoft.bedtime.fragment.settings.view.SettingsFragment;
 import com.celerysoft.bedtime.base.BaseActivity;
 import com.celerysoft.bedtime.base.BaseFragment;
-import com.celerysoft.bedtime.util.TestUtil;
 import com.celerysoft.ripple.Wrapper;
 import com.umeng.socialize.UMShareAPI;
 
@@ -86,7 +83,7 @@ public class MainActivity extends BaseActivity
         mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                test();
+//                com.celerysoft.bedtime.test.UnitTest.getInstance().startTest(MainActivity.this);
                 mPresenter.performFabAnimation();
             }
         });
@@ -102,7 +99,7 @@ public class MainActivity extends BaseActivity
         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, mDrawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        mDrawer.setDrawerListener(toggle);
+        mDrawer.addDrawerListener(toggle);
         toggle.syncState();
 
         mNavigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -189,16 +186,12 @@ public class MainActivity extends BaseActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.activity_main_toolbar, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
@@ -213,7 +206,6 @@ public class MainActivity extends BaseActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        // Handle navigation view item clicks here.
         int id = item.getItemId();
 
         if (id == R.id.nav_main) {
@@ -273,21 +265,5 @@ public class MainActivity extends BaseActivity
     @Override
     public Fragment getBedTimeFragment() {
         return mBedTimeFragment;
-    }
-
-    private void test() {
-        mPresenter = null;
-        mPresenter.exitApp();
-
-//        int delay = 0;
-//        new android.os.Handler().postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                com.celerysoft.bedtime.util.TestUtil.createTestNotification(MainActivity.this);
-//            }
-//        }, delay * 1000);
-//        finish();
-//        Intent intent = new Intent(MainActivity.this, com.celerysoft.bedtime.activity.launch.LaunchActivity.class);
-//        startActivity(intent);
     }
 }
