@@ -168,11 +168,11 @@ public class BedTimeModel {
         storeBedTime(bedTime);
     }
 
-    private int getSleepHour() {
+    public int getSleepHour() {
         return mSharedPreferences.getInt(mContext.getString(R.string.shared_preferences_key_personal_information_sleep_hour), 7);
     }
 
-    private int getSleepMinute() {
+    public int getSleepMinute() {
         return mSharedPreferences.getInt(mContext.getString(R.string.shared_preferences_key_personal_information_sleep_minute), 50);
     }
 }

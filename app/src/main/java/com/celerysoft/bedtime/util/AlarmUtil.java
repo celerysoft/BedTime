@@ -15,6 +15,7 @@ import com.celerysoft.bedtime.receiver.BedTimeReceiver;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by admin on 16/5/16.
@@ -60,33 +61,35 @@ public class AlarmUtil {
         }
 
         AlarmTimeModel alarmTimeModel = new AlarmTimeModel(context);
-        AlarmTimeBean nextAlarm = alarmTimeModel.findNextAlarm();
+        AlarmTimeBean nextAlarm = alarmTimeModel.findNextAlarm2();
 
         if (mLastAlarm != null && mLastAlarm.equals(nextAlarm)) {
             return;
         }
 
-        Calendar calendar = Calendar.getInstance();
+        Calendar calendar = nextAlarm.getCalendar();
 
-        nextAlarm.getDayOfTheWeek();
-        nextAlarm.getHour();
-        nextAlarm.getMinute();
-
-        int differentInMinute;
-        int currentDayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
-        int currentHour = calendar.get(Calendar.HOUR_OF_DAY);
-        int currentMinute = calendar.get(Calendar.MINUTE);
-        if (currentDayOfWeek != nextAlarm.getDayOfTheWeek()) {
-            differentInMinute = ((nextAlarm.getDayOfTheWeek() - currentDayOfWeek) * 24 + nextAlarm.getHour() - currentHour) * 60 + nextAlarm.getMinute() - currentMinute;
-        } else {
-            differentInMinute = (nextAlarm.getHour() - currentHour) * 60 + nextAlarm.getMinute() - currentMinute;
-        }
-//        calendar.set(Calendar.DAY_OF_WEEK, nextAlarm.getDayOfTheWeek());
-//        calendar.set(Calendar.HOUR_OF_DAY, nextAlarm.getHour());
-//        calendar.set(Calendar.MINUTE, nextAlarm.getMinute());
-        calendar.add(Calendar.MINUTE, differentInMinute);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MILLISECOND, 0);
+//        Calendar calendar = Calendar.getInstance();
+//
+//        nextAlarm.getDayOfTheWeek();
+//        nextAlarm.getHour();
+//        nextAlarm.getMinute();
+//
+//        int differentInMinute;
+//        int currentDayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+//        int currentHour = calendar.get(Calendar.HOUR_OF_DAY);
+//        int currentMinute = calendar.get(Calendar.MINUTE);
+//        if (currentDayOfWeek != nextAlarm.getDayOfTheWeek()) {
+//            differentInMinute = ((nextAlarm.getDayOfTheWeek() - currentDayOfWeek) * 24 + nextAlarm.getHour() - currentHour) * 60 + nextAlarm.getMinute() - currentMinute;
+//        } else {
+//            differentInMinute = (nextAlarm.getHour() - currentHour) * 60 + nextAlarm.getMinute() - currentMinute;
+//        }
+////        calendar.set(Calendar.DAY_OF_WEEK, nextAlarm.getDayOfTheWeek());
+////        calendar.set(Calendar.HOUR_OF_DAY, nextAlarm.getHour());
+////        calendar.set(Calendar.MINUTE, nextAlarm.getMinute());
+//        calendar.add(Calendar.MINUTE, differentInMinute);
+//        calendar.set(Calendar.SECOND, 0);
+//        calendar.set(Calendar.MILLISECOND, 0);
 
         AlarmManager alarmMgr;
         PendingIntent alarmIntent;
@@ -122,7 +125,7 @@ public class AlarmUtil {
     }
 
     private void writeDebugLog2ExternalStorage(Context context, Calendar calendar) {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.PRC);
 
         String content = simpleDateFormat.format(new Date());
         content += " set up next alarm ringed on: ";

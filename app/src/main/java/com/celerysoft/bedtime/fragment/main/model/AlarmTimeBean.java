@@ -2,8 +2,11 @@ package com.celerysoft.bedtime.fragment.main.model;
 
 import com.celerysoft.bedtime.bean.BaseTimeBean;
 
+import java.util.Calendar;
+
 /**
- * Created by admin on 16/4/28.
+ * Created by Celery on 16/4/28.
+ *
  */
 public class AlarmTimeBean extends BaseTimeBean {
     public enum Type {
@@ -18,6 +21,15 @@ public class AlarmTimeBean extends BaseTimeBean {
 
     public void setType(Type type) {
         mType = type;
+    }
+
+    private Calendar mCalendar;
+    public Calendar getCalendar() {
+        return mCalendar;
+    }
+
+    public void setCalendar(Calendar calendar) {
+        mCalendar = calendar;
     }
 
     @Override

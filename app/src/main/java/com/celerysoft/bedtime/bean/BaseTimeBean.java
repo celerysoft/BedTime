@@ -1,9 +1,15 @@
 package com.celerysoft.bedtime.bean;
 
+import java.io.Serializable;
+import java.util.Calendar;
+
 /**
- * Created by admin on 16/4/28.
+ * Created by Celery on 16/4/28.
+ *
  */
-public class BaseTimeBean {
+public class BaseTimeBean implements Serializable {
+    static final long serialVersionUID = -20160428140000L;
+
     private int mDayOfTheWeek;
 
     public int getDayOfTheWeek() {
@@ -11,7 +17,8 @@ public class BaseTimeBean {
     }
 
     public void setDayOfTheWeek(int dayOfTheWeek) {
-        this.mDayOfTheWeek = dayOfTheWeek;
+        mDayOfTheWeek = dayOfTheWeek;
+        mDayOfTheWeekDescription = deriveDayOfTheWeekDescription(dayOfTheWeek);
     }
 
     private String mDayOfTheWeekDescription;
@@ -20,6 +27,7 @@ public class BaseTimeBean {
         return mDayOfTheWeekDescription;
     }
 
+    // TODO remove redundant call.
     public void setDayOfTheWeekDescription(String dayOfTheWeekDescription) {
         mDayOfTheWeekDescription = dayOfTheWeekDescription;
     }
@@ -42,5 +50,26 @@ public class BaseTimeBean {
 
     public void setMinute(int minute) {
         this.mMinute = minute;
+    }
+
+    private String deriveDayOfTheWeekDescription(int dayOfTheWeek) {
+        switch (dayOfTheWeek) {
+            case Calendar.MONDAY:
+                return "MONDAY";
+            case Calendar.TUESDAY:
+                return "TUESDAY";
+            case Calendar.WEDNESDAY:
+                return "WEDNESDAY";
+            case Calendar.THURSDAY:
+                return "THURSDAY";
+            case Calendar.FRIDAY:
+                return "FRIDAY";
+            case Calendar.SATURDAY:
+                return "SATURDAY";
+            case Calendar.SUNDAY:
+                return "SUNDAY";
+            default:
+                return "WTF_DAY";
+        }
     }
 }

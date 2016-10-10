@@ -13,6 +13,7 @@ import android.os.Handler;
 import android.os.Message;
 
 import com.celerysoft.bedtime.R;
+import com.celerysoft.bedtime.bean.BaseTimeBean;
 import com.celerysoft.bedtime.fragment.bedtime.model.WakeupTimeBean;
 import com.celerysoft.bedtime.fragment.bedtime.model.WakeupTimeModel;
 import com.celerysoft.bedtime.fragment.main.model.AlarmTimeBean;
@@ -31,6 +32,10 @@ import java.util.Locale;
  *
  */
 public class PresenterMain implements IPresenterMain {
+    private static final long DAYS_OF_A_WEEK = 7;
+    private static final long MILLISECONDS_OF_A_DAY = 24 * 60 * 60 * 1000;
+    private static final long MILLISECOND_OF_30_MINUTES = 30 * 60 * 1000;
+
     private IViewMain mView;
 
     private Context mContext;
@@ -118,6 +123,11 @@ public class PresenterMain implements IPresenterMain {
 
     @Override
     public void startCountDownThread() {
+        startCountDownThread1();
+//        startCountDownThread2();
+    }
+
+    private void startCountDownThread1() {
         mIsCountDownThreadRun = true;
         if (mCountDownThread == null) {
             mCountDownThread = new Thread(new Runnable() {
@@ -140,21 +150,27 @@ public class PresenterMain implements IPresenterMain {
                         calendarCurrentDayBedTime.set(Calendar.HOUR_OF_DAY, currentDayBedTime.getHour());
                         calendarCurrentDayBedTime.set(Calendar.MINUTE, currentDayBedTime.getMinute());
                         calendarCurrentDayBedTime.set(Calendar.SECOND, 0);
+                        calendarCurrentDayBedTime.set(Calendar.MILLISECOND, 0);
+                        if (currentDayBedTime.isBedTimeInPrevDay()) {
+                            calendarCurrentDayBedTime.setTimeInMillis(calendarCurrentDayBedTime.getTimeInMillis() - 24 * 60 * 60 * 1000);
+                        }
 
                         Calendar calendarCurrentDayWakeupTime = Calendar.getInstance();
                         calendarCurrentDayWakeupTime.set(Calendar.DAY_OF_WEEK, currentDayWakeupTime.getDayOfTheWeek());
                         calendarCurrentDayWakeupTime.set(Calendar.HOUR_OF_DAY, currentDayWakeupTime.getHour());
                         calendarCurrentDayWakeupTime.set(Calendar.MINUTE, currentDayWakeupTime.getMinute());
                         calendarCurrentDayWakeupTime.set(Calendar.SECOND, 0);
+                        calendarCurrentDayWakeupTime.set(Calendar.MILLISECOND, 0);
 
                         Calendar calendarNextDayBedTime = Calendar.getInstance();
-                        if (!nextDayBedTime.isBedTimeInPrevDay()) {
-                            calendarNextDayBedTime.add(Calendar.DAY_OF_MONTH, 1);
-                        }
                         calendarNextDayBedTime.set(Calendar.DAY_OF_WEEK, nextDayBedTime.getActualDayOfWeek());
                         calendarNextDayBedTime.set(Calendar.HOUR_OF_DAY, nextDayBedTime.getHour());
                         calendarNextDayBedTime.set(Calendar.MINUTE, nextDayBedTime.getMinute());
                         calendarNextDayBedTime.set(Calendar.SECOND, 0);
+                        if (!nextDayBedTime.isBedTimeInPrevDay()) {
+//                            calendarNextDayBedTime.add(Calendar.DAY_OF_MONTH, 1);
+                            calendarNextDayBedTime.setTimeInMillis(calendarCurrentDayBedTime.getTimeInMillis() - 24 * 60 * 60 * 1000);
+                        }
 
                         Message msg = new Message();
 
@@ -198,6 +214,95 @@ public class PresenterMain implements IPresenterMain {
             });
             mCountDownThread.start();
         }
+    }
+
+    private void startCountDownThread2() {
+        mIsCountDownThreadRun = true;
+        if (mCountDownThread == null) {
+            mCountDownThread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    while (mIsCountDownThreadRun) {
+                        Calendar calendarNow = Calendar.getInstance();
+                        int currentDay = calendarNow.get(Calendar.DAY_OF_WEEK);
+                        int currentHour = calendarNow.get(Calendar.HOUR_OF_DAY);
+                        int currentMinute = calendarNow.get(Calendar.MINUTE);
+
+                        BedTimeBean currentDayBedTime = mBedTimeModel.findBedTimeByDayOfTheWeek(currentDay);
+                        WakeupTimeBean currentDayWakeupTime = mWakeupTimeModel.findWakeUpTimeByDayOfTheWeek(currentDay);
+
+                        BedTimeBean nextDayBedTime = mBedTimeModel.findNextBedTimeByDayOfTheWeek(currentDay);
+                        WakeupTimeBean nextDayWakeupTime = mWakeupTimeModel.findNextWakeUpTimeByDayOfTheWeek(currentDay);
+
+                        Calendar calendarCurrentDayBedTime = deriveCalendarByTimeBean(currentDayBedTime, currentDayBedTime.isBedTimeInPrevDay());
+                        Calendar calendarCurrentDayWakeupTime = deriveCalendarByTimeBean(currentDayWakeupTime, false);
+
+                        Calendar calendarNextDayBedTime = deriveCalendarByTimeBean(nextDayBedTime, nextDayBedTime.isBedTimeInPrevDay());
+
+                        Message msg = new Message();
+
+                        int minuteUntilNotification;
+
+                        if (calendarNow.before(calendarCurrentDayBedTime)) {
+                            msg.what = GO_BED;
+                            minuteUntilNotification = (currentDayBedTime.getHour() - currentHour) * 60 + currentDayBedTime.getMinute() - currentMinute;
+                        } else if (calendarNow.before(calendarCurrentDayWakeupTime)) {
+                            msg.what = GET_UP;
+                            minuteUntilNotification = (currentDayWakeupTime.getHour() - currentHour) * 60 + currentDayWakeupTime.getMinute() - currentMinute;
+                        } else if (calendarNow.before(calendarNextDayBedTime)) {
+                            msg.what = GO_BED;
+                            int hour;
+                            if (nextDayBedTime.isBedTimeInPrevDay()) {
+                                hour = nextDayBedTime.getHour();
+                            } else {
+                                hour = nextDayBedTime.getHour() + 24;
+                            }
+                            minuteUntilNotification = (hour - currentHour) * 60 + nextDayBedTime.getMinute() - currentMinute;
+                        } else {
+                            msg.what = GET_UP;
+                            minuteUntilNotification = (24 + nextDayWakeupTime.getHour() - currentHour) * 60 + nextDayWakeupTime.getMinute() - currentMinute;
+                        }
+
+                        msg.arg1 = minuteUntilNotification / 60;
+                        msg.arg2 = minuteUntilNotification % 60;
+                        mHandler.sendMessage(msg);
+
+                        try {
+                            Thread.sleep(5 * 1000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            });
+            mCountDownThread.start();
+        }
+    }
+
+    private Calendar deriveCalendarByTimeBean(BaseTimeBean time, boolean isTimeInPrevDay) {
+        boolean prevWeek = false;
+        int dayOfWeek = time.getDayOfTheWeek();
+
+        if (isTimeInPrevDay) {
+            if (dayOfWeek == Calendar.SUNDAY) {
+                dayOfWeek = Calendar.SATURDAY;
+                prevWeek = true;
+            } else {
+                dayOfWeek -= 1;
+            }
+        }
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.DAY_OF_WEEK, dayOfWeek);
+        calendar.set(Calendar.HOUR_OF_DAY, time.getHour());
+        calendar.set(Calendar.MINUTE, time.getMinute());
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        if (prevWeek) {
+            calendar.setTimeInMillis(calendar.getTimeInMillis() - DAYS_OF_A_WEEK * MILLISECONDS_OF_A_DAY);
+        }
+
+        return calendar;
     }
 
     @Override
