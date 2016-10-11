@@ -41,7 +41,7 @@
             android:layout_marginTop="@dimen/nav_header_vertical_spacing"
             android:layout_marginBottom="@dimen/nav_header_vertical_spacing"
             android:layout_gravity="center"
-            android:src="@mipmap/ic_avatar"
+            android:src="@drawable/ic_avatar"
             android:scaleType="fitCenter"/>
 
         <LinearLayout
@@ -166,7 +166,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin_in_coordinator_layout"
-        android:src="@mipmap/ic_content_save"
+        android:src="@drawable/ic_content_save"
         android:visibility="gone"
         app:borderWidth="0dp"/>
 

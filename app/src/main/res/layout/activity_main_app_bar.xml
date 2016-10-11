@@ -60,7 +60,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin_in_coordinator_layout"
-        android:src="@mipmap/ic_alarm_white"
+        android:src="@drawable/ic_alarm_white"
         app:borderWidth="0dp"/>
 
 </android.support.design.widget.CoordinatorLayout>

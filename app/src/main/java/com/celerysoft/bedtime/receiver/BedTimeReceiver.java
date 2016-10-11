@@ -63,7 +63,7 @@ public class BedTimeReceiver extends BroadcastReceiver {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             builder.setSmallIcon(R.mipmap.ic_launcher);
         } else {
-            builder.setSmallIcon(R.mipmap.ic_notification_sdk_21);
+            builder.setSmallIcon(R.drawable.ic_notification_sdk_21);
             builder.setColor(context.getResources().getColor(R.color.colorPrimary));
         }
 

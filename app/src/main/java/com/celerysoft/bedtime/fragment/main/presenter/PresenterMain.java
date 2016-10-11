@@ -1,14 +1,10 @@
 package com.celerysoft.bedtime.fragment.main.presenter;
 
 import android.annotation.SuppressLint;
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
 
@@ -16,7 +12,6 @@ import com.celerysoft.bedtime.R;
 import com.celerysoft.bedtime.bean.BaseTimeBean;
 import com.celerysoft.bedtime.fragment.bedtime.model.WakeupTimeBean;
 import com.celerysoft.bedtime.fragment.bedtime.model.WakeupTimeModel;
-import com.celerysoft.bedtime.fragment.main.model.AlarmTimeBean;
 import com.celerysoft.bedtime.fragment.main.model.BedTimeBean;
 import com.celerysoft.bedtime.fragment.main.model.BedTimeModel;
 import com.celerysoft.bedtime.fragment.main.view.IViewMain;
@@ -34,7 +29,6 @@ import java.util.Locale;
 public class PresenterMain implements IPresenterMain {
     private static final long DAYS_OF_A_WEEK = 7;
     private static final long MILLISECONDS_OF_A_DAY = 24 * 60 * 60 * 1000;
-    private static final long MILLISECOND_OF_30_MINUTES = 30 * 60 * 1000;
 
     private IViewMain mView;
 
@@ -47,8 +41,6 @@ public class PresenterMain implements IPresenterMain {
     private boolean mIsCountDownThreadRun = false;
 
     private SharedPreferences mSharedPreferences;
-
-    private static AlarmTimeBean mLastAlarm;
 
     public PresenterMain(IViewMain view) {
         mView = view;
@@ -92,7 +84,7 @@ public class PresenterMain implements IPresenterMain {
     /**
      * set next alarm.
      */
-    public void enableAlarm() {
+    private void enableAlarm() {
         AlarmUtil.getInstance().setUpNextAlarm(mContext);
     }
 
@@ -123,10 +115,15 @@ public class PresenterMain implements IPresenterMain {
 
     @Override
     public void startCountDownThread() {
-        startCountDownThread1();
-//        startCountDownThread2();
+        startCountDownThread2();
     }
 
+    /**
+     * // TODO remove this method.
+     * @deprecated on 1.2.11, use {@link #startCountDownThread2()} to instead of.
+     */
+    @Deprecated
+    @SuppressWarnings("unused")
     private void startCountDownThread1() {
         mIsCountDownThreadRun = true;
         if (mCountDownThread == null) {

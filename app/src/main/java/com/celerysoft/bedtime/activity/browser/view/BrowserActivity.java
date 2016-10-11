@@ -115,7 +115,7 @@ public class BrowserActivity extends BaseActivity implements IViewBrowserActivit
         mWebView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, final String url) {
-                mActionBar.setHomeAsUpIndicator(R.mipmap.ic_arrow_left);
+                mActionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_left);
                 view.loadUrl(url);
                 return true;
             }
@@ -176,7 +176,7 @@ public class BrowserActivity extends BaseActivity implements IViewBrowserActivit
 
             mActionBar.setTitle(title);
             mActionBar.setDisplayHomeAsUpEnabled(true);
-            mActionBar.setHomeAsUpIndicator(R.mipmap.ic_close);
+            mActionBar.setHomeAsUpIndicator(R.drawable.ic_close);
 
 //            TextView tvTitle = (TextView) findViewById(R.id.title);
 //            if (tvTitle != null) {
@@ -226,7 +226,7 @@ public class BrowserActivity extends BaseActivity implements IViewBrowserActivit
         if (mWebView.canGoBack()) {
             mWebView.goBack();
             if (!mWebView.canGoBack()) {
-                mActionBar.setHomeAsUpIndicator(R.mipmap.ic_close);
+                mActionBar.setHomeAsUpIndicator(R.drawable.ic_close);
             }
         } else {
             super.onBackPressed();
