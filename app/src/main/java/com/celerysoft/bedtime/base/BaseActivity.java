@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import com.celerysoft.bedtime.util.ActivityManagerUtil;
 import com.celerysoft.bedtime.util.GlobalValue;
 import com.celerysoft.bedtime.util.NotificationUtil;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.List;
 
@@ -66,7 +67,16 @@ public class BaseActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
+        MobclickAgent.onResume(this);
+
         mActivityManagerUtil.setCurrentActivity(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        MobclickAgent.onPause(this);
     }
 
     @Override

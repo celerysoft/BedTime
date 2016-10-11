@@ -20,6 +20,7 @@ import com.celerysoft.bedtime.fragment.settings.model.SettingsModel;
 import com.celerysoft.bedtime.base.BaseActivity;
 import com.celerysoft.bedtime.util.AlarmUtil;
 import com.celerysoft.ripple.Wrapper;
+import com.umeng.analytics.MobclickAgent;
 import com.umeng.socialize.PlatformConfig;
 
 /**
@@ -55,6 +56,8 @@ public class LaunchActivity extends BaseActivity {
 
         initView();
 
+        initUmeng();
+
         initSocialSharing();
 
         setAppLanguage();
@@ -88,6 +91,11 @@ public class LaunchActivity extends BaseActivity {
             decorView.setSystemUiVisibility(option);
             getWindow().setStatusBarColor(Color.TRANSPARENT);
         }
+    }
+
+    private void initUmeng() {
+        MobclickAgent.setCheckDevice(false);
+        MobclickAgent.setCatchUncaughtExceptions(false);
     }
 
     private void initSocialSharing() {

@@ -10,6 +10,7 @@ android {
         versionName "1.2.13"
         minSdkVersion 14
         targetSdkVersion 24
+        manifestPlaceholders = [ UMENG_CHANNEL_NAME:"Unspecified" ]
     }
 
     signingConfigs {
@@ -65,6 +66,15 @@ android {
         // but continue the build even when errors are found:
         abortOnError false
     }
+
+    productFlavors {
+        wandoujia {
+            manifestPlaceholders = [ UMENG_CHANNEL_NAME:"WANDOUJIA" ]
+        }
+        yingyongbao {
+            manifestPlaceholders = [ UMENG_CHANNEL_NAME:"YINGYONGBAO" ]
+        }
+    }
 }
 
 dependencies {
@@ -73,4 +83,5 @@ dependencies {
     compile 'com.android.support:design:24.2.1'
     compile 'com.wdullaer:materialdatetimepicker:2.3.0'
     compile 'com.celerysoft:rippletransitionanimationview:0.7.1'
+    compile 'com.umeng.analytics:analytics:latest.integration'
 }
