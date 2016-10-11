@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatTextView;
+import android.view.View;
 import android.widget.ImageView;
 
 /**
@@ -14,8 +15,10 @@ import android.widget.ImageView;
 public interface IViewPersonalInformationActivity {
     Context getContext();
     FragmentManager getFragmentManager();
+    View getBtnNickname();
     AppCompatTextView getTvNickname();
     AppCompatEditText getEtNickname();
+    View getBtnAge();
     AppCompatTextView getTvAge();
     AppCompatEditText getEtAge();
     AppCompatTextView getTvSleepTime();

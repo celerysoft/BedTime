@@ -68,11 +68,13 @@ public class PresenterPersonalInformationActivity implements IPresenterPersonalI
         if (mView.getTvNickname().getVisibility() == View.GONE) {
             mView.getTvNickname().setVisibility(View.VISIBLE);
             mView.getEtNickname().setVisibility(View.GONE);
+            mView.getBtnNickname().setClickable(true);
         }
 
         if (mView.getTvAge().getVisibility() == View.GONE) {
             mView.getTvAge().setVisibility(View.VISIBLE);
             mView.getEtAge().setVisibility(View.GONE);
+            mView.getBtnAge().setClickable(true);
         }
     }
 
@@ -86,6 +88,7 @@ public class PresenterPersonalInformationActivity implements IPresenterPersonalI
         mIsInEditMode = true;
 
         mView.getFloatingActionButton().show();
+        mView.getBtnNickname().setClickable(false);
         mView.getTvNickname().setVisibility(View.GONE);
         mView.getEtNickname().setVisibility(View.VISIBLE);
         mView.getEtNickname().setText(mView.getTvNickname().getText());
@@ -102,6 +105,7 @@ public class PresenterPersonalInformationActivity implements IPresenterPersonalI
         mIsInEditMode = true;
 
         mView.getFloatingActionButton().show();
+        mView.getBtnAge().setClickable(false);
         mView.getTvAge().setVisibility(View.GONE);
         mView.getEtAge().setVisibility(View.VISIBLE);
         mView.getEtAge().setText(mView.getTvAge().getText());
@@ -122,6 +126,7 @@ public class PresenterPersonalInformationActivity implements IPresenterPersonalI
         if (mView.getTvNickname().getVisibility() == View.GONE) {
             String nickname = mView.getEtNickname().getText().toString();
 
+            mView.getBtnNickname().setClickable(false);
             mView.getTvNickname().setVisibility(View.VISIBLE);
             mView.getTvNickname().setText(nickname);
             mView.getEtNickname().setVisibility(View.GONE);
@@ -131,6 +136,7 @@ public class PresenterPersonalInformationActivity implements IPresenterPersonalI
         if (mView.getTvAge().getVisibility() == View.GONE) {
             String age = mView.getEtAge().getText().toString();
 
+            mView.getBtnNickname().setClickable(false);
             mView.getTvAge().setVisibility(View.VISIBLE);
             mView.getTvAge().setText(age);
             mView.getEtAge().setVisibility(View.GONE);
@@ -258,7 +264,7 @@ public class PresenterPersonalInformationActivity implements IPresenterPersonalI
         mModifyAvatarDialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
     }
 
-    public void takePhoto() {
+    private void takePhoto() {
         Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
 
         Uri uri = FileProvider.getUriForFile(mContext, Const.FILE_PROVIDER_AUTHORITIES, new File(FileUtil.getInstance().getAvatarTempPath(mContext)));
@@ -279,7 +285,7 @@ public class PresenterPersonalInformationActivity implements IPresenterPersonalI
         mView.startActivityForResult(intent, REQUEST_CODE_CAMERA);
     }
 
-    public void pickPhotoFromGallery() {
+    private void pickPhotoFromGallery() {
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType("image/*");
         mView.startActivityForResult(intent, REQUEST_CODE_GALLERY);

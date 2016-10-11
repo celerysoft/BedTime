@@ -32,6 +32,9 @@ import java.io.File;
  */
 public class PersonalInformationActivity extends BaseActivity implements IViewPersonalInformationActivity {
     private ImageView mIvAvatar;
+    private View mBtnNickname;
+    private View mBtnAge;
+    private View mBtnSleepTime;
     private AppCompatTextView mTvNickname;
     private AppCompatEditText mEtNickname;
     private AppCompatTextView mTvAge;
@@ -82,33 +85,54 @@ public class PersonalInformationActivity extends BaseActivity implements IViewPe
             mIvAvatar.setImageBitmap(mPresenter.getAvatar());
         }
 
-        mTvNickname = (AppCompatTextView) findViewById(R.id.personal_information_tv_nickname);
-        mTvNickname.setOnClickListener(new View.OnClickListener() {
+        mBtnNickname = findViewById(R.id.personal_information_btn_nickname);
+        mBtnNickname.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mPresenter.editNickname();
             }
         });
+        mTvNickname = (AppCompatTextView) findViewById(R.id.personal_information_tv_nickname);
+//        mTvNickname.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                mPresenter.editNickname();
+//            }
+//        });
         mTvNickname.setText(mPresenter.getNickname());
         mEtNickname = (AppCompatEditText) findViewById(R.id.personal_information_et_nickname);
 
-        mTvAge = (AppCompatTextView) findViewById(R.id.personal_information_tv_age);
-        mTvAge.setOnClickListener(new View.OnClickListener() {
+        mBtnAge = findViewById(R.id.personal_information_btn_age);
+        mBtnAge.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mPresenter.editAge();
             }
         });
+        mTvAge = (AppCompatTextView) findViewById(R.id.personal_information_tv_age);
+//        mTvAge.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                mPresenter.editAge();
+//            }
+//        });
         mTvAge.setText(mPresenter.getAge());
         mEtAge = (AppCompatEditText) findViewById(R.id.personal_information_et_age);
 
-        mTvSleepTime = (AppCompatTextView) findViewById(R.id.personal_information_tv_sleep_time);
-        mTvSleepTime.setOnClickListener(new View.OnClickListener() {
+        mBtnSleepTime = findViewById(R.id.personal_information_btn_sleep_time);
+        mBtnSleepTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mPresenter.showSleepTimePickerDialog();
             }
         });
+        mTvSleepTime = (AppCompatTextView) findViewById(R.id.personal_information_tv_sleep_time);
+//        mTvSleepTime.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                mPresenter.showSleepTimePickerDialog();
+//            }
+//        });
         mTvSleepTime.setText(mPresenter.getSleepTime());
 
         mFloatingActionButton = (FloatingActionButton) findViewById(R.id.personal_information_fab);
@@ -169,6 +193,11 @@ public class PersonalInformationActivity extends BaseActivity implements IViewPe
     }
 
     @Override
+    public View getBtnNickname() {
+        return mBtnNickname;
+    }
+
+    @Override
     public AppCompatTextView getTvNickname() {
         return mTvNickname;
     }
@@ -176,6 +205,11 @@ public class PersonalInformationActivity extends BaseActivity implements IViewPe
     @Override
     public AppCompatEditText getEtNickname() {
         return mEtNickname;
+    }
+
+    @Override
+    public View getBtnAge() {
+        return mBtnAge;
     }
 
     @Override
