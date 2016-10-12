@@ -32,6 +32,12 @@ Bed Time is an app that remind you of going bed.
 
 ![04](https://raw.githubusercontent.com/celerysoft/README/master/BedTime/sc04.png)
 
+## How to build your own
+
+1. download the source code and use Android Studio to open it
+
+2. edit gradle.properties and app/build.gradle, to use your own key store, UMENG APPKEY, QQ and Wechat key to replace.
+
 ## License
 
-[MIT](./LICENSE)
+[GNU GPLv3](./LICENSE)

@@ -3,6 +3,8 @@ package com.celerysoft.bedtime.activity.launch;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Color;
@@ -99,8 +101,18 @@ public class LaunchActivity extends BaseActivity {
     }
 
     private void initSocialSharing() {
-        PlatformConfig.setWeixin("wx31a99c803f850798", "655c7b76686dc0b3e76f01ebad3f350e");
-        PlatformConfig.setQQZone("1105305383", "I3AhpsSYYwhzr9zI");
+        try {
+            ApplicationInfo appInfo = getPackageManager().getApplicationInfo(getPackageName(), PackageManager.GET_META_DATA);
+            String wechatAppId = appInfo.metaData.getString("WECHAT_APP_ID");
+            String wechatAppSecret = appInfo.metaData.getString("WECHAT_APP_SECRET");
+            String qqAppId = appInfo.metaData.getString("QQ_APP_ID");
+            String qqAppKey = appInfo.metaData.getString("QQ_APP_KEY");
+
+            PlatformConfig.setWeixin(wechatAppId, wechatAppSecret);
+            PlatformConfig.setQQZone(qqAppId, qqAppKey);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     private void setAppLanguage() {

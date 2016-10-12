@@ -6,11 +6,18 @@ android {
 
     defaultConfig {
         applicationId "com.celerysoft.bedtime"
-        versionCode 19
+        versionCode 20
         versionName "1.2.13"
         minSdkVersion 14
         targetSdkVersion 24
-        manifestPlaceholders = [ UMENG_CHANNEL_NAME:"Unspecified" ]
+        manifestPlaceholders = [
+                UMENG_APPKEY : UMENG_APPKEY_FOR_BED_TIME,
+                TENCENT_AUTH_SCHEME : "tencent" + QQ_APP_ID_FOR_BED_TIME,
+                WECHAT_APP_ID : WECHAT_APP_ID_FOR_BED_TIME,
+                WECHAT_APP_SECRET : WECHAT_APP_SECRET_FOR_BED_TIME,
+                QQ_APP_ID : QQ_APP_ID_FOR_BED_TIME,
+                QQ_APP_KEY : QQ_APP_KEY_FOR_BED_TIME
+        ]
     }
 
     signingConfigs {
@@ -19,6 +26,8 @@ android {
         }
 
         release {
+            // TODO (For open source developer only) replace to your own key store
+            // if you have no idea what to do, just remove all 4 lines below.
             storeFile file("celerysoft.jks")
             storePassword CELERY_STORE_PASSWORD
             keyAlias CELERY_KEY_ALIAS
@@ -36,7 +45,7 @@ android {
                 variant.outputs.each { output ->
                     def outputFile = output.outputFile
                     if (outputFile != null && outputFile.name.endsWith('debug.apk')) {
-                        def newName = "BedTime-" + "${defaultConfig.versionName}" + "-debug.apk"
+                        def newName = "BedTime-${defaultConfig.versionName}-debug.apk"
                         output.outputFile = new File(outputFile.parent, newName)
                     }
                 }
@@ -52,7 +61,7 @@ android {
                 variant.outputs.each { output ->
                     def outputFile = output.outputFile
                     if (outputFile != null && outputFile.name.endsWith('release.apk')) {
-                        def newName = "BedTime-" + "${defaultConfig.versionName}" + "-release.apk"
+                        def newName = "BedTime-${defaultConfig.versionName}-release-${variant.productFlavors[0].name}.apk"
                         output.outputFile = new File(outputFile.parent, newName)
                     }
                 }
@@ -68,11 +77,11 @@ android {
     }
 
     productFlavors {
-        wandoujia {
-            manifestPlaceholders = [ UMENG_CHANNEL_NAME:"WANDOUJIA" ]
+        Wandoujia {
+            manifestPlaceholders = [ UMENG_CHANNEL_NAME:"Wandoujia" ]
         }
-        yingyongbao {
-            manifestPlaceholders = [ UMENG_CHANNEL_NAME:"YINGYONGBAO" ]
+        Yingyongbao {
+            manifestPlaceholders = [ UMENG_CHANNEL_NAME:"Yingyongbao" ]
         }
     }
 }

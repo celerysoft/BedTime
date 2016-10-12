@@ -205,7 +205,7 @@ public class PresenterMainActivity implements IPresenterMainActivity {
     @Override
     public void sendFeedback() {
         String content = "Version name: " + BuildConfig.VERSION_NAME
-                + "Version code: " + BuildConfig.VERSION_CODE
+                + "\nVersion code: " + BuildConfig.VERSION_CODE
                 + "\n\n----------------\n\n";
 
 
