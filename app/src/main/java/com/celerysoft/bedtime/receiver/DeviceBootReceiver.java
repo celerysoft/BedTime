@@ -18,8 +18,8 @@ public class DeviceBootReceiver extends BroadcastReceiver {
             // After device boot completed, set current day's alarm.
             AlarmUtil.getInstance().setUpNextAlarm(context);
 
-            Intent serviceIntent = new Intent(context, AlarmService.class);
-            context.startService(serviceIntent);
+//            Intent serviceIntent = new Intent(context, AlarmService.class);
+//            context.startService(serviceIntent);
         }
     }
 }
