@@ -24,12 +24,13 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_above="@+id/main_fragment_tv_until"
+            android:gravity="center"
             android:layout_centerHorizontal="true">
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/main_fragment_tv_left_hour"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:gravity="center"
+                android:gravity="bottom"
                 android:text="12"
                 android:textSize="@dimen/text_size_display"
                 android:textColor="@color/colorPrimaryText"/>
@@ -37,6 +38,8 @@
                 android:id="@+id/main_fragment_tv_left_hour_label"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:layout_marginLeft="4dp"
+                android:layout_marginStart="4dp"
                 android:gravity="bottom"
                 android:text="@string/main_tv_hours_text"
                 android:textSize="@dimen/text_size_title"
@@ -47,7 +50,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="16dp"
                 android:layout_marginStart="16dp"
-                android:gravity="center"
+                android:gravity="bottom"
                 android:text="30"
                 android:textSize="@dimen/text_size_display"
                 android:textColor="@color/colorPrimaryText"/>
@@ -55,6 +58,8 @@
                 android:id="@+id/main_fragment_tv_left_minute_label"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:layout_marginLeft="4dp"
+                android:layout_marginStart="4dp"
                 android:gravity="bottom"
                 android:text="@string/main_tv_minutes_text"
                 android:textSize="@dimen/text_size_title"

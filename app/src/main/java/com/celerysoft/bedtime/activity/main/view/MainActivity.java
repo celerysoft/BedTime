@@ -19,6 +19,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.celerysoft.bedtime.R;
 import com.celerysoft.bedtime.activity.information.model.PersonalInformationModel;
@@ -84,6 +85,7 @@ public class MainActivity extends BaseActivity
             @Override
             public void onClick(View view) {
 //                com.celerysoft.bedtime.test.UnitTest.getInstance().startTest(MainActivity.this);
+//                com.celerysoft.bedtime.test.TestUtil.createTestNotification(MainActivity.this, 2000);
                 mPresenter.performFabAnimation();
             }
         });
@@ -203,7 +205,6 @@ public class MainActivity extends BaseActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();

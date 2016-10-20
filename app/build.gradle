@@ -6,8 +6,8 @@ android {
 
     defaultConfig {
         applicationId "com.celerysoft.bedtime"
-        versionCode 20
-        versionName "1.2.13"
+        versionCode 21
+        versionName "1.2.14"
         minSdkVersion 14
         targetSdkVersion 24
         manifestPlaceholders = [

@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.NotificationCompat;
 
@@ -23,14 +24,14 @@ import com.celerysoft.bedtime.util.NotificationUtil;
  * Test util
  */
 public class TestUtil {
-    public static void createTestNotification(Context context) {
-        int notifyId = (int) (Math.random() * 1000);
+    public static void createTestNotification(final Context context, long delay) {
+        final int notifyId = (int) (Math.random() * 1000);
 //        notifyId = 1;
 
         Intent openIntent = new Intent(context, OnNotificationClickReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, openIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        Notification notification;
+        final Notification notification;
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
@@ -50,13 +51,23 @@ public class TestUtil {
                 .setVibrate(new long[] {0, 1000, 500, 1000, 500, 1000})
                 .setSound(Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.notification));
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            builder.setFullScreenIntent(pendingIntent, true);
+        }
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             notification = builder.build();
         } else {
             notification = builder.getNotification();
         }
 
-        NotificationUtil.getInstance(context).sendNotification(notifyId, notification);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                NotificationUtil.getInstance(context).sendNotification(notifyId, notification);
+            }
+        }, delay);
+
     }
 
     public static void createTestDialog(Context context) {
