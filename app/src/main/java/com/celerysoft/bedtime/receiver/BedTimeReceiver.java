@@ -17,8 +17,14 @@ import com.celerysoft.bedtime.activity.main.view.MainActivity;
 import com.celerysoft.bedtime.util.ActivityManagerUtil;
 import com.celerysoft.bedtime.util.AlarmUtil;
 import com.celerysoft.bedtime.util.Const;
+import com.celerysoft.bedtime.util.FileUtil;
 import com.celerysoft.bedtime.util.GlobalValue;
 import com.celerysoft.bedtime.util.NotificationUtil;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by Celery on 16/4/14.
@@ -104,7 +110,6 @@ public class BedTimeReceiver extends BroadcastReceiver {
 //            builder.setFullScreenIntent(pendingIntent, false);
 //        }
 
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             notification = builder.build();
         } else {
@@ -112,6 +117,8 @@ public class BedTimeReceiver extends BroadcastReceiver {
         }
 
         NotificationUtil.getInstance(context).sendNotification(notifyId, notification);
+
+        writeDebugLog2ExternalStorage(context);
     }
 
     /**
@@ -129,6 +136,15 @@ public class BedTimeReceiver extends BroadcastReceiver {
         PowerManager.WakeLock wakeLock = pm.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP
                 | PowerManager.ON_AFTER_RELEASE, "BedTime Notification");
         wakeLock.acquire(timeout);
+    }
+
+    private void writeDebugLog2ExternalStorage(Context context) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+
+        String content = "alarm ring on: ";
+        content += simpleDateFormat.format(new Date());
+
+        FileUtil.getInstance().writeToExternalCache(context, "Alarm", null, content);
     }
 
     private void setNextAlarm(Context context) {

@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
+import android.provider.Settings;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.NotificationCompat;
 
@@ -55,7 +56,6 @@ public class TestUtil {
             builder.setPriority(NotificationCompat.PRIORITY_MAX);
         }
 
-
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 //            builder.setFullScreenIntent(pendingIntent, false);
 //        }
@@ -81,6 +81,13 @@ public class TestUtil {
                 .setMessage(context.getString(R.string.notification_bed_time_in_30_minutes))
                 .setPositiveButton(R.string.got_it, null)
                 .show();
+    }
+
+    public static void gotoIgnoreBatteryOptimizationSettings(Context context) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            Intent intent = new Intent(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS);
+            context.startActivity(intent);
+        }
     }
 
     public static BedTimeBean[] deriveAllBedTime(Context context) {

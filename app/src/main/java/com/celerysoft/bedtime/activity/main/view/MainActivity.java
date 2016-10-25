@@ -85,6 +85,7 @@ public class MainActivity extends BaseActivity
             public void onClick(View view) {
 //                com.celerysoft.bedtime.test.UnitTest.getInstance().startTest(MainActivity.this);
 //                com.celerysoft.bedtime.test.TestUtil.createTestNotification(MainActivity.this, 2000);
+//                com.celerysoft.bedtime.test.TestUtil.gotoIgnoreBatteryOptimizationSettings(MainActivity.this);
                 mPresenter.performFabAnimation();
             }
         });
