@@ -9,7 +9,6 @@
     <uses-permission
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         android:maxSdkVersion="18"/>
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
 
     <!-- 友盟所需权限 -->
     <uses-permission android:name="android.permission.INTERNET" />

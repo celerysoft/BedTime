@@ -51,9 +51,14 @@ public class TestUtil {
                 .setVibrate(new long[] {0, 1000, 500, 1000, 500, 1000})
                 .setSound(Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.notification));
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            builder.setFullScreenIntent(pendingIntent, true);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            builder.setPriority(NotificationCompat.PRIORITY_MAX);
         }
+
+
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//            builder.setFullScreenIntent(pendingIntent, false);
+//        }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             notification = builder.build();

@@ -231,10 +231,16 @@ public class PresenterMain implements IPresenterMain {
                         BedTimeBean nextDayBedTime = mBedTimeModel.findNextBedTimeByDayOfTheWeek(currentDay);
                         WakeupTimeBean nextDayWakeupTime = mWakeupTimeModel.findNextWakeUpTimeByDayOfTheWeek(currentDay);
 
-                        Calendar calendarCurrentDayBedTime = deriveCalendarByTimeBean(currentDayBedTime, currentDayBedTime.isBedTimeInPrevDay());
-                        Calendar calendarCurrentDayWakeupTime = deriveCalendarByTimeBean(currentDayWakeupTime, false);
+                        Calendar calendarCurrentDayBedTime = deriveCalendarByTimeBean(currentDayBedTime, currentDayBedTime.isBedTimeInPrevDay(), false);
+                        Calendar calendarCurrentDayWakeupTime = deriveCalendarByTimeBean(currentDayWakeupTime, false, false);
 
-                        Calendar calendarNextDayBedTime = deriveCalendarByTimeBean(nextDayBedTime, nextDayBedTime.isBedTimeInPrevDay());
+                        boolean isBedTimeInNextWeek = false;
+                        if (currentDay == Calendar.SATURDAY) {
+                            if (nextDayBedTime.getActualDayOfWeek() == Calendar.SUNDAY) {
+                                isBedTimeInNextWeek = true;
+                            }
+                        }
+                        Calendar calendarNextDayBedTime = deriveCalendarByTimeBean(nextDayBedTime, nextDayBedTime.isBedTimeInPrevDay(), isBedTimeInNextWeek);
 
                         Message msg = new Message();
 
@@ -276,7 +282,8 @@ public class PresenterMain implements IPresenterMain {
         }
     }
 
-    private Calendar deriveCalendarByTimeBean(BaseTimeBean time, boolean isTimeInPrevDay) {
+    private Calendar deriveCalendarByTimeBean(BaseTimeBean time, boolean isTimeInPrevDay, boolean isTimeInNextWeek) {
+        boolean nextWeek = isTimeInNextWeek;
         boolean prevWeek = false;
         int dayOfWeek = time.getDayOfTheWeek();
 
@@ -297,6 +304,9 @@ public class PresenterMain implements IPresenterMain {
         calendar.set(Calendar.MILLISECOND, 0);
         if (prevWeek) {
             calendar.setTimeInMillis(calendar.getTimeInMillis() - DAYS_OF_A_WEEK * MILLISECONDS_OF_A_DAY);
+        }
+        if (nextWeek) {
+            calendar.setTimeInMillis(calendar.getTimeInMillis() + DAYS_OF_A_WEEK * MILLISECONDS_OF_A_DAY);
         }
 
         return calendar;

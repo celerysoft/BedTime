@@ -19,7 +19,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.celerysoft.bedtime.R;
 import com.celerysoft.bedtime.activity.information.model.PersonalInformationModel;
@@ -196,7 +195,6 @@ public class MainActivity extends BaseActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_about_us) {
             mPresenter.openAboutBedTimeActivity();
             return true;
