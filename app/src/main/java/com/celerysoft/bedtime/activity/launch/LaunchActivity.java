@@ -105,7 +105,7 @@ public class LaunchActivity extends BaseActivity {
             ApplicationInfo appInfo = getPackageManager().getApplicationInfo(getPackageName(), PackageManager.GET_META_DATA);
             String wechatAppId = appInfo.metaData.getString("WECHAT_APP_ID");
             String wechatAppSecret = appInfo.metaData.getString("WECHAT_APP_SECRET");
-            String qqAppId = appInfo.metaData.getString("QQ_APP_ID");
+            String qqAppId = String.valueOf(appInfo.metaData.getInt("QQ_APP_ID", 0));
             String qqAppKey = appInfo.metaData.getString("QQ_APP_KEY");
 
             PlatformConfig.setWeixin(wechatAppId, wechatAppSecret);

@@ -94,7 +94,11 @@ public class MainActivity extends BaseActivity
         mAnimationWrapper.addAnimatorListenerAdapter(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
-                mPresenter.turnToBedTimeFragmentQuickly();
+                try {
+                    mPresenter.turnToBedTimeFragmentQuickly();
+                } catch (IllegalStateException e) {
+                    // no op
+                }
             }
         });
 

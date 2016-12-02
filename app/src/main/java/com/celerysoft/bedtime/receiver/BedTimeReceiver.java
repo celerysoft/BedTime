@@ -13,7 +13,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.NotificationCompat;
 
 import com.celerysoft.bedtime.R;
-import com.celerysoft.bedtime.activity.main.view.MainActivity;
 import com.celerysoft.bedtime.util.ActivityManagerUtil;
 import com.celerysoft.bedtime.util.AlarmUtil;
 import com.celerysoft.bedtime.util.Const;
@@ -22,7 +21,6 @@ import com.celerysoft.bedtime.util.GlobalValue;
 import com.celerysoft.bedtime.util.NotificationUtil;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
