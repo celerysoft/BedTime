@@ -2,13 +2,19 @@ package com.celerysoft.bedtime.fragment.settings.model;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.media.RingtoneManager;
 
 import com.celerysoft.bedtime.R;
+import com.celerysoft.bedtime.fragment.settings.bean.Sound;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 /**
  * Created by admin on 16/4/29.
+ *
  */
 public class SettingsModel {
     private static final int FOLLOW_SYSTEM = 0;
@@ -18,6 +24,8 @@ public class SettingsModel {
     private Context mContext;
 
     private SharedPreferences mSharedPreferences;
+
+    private List<Sound> mSoundList;
 
     public SettingsModel(Context context) {
         mContext = context;
@@ -55,7 +63,7 @@ public class SettingsModel {
                 locale = Locale.SIMPLIFIED_CHINESE;
                 break;
             case ENGLISH:
-                locale = locale.ENGLISH;
+                locale = Locale.ENGLISH;
                 break;
             default:
                 break;
@@ -82,6 +90,132 @@ public class SettingsModel {
         }
 
         return languageString;
+    }
+
+    public String getAppSoundString() {
+        String uri = getSoundUri();
+        Sound sound = findSoundByUri(uri);
+        if (sound == null) {
+            return "";
+        } else {
+            return sound.getTitle();
+        }
+    }
+
+    private List<Sound> getSoundList() {
+        if (mSoundList != null) {
+            return mSoundList;
+        }
+
+        RingtoneManager manager = new RingtoneManager(mContext);
+        manager.setType(RingtoneManager.TYPE_NOTIFICATION);
+        Cursor cursor = manager.getCursor();
+
+        mSoundList = new ArrayList<>();
+
+        int index = 0;
+        Sound appDefaultSound = new Sound();
+        appDefaultSound.setIndex(index);
+        appDefaultSound.setId("666");
+        appDefaultSound.setTitle(mContext.getString(R.string.settings_fragment_sound_use_default));
+        appDefaultSound.setUri("android.resource://" + mContext.getPackageName() + "/" + R.raw.notification);
+        mSoundList.add(appDefaultSound);
+        index++;
+
+        Sound SystemDefaultSound = new Sound();
+        SystemDefaultSound.setIndex(index);
+        SystemDefaultSound.setId("999");
+        SystemDefaultSound.setTitle(mContext.getString(R.string.settings_fragment_language_follow_system));
+        SystemDefaultSound.setUri(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION).toString());
+        mSoundList.add(SystemDefaultSound);
+        index++;
+
+        while (cursor.moveToNext()) {
+            String id = cursor.getString(RingtoneManager.ID_COLUMN_INDEX);
+            String title = cursor.getString(RingtoneManager.TITLE_COLUMN_INDEX);
+            String uri = cursor.getString(RingtoneManager.URI_COLUMN_INDEX);
+
+            Sound sound = new Sound();
+            sound.setIndex(index);
+            sound.setId(id);
+            sound.setTitle(title);
+            sound.setUri(uri + "/" + id);
+
+            mSoundList.add(sound);
+            index++;
+        }
+
+        return mSoundList;
+    }
+
+    public String[] getSoundStrings() {
+        List<Sound> list = getSoundList();
+
+        String[] sounds = new String[list.size()];
+
+        for (int i = 0; i < sounds.length; ++i) {
+            sounds[i] = list.get(i).getTitle();
+        }
+
+        return sounds;
+    }
+
+    public Sound findSoundByIndex(int index) {
+        List<Sound> soundList = getSoundList();
+        if (soundList == null || index >= soundList.size()) {
+            return null;
+        }
+
+        return soundList.get(index);
+    }
+
+    private Sound findSoundByUri(String uri) {
+        List<Sound> soundList = getSoundList();
+        if (soundList == null) {
+            return null;
+        }
+
+        int size = soundList.size();
+        for (int i = 0; i < size; ++i) {
+            Sound sound = soundList.get(i);
+            if (uri.equals(sound.getUri())) {
+                return sound;
+            }
+        }
+
+        return null;
+    }
+
+    private int findSoundIndexByUri(String uri) {
+        Sound sound = findSoundByUri(uri);
+        if (sound == null) {
+            return 0;
+        } else {
+            return sound.getIndex();
+        }
+    }
+
+    public String getSoundUri() {
+        return mSharedPreferences.getString(mContext.getString(R.string.shared_preferences_key_settings_sound), "android.resource://" + mContext.getPackageName() + "/" + R.raw.notification);
+    }
+
+    private void setSoundUri(String soundUri) {
+        mSharedPreferences.edit()
+                .putString(mContext.getString(R.string.shared_preferences_key_settings_sound), soundUri)
+                .apply();
+    }
+
+    public int getAppSoundIndex() {
+        String uri = getSoundUri();
+        return findSoundIndexByUri(uri);
+    }
+
+    public void setAppSound(int sound) {
+        if (mSoundList == null || mSoundList.size() <= sound) {
+            return;
+        }
+
+        setSoundUri(mSoundList.get(sound).getUri());
     }
 
     public void apply24HourTime(boolean applied) {

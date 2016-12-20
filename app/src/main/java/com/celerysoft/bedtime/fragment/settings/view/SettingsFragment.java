@@ -29,6 +29,8 @@ public class SettingsFragment extends BaseFragment implements IViewSettings {
     private SwitchCompat mSwitchTimeFormat;
     private View mViewLanguage;
     private AppCompatTextView mTvLanguage;
+    private View mViewSound;
+    private AppCompatTextView mTvSound;
     private View mViewPersonalInformation;
     private AppCompatTextView mTvCurrentVersion;
 
@@ -76,6 +78,17 @@ public class SettingsFragment extends BaseFragment implements IViewSettings {
         mTvLanguage = (AppCompatTextView) v.findViewById(R.id.settings_fragment_tv_language_desc);
         mTvLanguage.setText(mPresenter.getLanguageString());
 
+        mViewSound = v.findViewById(R.id.settings_fragment_sound);
+        mViewSound.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPresenter.showChooseSoundDialog();
+            }
+        });
+
+        mTvSound = (AppCompatTextView) v.findViewById(R.id.settings_fragment_tv_sound_desc);
+        mTvSound.setText(mPresenter.getSoundString());
+
         mViewPersonalInformation = v.findViewById(R.id.settings_fragment_personal_information);
         mViewPersonalInformation.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,5 +101,10 @@ public class SettingsFragment extends BaseFragment implements IViewSettings {
         mTvCurrentVersion.setText(String.format("%s  %s", getString(R.string.settings_fragment_tv_current_version_text), BuildConfig.VERSION_NAME));
 
         return v;
+    }
+
+    @Override
+    public AppCompatTextView getSoundDescTv() {
+        return mTvSound;
     }
 }

@@ -6,6 +6,8 @@ import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -84,8 +86,9 @@ public class MainActivity extends BaseActivity
             @Override
             public void onClick(View view) {
 //                com.celerysoft.bedtime.test.UnitTest.getInstance().startTest(MainActivity.this);
-//                com.celerysoft.bedtime.test.TestUtil.createTestNotification(MainActivity.this, 2000);
+//                com.celerysoft.bedtime.test.TestUtil.createTestNotification(MainActivity.this, 0);
 //                com.celerysoft.bedtime.test.TestUtil.gotoIgnoreBatteryOptimizationSettings(MainActivity.this);
+//                com.celerysoft.bedtime.test.TestUtil.systemSoundList(MainActivity.this);
                 mPresenter.performFabAnimation();
             }
         });
@@ -173,6 +176,11 @@ public class MainActivity extends BaseActivity
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 6 && resultCode == RESULT_OK) {
+            Uri uri = data.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI);
+            String a = "";
+        }
+
         super.onActivityResult(requestCode, resultCode, data);
         UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
         mPresenter.handleActivityResult(requestCode, resultCode, data);

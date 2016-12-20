@@ -8,4 +8,5 @@ import android.support.v7.widget.AppCompatTextView;
  */
 public interface IViewSettings {
     Activity getActivity();
+    AppCompatTextView getSoundDescTv();
 }

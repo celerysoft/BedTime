@@ -55,6 +55,7 @@
     
     <!-- settings -->
     <string name="shared_preferences_key_settings_language" translatable="false">shared_preferences_key_settings_language</string>
+    <string name="shared_preferences_key_settings_sound" translatable="false">shared_preferences_key_settings_sound</string>
     <string name="shared_preferences_key_settings_24_hour_time" translatable="false">shared_preferences_key_settings_24_hour_time</string>
 
     <!-- personal information -->
@@ -138,12 +139,14 @@
     //Settings Fragment
     <string name="settings_actionbar_title">Settings</string>
     <string name="settings_fragment_language_follow_system">Follow system settings</string>
+    <string name="settings_fragment_sound_use_default">Use BedTime Default</string>
     <string name="settings_fragment_category_date_and_time">Date &amp; Time</string>
     <string name="settings_fragment_tv_time_format_text">24-Hour Time</string>
     <string name="settings_fragment_tv_time_format_desc_text_24">e.g. 16:32</string>
     <string name="settings_fragment_tv_time_format_desc_text_12">e.g. 4:32 PM</string>
     <string name="settings_fragment_category_general">General</string>
     <string name="settings_fragment_tv_language_text">Language</string>
+    <string name="settings_fragment_tv_sound_text">Sound</string>
     <string name="settings_fragment_tv_personal_information_text">Personal Information</string>
     <string name="settings_fragment_tv_current_version_text">Current Version</string>
 

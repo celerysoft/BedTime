@@ -5,12 +5,16 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.support.v7.app.AlertDialog;
 import android.util.DisplayMetrics;
 
 import com.celerysoft.bedtime.R;
 import com.celerysoft.bedtime.activity.information.view.PersonalInformationActivity;
 import com.celerysoft.bedtime.activity.main.view.MainActivity;
+import com.celerysoft.bedtime.fragment.settings.bean.Sound;
 import com.celerysoft.bedtime.fragment.settings.model.SettingsModel;
 import com.celerysoft.bedtime.fragment.settings.view.IViewSettings;
 import com.celerysoft.bedtime.util.InitViewUtil;
@@ -27,7 +31,8 @@ public class PresenterSettings implements IPresenterSettings {
         return mModel;
     }
 
-    private int newLanguage;
+    private int mNewLanguage;
+    private int mNewSound;
 
     public PresenterSettings(IViewSettings view) {
         mView = view;
@@ -39,23 +44,60 @@ public class PresenterSettings implements IPresenterSettings {
     @Override
     public void showChooseLanguageDialog() {
         final int oldLanguage = mModel.getAppLanguage();
-        newLanguage = oldLanguage;
+        mNewLanguage = oldLanguage;
 
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext, R.style.AppTheme_Dialog_Light);
         builder.setTitle(mContext.getString(R.string.settings_fragment_tv_language_text))
                 .setSingleChoiceItems(mModel.getLanguageStrings(), oldLanguage, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        PresenterSettings.this.newLanguage = which;
+                        mNewLanguage = which;
                     }
                 })
                 .setNegativeButton(android.R.string.cancel, null)
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        if (PresenterSettings.this.newLanguage != oldLanguage) {
-                            mModel.setAppLanguage(newLanguage);
-                            PresenterSettings.this.changeAppLanguage();
+                        if (mNewLanguage != oldLanguage) {
+                            mModel.setAppLanguage(mNewLanguage);
+                            changeAppLanguage();
+                        }
+                    }
+                });
+
+        AlertDialog dialog = builder.show();
+        InitViewUtil.getInstance().initAlertDialog(dialog);
+    }
+
+    @Override
+    public void showChooseSoundDialog() {
+        final int oldSound = mModel.getAppSoundIndex();
+        mNewSound = oldSound;
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext, R.style.AppTheme_Dialog_Light);
+        builder.setTitle(mContext.getString(R.string.settings_fragment_tv_sound_text))
+                .setSingleChoiceItems(mModel.getSoundStrings(), oldSound, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        mNewSound = which;
+
+                        Sound sound = mModel.findSoundByIndex(which);
+                        if (sound == null) {
+                            return;
+                        }
+
+                        Uri uri = Uri.parse(sound.getUri());
+                        Ringtone r = RingtoneManager.getRingtone(mContext, uri);
+                        r.play();
+                    }
+                })
+                .setNegativeButton(android.R.string.cancel, null)
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (PresenterSettings.this.mNewSound != oldSound) {
+                            mModel.setAppSound(mNewSound);
+                            mView.getSoundDescTv().setText(mModel.findSoundByIndex(mNewSound).getTitle());
                         }
                     }
                 });
@@ -91,6 +133,11 @@ public class PresenterSettings implements IPresenterSettings {
     @Override
     public String getLanguageString() {
         return mModel.getAppLanguageString();
+    }
+
+    @Override
+    public String getSoundString() {
+        return mModel.getAppSoundString();
     }
 
     @Override

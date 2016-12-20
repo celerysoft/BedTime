@@ -1,11 +1,15 @@
 package com.celerysoft.bedtime.test;
 
+import android.app.Activity;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
 import android.support.v7.app.AlertDialog;
@@ -17,8 +21,11 @@ import com.celerysoft.bedtime.fragment.bedtime.model.WakeupTimeBean;
 import com.celerysoft.bedtime.fragment.bedtime.model.WakeupTimeModel;
 import com.celerysoft.bedtime.fragment.main.model.BedTimeBean;
 import com.celerysoft.bedtime.fragment.main.model.BedTimeModel;
+import com.celerysoft.bedtime.fragment.settings.model.SettingsModel;
 import com.celerysoft.bedtime.receiver.OnNotificationClickReceiver;
 import com.celerysoft.bedtime.util.NotificationUtil;
+
+import java.util.ArrayList;
 
 /**
  * Created by admin on 16/7/13.
@@ -49,8 +56,17 @@ public class TestUtil {
                 .setContentText(context.getString(R.string.notification_it_is_bed_time))
                 .setTicker(context.getString(R.string.notification_it_is_bed_time))
                 .setLights(context.getResources().getColor(R.color.colorPrimary), 500, 2000)
-                .setVibrate(new long[] {0, 1000, 500, 1000, 500, 1000})
-                .setSound(Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.notification));
+                .setVibrate(new long[] {0, 1000, 500, 1000, 500, 1000});
+
+        SettingsModel settingsModel = new SettingsModel(context);
+        String uriString = settingsModel.getSoundUri();
+        Uri soundUri;
+        if (uriString == null || uriString.length() == 0) {
+            soundUri = Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.notification);
+        } else {
+            soundUri = Uri.parse(uriString);
+        }
+        builder.setSound(soundUri);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             builder.setPriority(NotificationCompat.PRIORITY_MAX);
@@ -106,5 +122,34 @@ public class TestUtil {
             wakeupTimes[i - 1] = model.findWakeUpTimeByDayOfTheWeek(i);
         }
         return wakeupTimes;
+    }
+
+    public static void systemSoundList(Activity activity) {
+        RingtoneManager manager = new RingtoneManager(activity);
+        manager.setType(RingtoneManager.TYPE_NOTIFICATION);
+        Cursor cursor = manager.getCursor();
+
+        ArrayList<String> list = new ArrayList<>();
+        while (cursor.moveToNext()) {
+            int columnCount = cursor.getColumnCount();
+            String columnName;
+            for (int i = 0; i < columnCount; ++i) {
+                columnName = cursor.getColumnName(i);
+                Bundle b = cursor.getExtras();
+                String a = "";
+            }
+
+            String id = cursor.getString(RingtoneManager.ID_COLUMN_INDEX);
+            String title = cursor.getString(RingtoneManager.TITLE_COLUMN_INDEX);
+            String uri = cursor.getString(RingtoneManager.URI_COLUMN_INDEX);
+
+            list.add(id + "#" + title + "#" + uri);
+        }
+
+        Intent intent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
+        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_NOTIFICATION);
+        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TITLE, "Select Tone");
+//        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, (Uri) null);
+        activity.startActivityForResult(intent, 6);
     }
 }

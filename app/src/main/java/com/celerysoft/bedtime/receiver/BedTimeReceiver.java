@@ -13,6 +13,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.NotificationCompat;
 
 import com.celerysoft.bedtime.R;
+import com.celerysoft.bedtime.fragment.settings.model.SettingsModel;
 import com.celerysoft.bedtime.util.ActivityManagerUtil;
 import com.celerysoft.bedtime.util.AlarmUtil;
 import com.celerysoft.bedtime.util.Const;
@@ -88,7 +89,14 @@ public class BedTimeReceiver extends BroadcastReceiver {
                     .setLights(context.getResources().getColor(R.color.colorPrimary), 500, 2000)
                     .setVibrate(new long[] {0, 1000, 500, 1000, 500, 1000});
 
-            Uri soundUri = Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.notification);
+            SettingsModel settingsModel = new SettingsModel(context);
+            String uriString = settingsModel.getSoundUri();
+            Uri soundUri;
+            if (uriString == null || uriString.length() == 0) {
+                soundUri = Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.notification);
+            } else {
+                soundUri = Uri.parse(uriString);
+            }
             builder.setSound(soundUri);
 
         } else if (action.equals(context.getString(R.string.action_bed_time))) {
