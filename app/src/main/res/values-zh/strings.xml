@@ -72,6 +72,8 @@
     <string name="bedtime_friday">星期五</string>
     <string name="bedtime_saturday">星期六</string>
     <string name="bedtime_sunday">星期天</string>
+    <string name="bedtime_today">今日</string>
+    <string name="bedtime_tomorrow">明日</string>
 
     //Settings Fragment
     <string name="settings_actionbar_title">设置</string>

@@ -135,6 +135,8 @@
     <string name="bedtime_friday">Friday</string>
     <string name="bedtime_saturday">Saturday</string>
     <string name="bedtime_sunday">Sunday</string>
+    <string name="bedtime_today">Today</string>
+    <string name="bedtime_tomorrow">Tomorrow</string>
 
     //Settings Fragment
     <string name="settings_actionbar_title">Settings</string>

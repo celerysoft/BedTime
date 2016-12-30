@@ -9,6 +9,7 @@ import android.widget.BaseAdapter;
 
 import com.celerysoft.bedtime.R;
 import com.celerysoft.bedtime.fragment.bedtime.model.WakeupTimeBean;
+import com.celerysoft.bedtime.util.Const;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -18,6 +19,7 @@ import java.util.Calendar;
  */
 public class WakeupTimeListViewAdapter extends BaseAdapter {
     private Context mContext;
+    private Calendar mCalendar;
 
     private boolean mIs24HourTime = true;
 
@@ -38,6 +40,7 @@ public class WakeupTimeListViewAdapter extends BaseAdapter {
     public WakeupTimeListViewAdapter(Context context) {
         mContext = context;
 
+        mCalendar = Calendar.getInstance();
         //createDefaultItems();
     }
 
@@ -105,12 +108,14 @@ public class WakeupTimeListViewAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder viewHolder = null;
+        ViewHolder viewHolder;
 
         if (convertView == null) {
             convertView = LayoutInflater.from(mContext).inflate(R.layout.list_view_wakeup_time_item, parent, false);
             viewHolder = new ViewHolder();
+            viewHolder.root = convertView.findViewById(R.id.list_view_wakeup_time_root);
             viewHolder.title = (AppCompatTextView) convertView.findViewById(R.id.list_view_wakeup_time_title);
+            viewHolder.tag = (AppCompatTextView) convertView.findViewById(R.id.list_view_wakeup_time_tag);
             viewHolder.content = (AppCompatTextView) convertView.findViewById(R.id.list_view_wakeup_time_content);
             convertView.setTag(viewHolder);
         } else {
@@ -121,12 +126,44 @@ public class WakeupTimeListViewAdapter extends BaseAdapter {
         viewHolder.title.setText(getWakeupTimeTitleString(bean));
         viewHolder.content.setText(getWakeupTimeContentString(bean));
 
+
+        if (isToday(bean.getDayOfTheWeek())) {
+            viewHolder.root.setBackgroundColor(mContext.getResources().getColor(R.color.colorAccentA100));
+            viewHolder.title.setTextColor(mContext.getResources().getColor(R.color.colorText));
+            viewHolder.tag.setText(mContext.getString(R.string.bedtime_today));
+            viewHolder.content.setTextColor(mContext.getResources().getColor(R.color.colorText));
+        } else if(isTomorrow(bean.getDayOfTheWeek())) {
+            viewHolder.root.setBackgroundColor(mContext.getResources().getColor(R.color.colorAccent));
+            viewHolder.title.setTextColor(mContext.getResources().getColor(R.color.colorText));
+            viewHolder.tag.setText(mContext.getString(R.string.bedtime_tomorrow));
+            viewHolder.content.setTextColor(mContext.getResources().getColor(R.color.colorText));
+        } else {
+            viewHolder.root.setBackgroundColor(mContext.getResources().getColor(android.R.color.transparent));
+            viewHolder.title.setTextColor(mContext.getResources().getColor(R.color.colorPrimaryText));
+            viewHolder.tag.setText(Const.EMPTY_STRING);
+            viewHolder.content.setTextColor(mContext.getResources().getColor(R.color.colorPrimaryText));
+        }
+
+
         return convertView;
     }
 
     private class ViewHolder {
+        public View root;
         public AppCompatTextView title;
+        public AppCompatTextView tag;
         public AppCompatTextView content;
+    }
+
+    private boolean isToday(int dayOfWeek) {
+        int today = mCalendar.get(Calendar.DAY_OF_WEEK);
+        return today == dayOfWeek;
+    }
+
+    private boolean isTomorrow(int dayOfWeek) {
+        int today = mCalendar.get(Calendar.DAY_OF_WEEK);
+        int tomorrow = today == Calendar.SATURDAY ? Calendar.MONDAY : today + 1;
+        return tomorrow == dayOfWeek;
     }
 
     private String getWakeupTimeTitleString(WakeupTimeBean bean) {

@@ -13,6 +13,8 @@ public class Const {
         return context.getString(R.string.shared_preferences_key_default);
     }
 
+    public static final String EMPTY_STRING = "";
+
     public static final String FILE_PROVIDER_AUTHORITIES = BuildConfig.APPLICATION_ID + ".provider";
 
     @Deprecated
