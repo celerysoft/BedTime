@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.res.Configuration;
 import android.os.Build;
-import android.os.LocaleList;
 
 import com.celerysoft.bedtime.fragment.settings.model.SettingsModel;
 

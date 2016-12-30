@@ -1,12 +1,12 @@
 package com.celerysoft.bedtime.fragment.main.model;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.celerysoft.bedtime.R;
 import com.celerysoft.bedtime.fragment.bedtime.model.WakeupTimeBean;
 import com.celerysoft.bedtime.fragment.bedtime.model.WakeupTimeModel;
+import com.celerysoft.bedtime.util.SPUtil;
 
 import java.util.Calendar;
 
@@ -17,16 +17,12 @@ import java.util.Calendar;
 public class BedTimeModel {
     private static final String TAG = "BedTimeModel";
 
-    private SharedPreferences mSharedPreferences;
     private Context mContext;
 
     private WakeupTimeModel mWakeupTimeModel;
 
     public BedTimeModel(Context context) {
         mContext = context;
-
-        String sharedPreferencesKey = context.getString(R.string.shared_preferences_key_default);
-        mSharedPreferences = context.getSharedPreferences(sharedPreferencesKey, Context.MODE_PRIVATE);
 
         mWakeupTimeModel = new WakeupTimeModel(context);
     }
@@ -35,43 +31,36 @@ public class BedTimeModel {
         BedTimeBean bean = new BedTimeBean();
         bean.setDayOfTheWeek(dayOfTheWeek);
 
-        int goBedHour = 1;
-        int goBedMinute = 0;
+        int goBedHour;
+        int goBedMinute;
         switch (dayOfTheWeek) {
             case Calendar.MONDAY:
                 bean.setDayOfTheWeekDescription("MONDAY");
-                goBedHour = mSharedPreferences.getInt(mContext.getString(R.string.shared_preferences_key_bed_time_monday_hour), 1);
-                goBedMinute = mSharedPreferences.getInt(mContext.getString(R.string.shared_preferences_key_bed_time_monday_minute), 0);
+                goBedMinute = SPUtil.get(mContext, mContext.getString(R.string.shared_preferences_key_bed_time_monday_minute), 0);
                 break;
             case Calendar.TUESDAY:
                 bean.setDayOfTheWeekDescription("TUESDAY");
-                goBedHour = mSharedPreferences.getInt(mContext.getString(R.string.shared_preferences_key_bed_time_tuesday_hour), 1);
-                goBedMinute = mSharedPreferences.getInt(mContext.getString(R.string.shared_preferences_key_bed_time_tuesday_minute), 0);
+                goBedMinute = SPUtil.get(mContext, mContext.getString(R.string.shared_preferences_key_bed_time_tuesday_minute), 0);
                 break;
             case Calendar.WEDNESDAY:
                 bean.setDayOfTheWeekDescription("WEDNESDAY");
-                goBedHour = mSharedPreferences.getInt(mContext.getString(R.string.shared_preferences_key_bed_time_wednesday_hour), 1);
-                goBedMinute = mSharedPreferences.getInt(mContext.getString(R.string.shared_preferences_key_bed_time_wednesday_minute), 0);
+                goBedMinute = SPUtil.get(mContext, mContext.getString(R.string.shared_preferences_key_bed_time_wednesday_minute), 0);
                 break;
             case Calendar.THURSDAY:
                 bean.setDayOfTheWeekDescription("THURSDAY");
-                goBedHour = mSharedPreferences.getInt(mContext.getString(R.string.shared_preferences_key_bed_time_thursday_hour), 1);
-                goBedMinute = mSharedPreferences.getInt(mContext.getString(R.string.shared_preferences_key_bed_time_thursday_minute), 0);
+                goBedMinute = SPUtil.get(mContext, mContext.getString(R.string.shared_preferences_key_bed_time_thursday_minute), 0);
                 break;
             case Calendar.FRIDAY:
                 bean.setDayOfTheWeekDescription("FRIDAY");
-                goBedHour = mSharedPreferences.getInt(mContext.getString(R.string.shared_preferences_key_bed_time_friday_hour), 1);
-                goBedMinute = mSharedPreferences.getInt(mContext.getString(R.string.shared_preferences_key_bed_time_friday_minute), 0);
+                goBedMinute = SPUtil.get(mContext, mContext.getString(R.string.shared_preferences_key_bed_time_friday_minute), 0);
                 break;
             case Calendar.SATURDAY:
                 bean.setDayOfTheWeekDescription("SATURDAY");
-                goBedHour = mSharedPreferences.getInt(mContext.getString(R.string.shared_preferences_key_bed_time_saturday_hour), 1);
-                goBedMinute = mSharedPreferences.getInt(mContext.getString(R.string.shared_preferences_key_bed_time_saturday_minute), 0);
+                goBedMinute = SPUtil.get(mContext, mContext.getString(R.string.shared_preferences_key_bed_time_saturday_minute), 0);
                 break;
             case Calendar.SUNDAY:
                 bean.setDayOfTheWeekDescription("SUNDAY");
-                goBedHour = mSharedPreferences.getInt(mContext.getString(R.string.shared_preferences_key_bed_time_sunday_hour), 1);
-                goBedMinute = mSharedPreferences.getInt(mContext.getString(R.string.shared_preferences_key_bed_time_sunday_minute), 0);
+                goBedMinute = SPUtil.get(mContext, mContext.getString(R.string.shared_preferences_key_bed_time_sunday_minute), 0);
                 break;
             default:
                 Log.w(TAG, "findWakeUpTimeByDayOfTheWeek with an illegal weekday, please use Calendar.SUNDAY, etc.");
@@ -103,46 +92,49 @@ public class BedTimeModel {
         return findBedTimeByDayOfTheWeek(nextDayOfTheWeek);
     }
 
-    public void storeBedTime(BedTimeBean bean) {
+    private void storeBedTime(BedTimeBean bean) {
         int dayOfTheWeek = bean.getDayOfTheWeek();
         int bedHour = bean.getHour();
         int bedMinute = bean.getMinute();
 
-        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        String keyOfBedHour;
+        String keyOfBedMinute;
         switch (dayOfTheWeek) {
             case Calendar.MONDAY:
-                editor.putInt(mContext.getString(R.string.shared_preferences_key_bed_time_monday_hour), bedHour)
-                        .putInt(mContext.getString(R.string.shared_preferences_key_bed_time_monday_minute), bedMinute);
+                keyOfBedHour = mContext.getString(R.string.shared_preferences_key_bed_time_monday_hour);
+                keyOfBedMinute = mContext.getString(R.string.shared_preferences_key_bed_time_monday_minute);
                 break;
             case Calendar.TUESDAY:
-                editor.putInt(mContext.getString(R.string.shared_preferences_key_bed_time_tuesday_hour), bedHour)
-                        .putInt(mContext.getString(R.string.shared_preferences_key_bed_time_tuesday_minute), bedMinute);
+                keyOfBedHour = mContext.getString(R.string.shared_preferences_key_bed_time_tuesday_hour);
+                keyOfBedMinute = mContext.getString(R.string.shared_preferences_key_bed_time_tuesday_minute);
                 break;
             case Calendar.WEDNESDAY:
-                editor.putInt(mContext.getString(R.string.shared_preferences_key_bed_time_wednesday_hour), bedHour)
-                        .putInt(mContext.getString(R.string.shared_preferences_key_bed_time_wednesday_minute), bedMinute);
+                keyOfBedHour = mContext.getString(R.string.shared_preferences_key_bed_time_wednesday_hour);
+                keyOfBedMinute = mContext.getString(R.string.shared_preferences_key_bed_time_wednesday_minute);
                 break;
             case Calendar.THURSDAY:
-                editor.putInt(mContext.getString(R.string.shared_preferences_key_bed_time_thursday_hour), bedHour)
-                        .putInt(mContext.getString(R.string.shared_preferences_key_bed_time_thursday_minute), bedMinute);
+                keyOfBedHour = mContext.getString(R.string.shared_preferences_key_bed_time_thursday_hour);
+                keyOfBedMinute = mContext.getString(R.string.shared_preferences_key_bed_time_thursday_minute);
                 break;
             case Calendar.FRIDAY:
-                editor.putInt(mContext.getString(R.string.shared_preferences_key_bed_time_friday_hour), bedHour)
-                        .putInt(mContext.getString(R.string.shared_preferences_key_bed_time_friday_minute), bedMinute);
+                keyOfBedHour = mContext.getString(R.string.shared_preferences_key_bed_time_friday_hour);
+                keyOfBedMinute = mContext.getString(R.string.shared_preferences_key_bed_time_friday_minute);
                 break;
             case Calendar.SATURDAY:
-                editor.putInt(mContext.getString(R.string.shared_preferences_key_bed_time_saturday_hour), bedHour)
-                        .putInt(mContext.getString(R.string.shared_preferences_key_bed_time_saturday_minute), bedMinute);
+                keyOfBedHour = mContext.getString(R.string.shared_preferences_key_bed_time_saturday_hour);
+                keyOfBedMinute = mContext.getString(R.string.shared_preferences_key_bed_time_saturday_minute);
                 break;
             case Calendar.SUNDAY:
-                editor.putInt(mContext.getString(R.string.shared_preferences_key_bed_time_sunday_hour), bedHour)
-                        .putInt(mContext.getString(R.string.shared_preferences_key_bed_time_sunday_minute), bedMinute);
+                keyOfBedHour = mContext.getString(R.string.shared_preferences_key_bed_time_sunday_hour);
+                keyOfBedMinute = mContext.getString(R.string.shared_preferences_key_bed_time_sunday_minute);
                 break;
             default:
                 Log.w(TAG, "findWakeUpTimeByDayOfTheWeek with an illegal weekday, please use Calendar.SUNDAY, etc.");
                 throw new RuntimeException("findWakeUpTimeByDayOfTheWeek with an illegal weekday, please use Calendar.SUNDAY, etc.");
         }
-        editor.apply();
+
+        SPUtil.put(mContext, keyOfBedHour, bedHour);
+        SPUtil.put(mContext, keyOfBedMinute, bedMinute);
     }
 
     public void refreshBedTime() {
@@ -169,10 +161,10 @@ public class BedTimeModel {
     }
 
     public int getSleepHour() {
-        return mSharedPreferences.getInt(mContext.getString(R.string.shared_preferences_key_personal_information_sleep_hour), 7);
+        return SPUtil.get(mContext, mContext.getString(R.string.shared_preferences_key_personal_information_sleep_hour), 7);
     }
 
     public int getSleepMinute() {
-        return mSharedPreferences.getInt(mContext.getString(R.string.shared_preferences_key_personal_information_sleep_minute), 50);
+        return SPUtil.get(mContext, mContext.getString(R.string.shared_preferences_key_personal_information_sleep_minute), 50);
     }
 }

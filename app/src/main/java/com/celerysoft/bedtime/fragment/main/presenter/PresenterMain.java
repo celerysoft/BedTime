@@ -3,7 +3,6 @@ package com.celerysoft.bedtime.fragment.main.presenter;
 import android.annotation.SuppressLint;
 import android.content.ComponentName;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Handler;
 import android.os.Message;
@@ -17,7 +16,7 @@ import com.celerysoft.bedtime.fragment.main.model.BedTimeModel;
 import com.celerysoft.bedtime.fragment.main.view.IViewMain;
 import com.celerysoft.bedtime.receiver.DeviceBootReceiver;
 import com.celerysoft.bedtime.util.AlarmUtil;
-import com.celerysoft.bedtime.util.Const;
+import com.celerysoft.bedtime.util.SPUtil;
 
 import java.util.Calendar;
 import java.util.Locale;
@@ -40,28 +39,22 @@ public class PresenterMain implements IPresenterMain {
     private Thread mCountDownThread;
     private boolean mIsCountDownThreadRun = false;
 
-    private SharedPreferences mSharedPreferences;
-
     public PresenterMain(IViewMain view) {
         mView = view;
         mContext = view.getContext();
 
         mWakeupTimeModel = new WakeupTimeModel(mContext);
         mBedTimeModel = new BedTimeModel(mContext);
-
-        mSharedPreferences = mContext.getSharedPreferences(Const.DEFAULT_SHARED_PREFERENCES_FILE_NAME, Context.MODE_PRIVATE);
     }
 
     @Override
     public boolean getNotificationStatus() {
-        return mSharedPreferences.getBoolean(mContext.getString(R.string.shared_preferences_key_open_notification), true);
+        return SPUtil.get(mContext, mContext.getString(R.string.shared_preferences_key_open_notification), true);
     }
 
     @Override
     public void turnOnNotification() {
-        mSharedPreferences.edit()
-                .putBoolean(mContext.getString(R.string.shared_preferences_key_open_notification), true)
-                .apply();
+        SPUtil.put(mContext, mContext.getString(R.string.shared_preferences_key_open_notification), true);
 
         enableAlarm();
 
@@ -71,9 +64,7 @@ public class PresenterMain implements IPresenterMain {
 
     @Override
     public void turnOffNotification() {
-        mSharedPreferences.edit()
-                .putBoolean(mContext.getString(R.string.shared_preferences_key_open_notification), false)
-                .apply();
+        SPUtil.put(mContext, mContext.getString(R.string.shared_preferences_key_open_notification), false);
 
         disableAlarm();
 
@@ -283,7 +274,6 @@ public class PresenterMain implements IPresenterMain {
     }
 
     private Calendar deriveCalendarByTimeBean(BaseTimeBean time, boolean isTimeInPrevDay, boolean isTimeInNextWeek) {
-        boolean nextWeek = isTimeInNextWeek;
         boolean prevWeek = false;
         int dayOfWeek = time.getDayOfTheWeek();
 
@@ -305,7 +295,7 @@ public class PresenterMain implements IPresenterMain {
         if (prevWeek) {
             calendar.setTimeInMillis(calendar.getTimeInMillis() - DAYS_OF_A_WEEK * MILLISECONDS_OF_A_DAY);
         }
-        if (nextWeek) {
+        if (isTimeInNextWeek) {
             calendar.setTimeInMillis(calendar.getTimeInMillis() + DAYS_OF_A_WEEK * MILLISECONDS_OF_A_DAY);
         }
 

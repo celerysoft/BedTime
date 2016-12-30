@@ -5,7 +5,6 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Build;
 import android.os.PowerManager;
@@ -20,6 +19,7 @@ import com.celerysoft.bedtime.util.Const;
 import com.celerysoft.bedtime.util.FileUtil;
 import com.celerysoft.bedtime.util.GlobalValue;
 import com.celerysoft.bedtime.util.NotificationUtil;
+import com.celerysoft.bedtime.util.SPUtil;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -136,6 +136,7 @@ public class BedTimeReceiver extends BroadcastReceiver {
      * need this permission for just lighting the screen on.
      */
     @Deprecated
+    @SuppressWarnings("unused")
     private void acquireWakeLock(Context context, long timeout) {
         PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
         //noinspection deprecation
@@ -158,7 +159,6 @@ public class BedTimeReceiver extends BroadcastReceiver {
     }
 
     private String getNickname(Context context) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(context.getString(R.string.shared_preferences_key_default), Context.MODE_PRIVATE);
-        return sharedPreferences.getString(context.getString(R.string.shared_preferences_key_personal_information_nickname), "BedTime");
+        return SPUtil.get(context, context.getString(R.string.shared_preferences_key_personal_information_nickname), "BedTime");
     }
 }

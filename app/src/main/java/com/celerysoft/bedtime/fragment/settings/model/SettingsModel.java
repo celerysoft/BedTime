@@ -1,15 +1,13 @@
 package com.celerysoft.bedtime.fragment.settings.model;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.media.RingtoneManager;
-import android.os.Build;
-import android.os.LocaleList;
 
 import com.celerysoft.bedtime.R;
 import com.celerysoft.bedtime.fragment.settings.bean.Sound;
 import com.celerysoft.bedtime.util.Const;
+import com.celerysoft.bedtime.util.SPUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,13 +24,10 @@ public class SettingsModel {
 
     private Context mContext;
 
-    private SharedPreferences mSharedPreferences;
-
     private List<Sound> mSoundList;
 
     public SettingsModel(Context context) {
         mContext = context;
-        mSharedPreferences = context.getSharedPreferences(context.getString(R.string.shared_preferences_key_default), Context.MODE_PRIVATE);
     }
 
     public String[] getLanguageStrings() {
@@ -46,13 +41,11 @@ public class SettingsModel {
     }
 
     public int getAppLanguage() {
-        return mSharedPreferences.getInt(mContext.getString(R.string.shared_preferences_key_settings_language), 0);
+        return SPUtil.get(mContext, mContext.getString(R.string.shared_preferences_key_settings_language), 0);
     }
 
     public void setAppLanguage(int language) {
-        mSharedPreferences.edit()
-                .putInt(mContext.getString(R.string.shared_preferences_key_settings_language), language)
-                .apply();
+        SPUtil.put(mContext, mContext.getString(R.string.shared_preferences_key_settings_language), language);
     }
 
     public Locale getLocale() {
@@ -199,13 +192,11 @@ public class SettingsModel {
     }
 
     public String getSoundUri() {
-        return mSharedPreferences.getString(mContext.getString(R.string.shared_preferences_key_settings_sound), "android.resource://" + mContext.getPackageName() + "/" + R.raw.notification);
+        return SPUtil.get(mContext, mContext.getString(R.string.shared_preferences_key_settings_sound), "android.resource://" + mContext.getPackageName() + "/" + R.raw.notification);
     }
 
     private void setSoundUri(String soundUri) {
-        mSharedPreferences.edit()
-                .putString(mContext.getString(R.string.shared_preferences_key_settings_sound), soundUri)
-                .apply();
+        SPUtil.put(mContext, mContext.getString(R.string.shared_preferences_key_settings_sound), soundUri);
     }
 
     public int getAppSoundIndex() {
@@ -222,12 +213,10 @@ public class SettingsModel {
     }
 
     public void apply24HourTime(boolean applied) {
-        mSharedPreferences.edit()
-                .putBoolean(mContext.getString(R.string.shared_preferences_key_settings_24_hour_time), applied)
-                .apply();
+        SPUtil.put(mContext, mContext.getString(R.string.shared_preferences_key_settings_24_hour_time), applied);
     }
 
     public boolean is24HourTime() {
-        return mSharedPreferences.getBoolean(mContext.getString(R.string.shared_preferences_key_settings_24_hour_time), true);
+        return SPUtil.get(mContext, mContext.getString(R.string.shared_preferences_key_settings_24_hour_time), true);
     }
 }

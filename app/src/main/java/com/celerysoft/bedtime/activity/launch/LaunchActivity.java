@@ -62,8 +62,6 @@ public class LaunchActivity extends BaseActivity {
 
         initSocialSharing();
 
-//        setAppLanguage();
-
         AlarmUtil.getInstance().setUpNextAlarm(this);
 
         mIsInitializationFinished = true;
@@ -112,24 +110,6 @@ public class LaunchActivity extends BaseActivity {
             PlatformConfig.setQQZone(qqAppId, qqAppKey);
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
-        }
-    }
-
-    private void setAppLanguage() {
-        SettingsModel model = new SettingsModel(this);
-
-        Resources resources = getResources();
-        DisplayMetrics displayMetrics = resources.getDisplayMetrics();
-
-        Configuration config = resources.getConfiguration();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            config.setLocale(model.getLocale());
-            getApplicationContext().createConfigurationContext(config);
-        } else {
-            //noinspection deprecation
-            config.locale = model.getLocale();
-            //noinspection deprecation
-            resources.updateConfiguration(config, displayMetrics);
         }
     }
 

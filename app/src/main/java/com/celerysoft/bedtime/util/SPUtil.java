@@ -16,7 +16,7 @@ public class SPUtil {
     /**
      * default SharedPreferences file name
      **/
-    public static final String FILE_NAME = Const.DEFAULT_SHARED_PREFERENCES_FILE_NAME;
+    private static final String FILE_NAME = Const.DEFAULT_SHARED_PREFERENCES_FILE_NAME;
 
     /**
      * Store data by SharedPreferences
@@ -216,6 +216,7 @@ public class SPUtil {
                 Class clz = SharedPreferences.Editor.class;
                 return clz.getMethod("apply");
             } catch (NoSuchMethodException e) {
+                // no op
             }
 
             return null;
@@ -228,8 +229,11 @@ public class SPUtil {
                     return;
                 }
             } catch (IllegalArgumentException e) {
+                // no op
             } catch (IllegalAccessException e) {
+                // no op
             } catch (InvocationTargetException e) {
+                // no op
             }
             editor.commit();
         }

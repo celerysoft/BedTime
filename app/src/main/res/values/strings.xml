@@ -35,18 +35,25 @@
     <string name="shared_preferences_key_wakeup_time_sunday_minute" translatable="false">shared_preferences_key_wakeup_time_sunday_minute</string>
 
     <!-- Go bed time -->
+    // Deprecated
     <string name="shared_preferences_key_bed_time_monday_hour" translatable="false">shared_preferences_key_bed_time_monday_hour</string>
     <string name="shared_preferences_key_bed_time_monday_minute" translatable="false">shared_preferences_key_bed_time_monday_minute</string>
+    // Deprecated
     <string name="shared_preferences_key_bed_time_tuesday_hour" translatable="false">shared_preferences_key_bed_time_tuesday_hour</string>
     <string name="shared_preferences_key_bed_time_tuesday_minute" translatable="false">shared_preferences_key_bed_time_tuesday_minute</string>
+    // Deprecated
     <string name="shared_preferences_key_bed_time_wednesday_hour" translatable="false">shared_preferences_key_bed_time_wednesday_hour</string>
     <string name="shared_preferences_key_bed_time_wednesday_minute" translatable="false">shared_preferences_key_bed_time_wednesday_minute</string>
+    // Deprecated
     <string name="shared_preferences_key_bed_time_thursday_hour" translatable="false">shared_preferences_key_bed_time_thursday_hour</string>
     <string name="shared_preferences_key_bed_time_thursday_minute" translatable="false">shared_preferences_key_bed_time_thursday_minute</string>
+    // Deprecated
     <string name="shared_preferences_key_bed_time_friday_hour" translatable="false">shared_preferences_key_bed_time_friday_hour</string>
     <string name="shared_preferences_key_bed_time_friday_minute" translatable="false">shared_preferences_key_bed_time_friday_minute</string>
+    // Deprecated
     <string name="shared_preferences_key_bed_time_saturday_hour" translatable="false">shared_preferences_key_bed_time_saturday_hour</string>
     <string name="shared_preferences_key_bed_time_saturday_minute" translatable="false">shared_preferences_key_bed_time_saturday_minute</string>
+    // Deprecated
     <string name="shared_preferences_key_bed_time_sunday_hour" translatable="false">shared_preferences_key_bed_time_sunday_hour</string>
     <string name="shared_preferences_key_bed_time_sunday_minute" translatable="false">shared_preferences_key_bed_time_sunday_minute</string>
 

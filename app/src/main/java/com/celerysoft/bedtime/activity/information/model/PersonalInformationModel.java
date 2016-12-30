@@ -1,7 +1,6 @@
 package com.celerysoft.bedtime.activity.information.model;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Environment;
@@ -11,49 +10,38 @@ import com.celerysoft.bedtime.fragment.main.model.BedTimeModel;
 import com.celerysoft.bedtime.util.AlarmUtil;
 import com.celerysoft.bedtime.util.Const;
 import com.celerysoft.bedtime.util.FileUtil;
+import com.celerysoft.bedtime.util.SPUtil;
 
 import java.io.File;
 
 /**
  * Created by admin on 16/5/3.
+ *
  */
 public class PersonalInformationModel {
     private Context mContext;
 
-    private SharedPreferences mSharedPreferences;
-
-    BedTimeModel mBedTimeModel;
-
     public PersonalInformationModel(Context context) {
         mContext = context;
-
-        mSharedPreferences = context.getSharedPreferences(mContext.getString(R.string.shared_preferences_key_default), Context.MODE_PRIVATE);
-
-        mBedTimeModel = new BedTimeModel(context);
     }
 
     public String getNickname() {
-        return mSharedPreferences.getString(mContext.getString(R.string.shared_preferences_key_personal_information_nickname), "BedTime");
+        return SPUtil.get(mContext, mContext.getString(R.string.shared_preferences_key_personal_information_nickname), "BedTime");
     }
 
     public void setNickname(String nickname) {
-        mSharedPreferences.edit()
-                .putString(mContext.getString(R.string.shared_preferences_key_personal_information_nickname), nickname)
-                .apply();
-
+        SPUtil.put(mContext, mContext.getString(R.string.shared_preferences_key_personal_information_nickname), nickname);
     }
 
     public String getAge() {
-        int age = mSharedPreferences.getInt(mContext.getString(R.string.shared_preferences_key_personal_information_age), 18);
+        int age = SPUtil.get(mContext, mContext.getString(R.string.shared_preferences_key_personal_information_age), 18);
         return String.valueOf(age);
     }
 
     public void setAge(String age) {
         Integer ageInt = Integer.valueOf(age);
 
-        mSharedPreferences.edit()
-                .putInt(mContext.getString(R.string.shared_preferences_key_personal_information_age), ageInt)
-                .apply();
+        SPUtil.put(mContext, mContext.getString(R.string.shared_preferences_key_personal_information_age), ageInt);
     }
 
     public String getSleepTime() {
@@ -74,32 +62,29 @@ public class PersonalInformationModel {
     }
 
     public int getSleepTimeHour() {
-        return mSharedPreferences.getInt(mContext.getString(R.string.shared_preferences_key_personal_information_sleep_hour), 7);
+        return SPUtil.get(mContext, mContext.getString(R.string.shared_preferences_key_personal_information_sleep_hour), 7);
     }
 
     public int getSleepTimeMinute() {
-        return mSharedPreferences.getInt(mContext.getString(R.string.shared_preferences_key_personal_information_sleep_minute), 30);
+        return SPUtil.get(mContext, mContext.getString(R.string.shared_preferences_key_personal_information_sleep_minute), 30);
     }
 
     public void setSleepTime(int hour, int minute) {
         setSleepTimeHour(hour);
         setSleepTimeMinute(minute);
 
-        mBedTimeModel.refreshBedTime();
+        BedTimeModel bedTimeModel = new BedTimeModel(mContext);
+        bedTimeModel.refreshBedTime();
 
         AlarmUtil.getInstance().setUpNextAlarm(mContext);
     }
 
     private void setSleepTimeHour(int hour) {
-        mSharedPreferences.edit()
-                .putInt(mContext.getString(R.string.shared_preferences_key_personal_information_sleep_hour), hour)
-                .apply();
+        SPUtil.put(mContext, mContext.getString(R.string.shared_preferences_key_personal_information_sleep_hour), hour);
     }
 
     private void setSleepTimeMinute(int minute) {
-        mSharedPreferences.edit()
-                .putInt(mContext.getString(R.string.shared_preferences_key_personal_information_sleep_minute), minute)
-                .apply();
+        SPUtil.put(mContext, mContext.getString(R.string.shared_preferences_key_personal_information_sleep_minute), minute);
     }
 
     public void setAvatar(Bitmap bitmap) {
@@ -126,6 +111,5 @@ public class PersonalInformationModel {
 
         return bitmap;
     }
-
 
 }

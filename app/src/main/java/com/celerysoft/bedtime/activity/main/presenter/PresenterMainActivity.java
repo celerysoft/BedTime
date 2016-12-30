@@ -8,7 +8,6 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.ListViewCompat;
@@ -26,10 +25,9 @@ import com.celerysoft.bedtime.fragment.bedtime.view.BedTimeFragment;
 import com.celerysoft.bedtime.fragment.main.view.MainFragment;
 import com.celerysoft.bedtime.fragment.settings.view.SettingsFragment;
 import com.celerysoft.bedtime.util.ActivityManagerUtil;
-import com.celerysoft.bedtime.util.FileUtil;
 import com.celerysoft.bedtime.util.Const;
-import com.celerysoft.bedtime.base.BaseActivity;
 import com.celerysoft.bedtime.util.InitViewUtil;
+import com.celerysoft.bedtime.util.SPUtil;
 import com.celerysoft.bedtime.util.Util;
 import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.UMShareListener;
@@ -253,13 +251,10 @@ public class PresenterMainActivity implements IPresenterMainActivity {
 
     @Override
     public boolean isNewToBedTime() {
-        SharedPreferences sharedPreferences = mContext.getSharedPreferences(mContext.getString(R.string.shared_preferences_key_default), Context.MODE_PRIVATE);
-        boolean isNew = sharedPreferences.getBoolean(mContext.getString(R.string.shared_preferences_key_is_new_user), true);
+        boolean isNew = SPUtil.get(mContext, mContext.getString(R.string.shared_preferences_key_is_new_user), true);
 
         if (isNew) {
-            sharedPreferences.edit()
-                    .putBoolean(mContext.getString(R.string.shared_preferences_key_is_new_user), false)
-                    .apply();
+            SPUtil.put(mContext, mContext.getString(R.string.shared_preferences_key_is_new_user), false);
         }
 
         return isNew;

@@ -54,9 +54,10 @@ public class BaseApplication extends Application {
             //noinspection deprecation
             locale = getResources().getConfiguration().locale;
         }
-        Const.SYSTEM_DEFAULT_LOCALE = locale;
+        Const.SYSTEM_DEFAULT_LOCALE = (Locale) locale.clone();
 
         Const.DEFAULT_SHARED_PREFERENCES_FILE_NAME = getString(R.string.shared_preferences_key_default);
+
     }
 
     private void initCrashHandler() {
