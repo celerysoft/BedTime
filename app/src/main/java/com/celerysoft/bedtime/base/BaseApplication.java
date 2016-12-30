@@ -6,7 +6,10 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Environment;
+import android.os.LocaleList;
 
+import com.celerysoft.bedtime.R;
+import com.celerysoft.bedtime.util.Const;
 import com.celerysoft.bedtime.util.FileUtil;
 
 import java.io.File;
@@ -19,6 +22,7 @@ import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedHashMap;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -28,11 +32,31 @@ import java.util.Map;
 public class BaseApplication extends Application {
     CrashHandler mCrashHandler;
 
+//    @Override
+//    protected void attachBaseContext(Context base) {
+//        super.attachBaseContext(BaseContextWrapper.wrap(base));
+//    }
+
     @Override
     public void onCreate() {
         super.onCreate();
 
+        initAppConst();
+
         initCrashHandler();
+    }
+
+    private void initAppConst() {
+        Locale locale;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            locale = getResources().getConfiguration().getLocales().get(0);
+        } else {
+            //noinspection deprecation
+            locale = getResources().getConfiguration().locale;
+        }
+        Const.SYSTEM_DEFAULT_LOCALE = locale;
+
+        Const.DEFAULT_SHARED_PREFERENCES_FILE_NAME = getString(R.string.shared_preferences_key_default);
     }
 
     private void initCrashHandler() {

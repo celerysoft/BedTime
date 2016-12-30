@@ -8,6 +8,7 @@ import android.content.res.Resources;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.Build;
 import android.support.v7.app.AlertDialog;
 import android.util.DisplayMetrics;
 
@@ -21,6 +22,7 @@ import com.celerysoft.bedtime.util.InitViewUtil;
 
 /**
  * Created by admin on 16/4/29.
+ *
  */
 public class PresenterSettings implements IPresenterSettings {
     private IViewSettings mView;
@@ -113,12 +115,21 @@ public class PresenterSettings implements IPresenterSettings {
     }
 
     private void changeAppLanguage() {
-        Resources resources = mContext.getResources();
-        DisplayMetrics displayMetrics = resources.getDisplayMetrics();
-
-        Configuration config = resources.getConfiguration();
-        config.locale = mModel.getLocale();
-        resources.updateConfiguration(config, displayMetrics);
+//        Resources resources = mContext.getResources();
+//        DisplayMetrics displayMetrics = resources.getDisplayMetrics();
+//
+//        Configuration config = resources.getConfiguration();
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+//            config.setLocale(mModel.getLocale());
+//            mContext.getApplicationContext().createConfigurationContext(config);
+//            //noinspection deprecation
+//            resources.updateConfiguration(config, displayMetrics);
+//        } else {
+//            //noinspection deprecation
+//            config.locale = mModel.getLocale();
+//            //noinspection deprecation
+//            resources.updateConfiguration(config, displayMetrics);
+//        }
 
         restartActivity();
     }

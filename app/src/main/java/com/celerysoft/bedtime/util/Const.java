@@ -5,13 +5,16 @@ import android.content.Context;
 import com.celerysoft.bedtime.BuildConfig;
 import com.celerysoft.bedtime.R;
 
+import java.util.Locale;
+
 /**
  * Created by admin on 16/4/26.
+ *
  */
 public class Const {
-    public static String getDefaultSharedPreferencesKey(Context context) {
-        return context.getString(R.string.shared_preferences_key_default);
-    }
+    public static String DEFAULT_SHARED_PREFERENCES_FILE_NAME;
+
+    public static Locale SYSTEM_DEFAULT_LOCALE;
 
     public static final String EMPTY_STRING = "";
 

@@ -4,9 +4,12 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.media.RingtoneManager;
+import android.os.Build;
+import android.os.LocaleList;
 
 import com.celerysoft.bedtime.R;
 import com.celerysoft.bedtime.fragment.settings.bean.Sound;
+import com.celerysoft.bedtime.util.Const;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,7 +56,7 @@ public class SettingsModel {
     }
 
     public Locale getLocale() {
-        Locale locale = Locale.getDefault();
+        Locale locale = Const.SYSTEM_DEFAULT_LOCALE;
 
         int language = getAppLanguage();
         switch (language) {

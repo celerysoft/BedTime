@@ -62,7 +62,7 @@ public class LaunchActivity extends BaseActivity {
 
         initSocialSharing();
 
-        setAppLanguage();
+//        setAppLanguage();
 
         AlarmUtil.getInstance().setUpNextAlarm(this);
 
@@ -124,11 +124,13 @@ public class LaunchActivity extends BaseActivity {
         Configuration config = resources.getConfiguration();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
             config.setLocale(model.getLocale());
+            getApplicationContext().createConfigurationContext(config);
         } else {
             //noinspection deprecation
             config.locale = model.getLocale();
+            //noinspection deprecation
+            resources.updateConfiguration(config, displayMetrics);
         }
-        resources.updateConfiguration(config, displayMetrics);
     }
 
     @Override

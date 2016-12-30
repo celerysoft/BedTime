@@ -25,6 +25,11 @@ public class BaseActivity extends AppCompatActivity {
     protected ActivityManagerUtil mActivityManagerUtil;
 
     @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(BaseContextWrapper.wrap(base));
+    }
+
+    @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         mActivityManagerUtil = ActivityManagerUtil.getInstance();
 

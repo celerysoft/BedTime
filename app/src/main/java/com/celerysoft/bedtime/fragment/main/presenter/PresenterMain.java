@@ -49,7 +49,7 @@ public class PresenterMain implements IPresenterMain {
         mWakeupTimeModel = new WakeupTimeModel(mContext);
         mBedTimeModel = new BedTimeModel(mContext);
 
-        mSharedPreferences = mContext.getSharedPreferences(Const.getDefaultSharedPreferencesKey(mContext), Context.MODE_PRIVATE);
+        mSharedPreferences = mContext.getSharedPreferences(Const.DEFAULT_SHARED_PREFERENCES_FILE_NAME, Context.MODE_PRIVATE);
     }
 
     @Override
