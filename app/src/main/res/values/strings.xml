@@ -135,6 +135,8 @@
     //Bed Time Fragment
     <string name="bedtime_actionbar_title">When To Bed</string>
     <string name="bedtime_title">Wakeup times</string>
+    <string name="bedtime_help_dialog_title">About wakeup time</string>
+    <string name="bedtime_help_dialog_message">Tap item to set up every wake-up time, then we can calculate your bed-time infer to your wake-up time and sleep time. And warn you on 30 minutes before your bed-time</string>
     <string name="bedtime_monday">Monday</string>
     <string name="bedtime_tuesday">Tuesday</string>
     <string name="bedtime_wednesday">Wednesday</string>

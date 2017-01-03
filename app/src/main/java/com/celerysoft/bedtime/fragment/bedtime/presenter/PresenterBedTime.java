@@ -1,9 +1,13 @@
 package com.celerysoft.bedtime.fragment.bedtime.presenter;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Build;
+import android.support.v7.app.AlertDialog;
 
 import com.celerysoft.bedtime.R;
+import com.celerysoft.bedtime.activity.information.view.PersonalInformationActivity;
 import com.celerysoft.bedtime.activity.main.presenter.IPresenterMainActivity;
 import com.celerysoft.bedtime.activity.main.view.MainActivity;
 import com.celerysoft.bedtime.fragment.bedtime.adapter.WakeupTimeListViewAdapter;
@@ -106,6 +110,15 @@ public class PresenterBedTime implements IPresenterBedTime {
         WakeupTimeBean wakeupTime = mModel.findWakeUpTimeByDayOfTheWeek(dayOfTheWeek);
         adapter.getWakeupTimes().set(position, wakeupTime);
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void showHelpDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext, R.style.AppTheme_Dialog_Light);
+        builder.setTitle(mContext.getString(R.string.bedtime_help_dialog_title))
+                .setMessage(mContext.getString(R.string.bedtime_help_dialog_message))
+                .setPositiveButton(mContext.getString(R.string.got_it), null)
+                .show();
     }
 
     private void updateAlarm() {

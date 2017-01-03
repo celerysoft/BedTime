@@ -17,6 +17,7 @@ import com.celerysoft.bedtime.base.BaseFragment;
 
 /**
  * Created by Celery on 16/4/12.
+ *
  */
 public class MainFragment extends BaseFragment implements IViewMain {
     private final String TAG = "MainFragment";

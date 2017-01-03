@@ -162,7 +162,7 @@ public class WakeupTimeListViewAdapter extends BaseAdapter {
 
     private boolean isTomorrow(int dayOfWeek) {
         int today = mCalendar.get(Calendar.DAY_OF_WEEK);
-        int tomorrow = today == Calendar.SATURDAY ? Calendar.MONDAY : today + 1;
+        int tomorrow = today == Calendar.SATURDAY ? Calendar.SUNDAY : today + 1;
         return tomorrow == dayOfWeek;
     }
 

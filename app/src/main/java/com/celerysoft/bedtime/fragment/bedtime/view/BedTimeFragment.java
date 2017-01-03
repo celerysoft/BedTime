@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 
 import com.celerysoft.bedtime.R;
 import com.celerysoft.bedtime.fragment.bedtime.adapter.WakeupTimeListViewAdapter;
@@ -21,6 +22,7 @@ import java.util.Calendar;
 
 /**
  * Created by Celery on 16/4/12.
+ *
  */
 public class BedTimeFragment extends BaseFragment implements IViewBedTime {
 
@@ -28,6 +30,8 @@ public class BedTimeFragment extends BaseFragment implements IViewBedTime {
     public IPresenterBedTime getPresenter() {
         return mPresenter;
     }
+
+    ImageView mIvHelp;
 
     ListViewCompat mListViewWakeupTime;
     WakeupTimeListViewAdapter mAdapter;
@@ -44,6 +48,14 @@ public class BedTimeFragment extends BaseFragment implements IViewBedTime {
 
     private void initView(View v) {
         mPresenter = new PresenterBedTime(this);
+
+        mIvHelp = (ImageView) v.findViewById(R.id.bedtime_iv_help);
+        mIvHelp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPresenter.showHelpDialog();
+            }
+        });
 
         mListViewWakeupTime = (ListViewCompat) v.findViewById(R.id.bedtime_lv_wakeup_time);
         mAdapter = mPresenter.fetchDataToCreateAdapter();

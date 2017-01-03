@@ -65,6 +65,8 @@
     //Bed Time Fragment
     <string name="bedtime_actionbar_title">卧榻</string>
     <string name="bedtime_title">起床时间</string>
+    <string name="bedtime_help_dialog_title">关于起床时间</string>
+    <string name="bedtime_help_dialog_message">点击列表项分别设置每天的起床时刻，夜堪眠会根据您的起床时刻及所需睡眠的时间推算出您上床睡觉的时刻，并于该时刻30分钟前提醒您上床睡觉</string>
     <string name="bedtime_monday">星期一</string>
     <string name="bedtime_tuesday">星期二</string>
     <string name="bedtime_wednesday">星期三</string>

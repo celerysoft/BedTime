@@ -6,8 +6,6 @@ import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.media.RingtoneManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -176,12 +174,8 @@ public class MainActivity extends BaseActivity
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == 6 && resultCode == RESULT_OK) {
-            Uri uri = data.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI);
-            String a = "";
-        }
-
         super.onActivityResult(requestCode, resultCode, data);
+
         UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
         mPresenter.handleActivityResult(requestCode, resultCode, data);
     }
