@@ -162,6 +162,7 @@ public class BrowserActivity extends BaseActivity implements IViewBrowserActivit
         mPresenter = new PresenterBrowserActivity(this);
 
         mWebSettings = mWebView.getSettings();
+        mWebSettings.setMixedContentMode(WebSettings.MIXED_CONTENT_COMPATIBILITY_MODE);
     }
 
     private void initView() {

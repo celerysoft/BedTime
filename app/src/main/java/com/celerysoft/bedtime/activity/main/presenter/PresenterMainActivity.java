@@ -10,9 +10,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.ListViewCompat;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ListView;
 
 import com.celerysoft.bedtime.BuildConfig;
 import com.celerysoft.bedtime.R;
@@ -279,7 +279,7 @@ public class PresenterMainActivity implements IPresenterMainActivity {
 
     @Override
     public void showSocialSharingDialog() {
-        ListViewCompat listView = new ListViewCompat(mContext);
+        ListView listView = new ListView(mContext);
         listView.setAdapter(new SocialSharingListViewAdapter(mContext));
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

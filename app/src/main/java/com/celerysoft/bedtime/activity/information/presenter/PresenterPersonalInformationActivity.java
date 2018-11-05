@@ -11,11 +11,11 @@ import android.provider.MediaStore;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.ListViewCompat;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.ListView;
 
 import com.celerysoft.bedtime.R;
 import com.celerysoft.bedtime.activity.information.adapter.ModifyAvatarDialogAdapter;
@@ -231,7 +231,7 @@ public class PresenterPersonalInformationActivity implements IPresenterPersonalI
 
     @Override
     public void showModifyAvatarDialog() {
-        ListViewCompat listView = new ListViewCompat(mContext);
+        ListView listView = new ListView(mContext);
         listView.setAdapter(new ModifyAvatarDialogAdapter(mContext));
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

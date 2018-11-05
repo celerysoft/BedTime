@@ -72,6 +72,11 @@
     <string name="shared_preferences_key_personal_information_sleep_minute" translatable="false">shared_preferences_key_personal_information_sleep_minute</string>
     // Common string do not translate -end
 
+    //App Shortcuts
+    <string name="shortcut_set_wakeup_time_short_label">Set wakeup time</string>
+    <string name="shortcut_set_wakeup_time_long_label">Set wakeup time</string>
+    <string name="shortcut_set_wakeup_time_disabled_message">Set wakeup time is disabled</string>
+
     // Common word
     <string name="got_it">Got it</string>
 

@@ -6,6 +6,7 @@ import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -29,6 +30,7 @@ import com.celerysoft.bedtime.fragment.main.view.MainFragment;
 import com.celerysoft.bedtime.fragment.settings.view.SettingsFragment;
 import com.celerysoft.bedtime.base.BaseActivity;
 import com.celerysoft.bedtime.base.BaseFragment;
+import com.celerysoft.bedtime.util.Const;
 import com.celerysoft.ripple.Wrapper;
 import com.umeng.socialize.UMShareAPI;
 
@@ -72,6 +74,8 @@ public class MainActivity extends BaseActivity
 
         if(mPresenter.isNewToBedTime()) {
             mPresenter.showWelcomeDialog();
+        } else {
+            handleAppShortcut();
         }
     }
 
@@ -147,6 +151,26 @@ public class MainActivity extends BaseActivity
             mPresenter.updateViewByFragmentInfo(fragment);
         }
     };
+
+    private void handleAppShortcut() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
+            String action;
+            try {
+                action = getIntent().getAction();
+            } catch (NullPointerException e) {
+                action = "";
+            }
+            if (action != null && !action.equals("")) {
+                switch (action) {
+                    case Const.APP_SHORTCUT_ACTION_SET_WAKEUP_TIME:
+                        mPresenter.turnToBedTimeFragmentQuickly();
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+    }
 
     protected void restoreInstanceState(Bundle savedInstanceState) {
         if (savedInstanceState != null) {

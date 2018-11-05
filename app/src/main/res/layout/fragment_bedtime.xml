@@ -32,9 +32,7 @@
 
     </LinearLayout>
 
-
-
-    <android.support.v7.widget.ListViewCompat
+    <ListView
         android:id="@+id/bedtime_lv_wakeup_time"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

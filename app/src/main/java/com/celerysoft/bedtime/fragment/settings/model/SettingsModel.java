@@ -3,6 +3,7 @@ package com.celerysoft.bedtime.fragment.settings.model;
 import android.content.Context;
 import android.database.Cursor;
 import android.media.RingtoneManager;
+import android.util.Log;
 
 import com.celerysoft.bedtime.R;
 import com.celerysoft.bedtime.fragment.settings.bean.Sound;
@@ -41,19 +42,22 @@ public class SettingsModel {
     }
 
     public int getAppLanguage() {
+        Log.i("获取语言", String.valueOf(SPUtil.get(mContext, mContext.getString(R.string.shared_preferences_key_settings_language), 0)));
         return SPUtil.get(mContext, mContext.getString(R.string.shared_preferences_key_settings_language), 0);
     }
 
     public void setAppLanguage(int language) {
+        Log.i("设置语言", String.valueOf(language));
         SPUtil.put(mContext, mContext.getString(R.string.shared_preferences_key_settings_language), language);
     }
 
     public Locale getLocale() {
-        Locale locale = Const.SYSTEM_DEFAULT_LOCALE;
+        Locale locale = mContext.getResources().getConfiguration().locale;
 
         int language = getAppLanguage();
         switch (language) {
             case FOLLOW_SYSTEM:
+                locale = Locale.getDefault();
                 break;
             case CHINESE:
                 locale = Locale.SIMPLIFIED_CHINESE;

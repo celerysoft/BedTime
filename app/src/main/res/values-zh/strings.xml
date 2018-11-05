@@ -2,6 +2,11 @@
 <resources>
     <string name="app_name">夜堪眠</string>
 
+    //App Shortcuts
+    <string name="shortcut_set_wakeup_time_short_label">起床时刻</string>
+    <string name="shortcut_set_wakeup_time_long_label">设置起床时间</string>
+    <string name="shortcut_set_wakeup_time_disabled_message">设置起床时间功能已禁用</string>
+
     // Common word
     <string name="got_it">知道啦</string>
 

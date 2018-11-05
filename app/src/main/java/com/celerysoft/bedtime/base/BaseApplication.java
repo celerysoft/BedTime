@@ -2,27 +2,28 @@ package com.celerysoft.bedtime.base;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.ShortcutInfo;
+import android.content.pm.ShortcutManager;
+import android.graphics.drawable.Icon;
 import android.os.Build;
-import android.os.Environment;
-import android.os.LocaleList;
+import android.util.Log;
 
 import com.celerysoft.bedtime.R;
+import com.celerysoft.bedtime.activity.main.view.MainActivity;
 import com.celerysoft.bedtime.util.Const;
 import com.celerysoft.bedtime.util.FileUtil;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.LinkedHashMap;
-import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -34,30 +35,42 @@ public class BaseApplication extends Application {
 
 //    @Override
 //    protected void attachBaseContext(Context base) {
-//        super.attachBaseContext(BaseContextWrapper.wrap(base));
+////        super.attachBaseContext(BaseContextWrapper.wrap(base));
+//        super.attachBaseContext(base);
 //    }
 
     @Override
     public void onCreate() {
+        Log.i("sososo", "onAppCreate");
         super.onCreate();
 
         initAppConst();
 
         initCrashHandler();
+
+        initAppShortCuts();
     }
 
     private void initAppConst() {
-        Locale locale;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            locale = getResources().getConfiguration().getLocales().get(0);
-        } else {
-            //noinspection deprecation
-            locale = getResources().getConfiguration().locale;
-        }
-        Const.SYSTEM_DEFAULT_LOCALE = (Locale) locale.clone();
-
         Const.DEFAULT_SHARED_PREFERENCES_FILE_NAME = getString(R.string.shared_preferences_key_default);
+    }
 
+    private void initAppShortCuts() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
+            ShortcutManager shortcutManager = this.getSystemService(ShortcutManager.class);
+
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.setAction(Const.APP_SHORTCUT_ACTION_SET_WAKEUP_TIME);
+            ShortcutInfo shortcut = new ShortcutInfo.Builder(this, Const.APP_SHORTCUT_ACTION_SET_WAKEUP_TIME)
+                    .setShortLabel(getString(R.string.shortcut_set_wakeup_time_short_label))
+                    .setLongLabel(getString(R.string.shortcut_set_wakeup_time_long_label))
+                    .setDisabledMessage(getString(R.string.shortcut_set_wakeup_time_disabled_message))
+                    .setIcon(Icon.createWithResource(this, R.drawable.ic_alarm_black))
+                    .setIntent(intent)
+                    .build();
+
+            shortcutManager.setDynamicShortcuts(Arrays.asList(shortcut));
+        }
     }
 
     private void initCrashHandler() {

@@ -1,6 +1,12 @@
 package com.celerysoft.bedtime.util;
 
+import android.content.Context;
+import android.content.res.Configuration;
+import android.content.res.Resources;
+import android.util.DisplayMetrics;
+
 import com.celerysoft.bedtime.base.BaseActivity;
+import com.celerysoft.bedtime.fragment.settings.model.SettingsModel;
 
 import java.util.Stack;
 
@@ -32,6 +38,10 @@ public class ActivityManagerUtil {
     }
 
     public void registerActivity(BaseActivity activity) {
+        if (mActivities.empty()) {
+            initAppLanguage(activity);
+        }
+
         mActivities.push(activity);
     }
 
@@ -60,5 +70,14 @@ public class ActivityManagerUtil {
 
         mCurrentActivity.finish();
         GlobalValue.isAppRunningForeground = false;
+    }
+
+    private void initAppLanguage(Context context) {
+        Resources resources = context.getResources();
+        DisplayMetrics dm = resources.getDisplayMetrics();
+        Configuration config = resources.getConfiguration();
+        SettingsModel model = new SettingsModel(context);
+        config.locale = model.getLocale();
+        resources.updateConfiguration(config, dm);
     }
 }

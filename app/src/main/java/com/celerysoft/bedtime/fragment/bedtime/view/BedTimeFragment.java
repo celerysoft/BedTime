@@ -2,12 +2,12 @@ package com.celerysoft.bedtime.fragment.bedtime.view;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.ListViewCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.ListView;
 
 import com.celerysoft.bedtime.R;
 import com.celerysoft.bedtime.fragment.bedtime.adapter.WakeupTimeListViewAdapter;
@@ -33,7 +33,7 @@ public class BedTimeFragment extends BaseFragment implements IViewBedTime {
 
     ImageView mIvHelp;
 
-    ListViewCompat mListViewWakeupTime;
+    ListView mListViewWakeupTime;
     WakeupTimeListViewAdapter mAdapter;
 
     @Nullable
@@ -49,7 +49,7 @@ public class BedTimeFragment extends BaseFragment implements IViewBedTime {
     private void initView(View v) {
         mPresenter = new PresenterBedTime(this);
 
-        mIvHelp = (ImageView) v.findViewById(R.id.bedtime_iv_help);
+        mIvHelp = v.findViewById(R.id.bedtime_iv_help);
         mIvHelp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,7 +57,7 @@ public class BedTimeFragment extends BaseFragment implements IViewBedTime {
             }
         });
 
-        mListViewWakeupTime = (ListViewCompat) v.findViewById(R.id.bedtime_lv_wakeup_time);
+        mListViewWakeupTime = v.findViewById(R.id.bedtime_lv_wakeup_time);
         mAdapter = mPresenter.fetchDataToCreateAdapter();
         mListViewWakeupTime.setAdapter(mAdapter);
         mListViewWakeupTime.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -89,7 +89,7 @@ public class BedTimeFragment extends BaseFragment implements IViewBedTime {
 //    }
 
     private int positionToDayOfTheWeek(int position) {
-        int dayOfTheWeek = Calendar.SUNDAY;
+        int dayOfTheWeek;
         switch (position) {
             case 0:
                 dayOfTheWeek = Calendar.MONDAY;
@@ -110,9 +110,8 @@ public class BedTimeFragment extends BaseFragment implements IViewBedTime {
                 dayOfTheWeek = Calendar.SATURDAY;
                 break;
             case 6:
-                dayOfTheWeek = Calendar.SUNDAY;
-                break;
             default:
+                dayOfTheWeek = Calendar.SUNDAY;
                 break;
         }
         return dayOfTheWeek;

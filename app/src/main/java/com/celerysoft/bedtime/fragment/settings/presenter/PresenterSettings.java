@@ -115,12 +115,21 @@ public class PresenterSettings implements IPresenterSettings {
     }
 
     private void changeAppLanguage() {
+        Context context = mView.getActivity();
+        Resources resources = context.getResources();
+        DisplayMetrics dm = resources.getDisplayMetrics();
+        Configuration config = resources.getConfiguration();
+        SettingsModel model = new SettingsModel(context);
+        config.locale = model.getLocale();
+        resources.updateConfiguration(config, dm);
+
         restartActivity();
     }
 
     private void restartActivity() {
         mView.getActivity().finish();
         Intent intent = new Intent(mContext, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         intent.putExtra("launch_fragment", "settings");
         mContext.startActivity(intent);
     }
